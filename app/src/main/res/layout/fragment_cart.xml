@@ -1,0 +1,51 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout
+        xmlns:android="http://schemas.android.com/apk/res/android"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:background="#f1f1F1"
+        android:paddingBottom="15dp" android:paddingLeft="15dp" android:paddingRight="15dp">
+
+
+    <android.support.v7.widget.RecyclerView
+            android:id="@+id/recyclerCartItems"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:padding="10dp"
+            android:layout_marginTop="15dp"/>
+    <LinearLayout
+            android:orientation="vertical"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_alignParentBottom="true">
+
+        <RelativeLayout
+                android:orientation="vertical"
+                android:background="#bee1e6e5"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent">
+            <TextView
+                    android:text="المجموع"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_alignParentRight="true"
+            />
+            <TextView
+                    android:text="0"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:id="@+id/txtCartTotal"/>
+        </RelativeLayout>
+        <Button
+                android:text="إتمام عملية الشراء"
+                android:layout_width="match_parent"
+                android:textColor="#ffffff"
+                android:layout_height="48dp"
+                android:background="#1a7d41"
+                android:id="@+id/btnCartOrder"
+                android:layout_alignParentBottom="true"
+                android:layout_centerInParent="true"/>
+
+    </LinearLayout>
+
+</RelativeLayout>

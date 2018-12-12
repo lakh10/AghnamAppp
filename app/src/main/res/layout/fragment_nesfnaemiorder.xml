@@ -1,0 +1,34 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent">
+
+    <TextView
+            android:text="الكمية"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:gravity="center"
+            android:textColor="#32a65b"
+            android:id="@+id/textView31"
+            android:layout_alignParentEnd="true"
+            android:layout_alignParentTop="true"
+            android:layout_marginEnd="30dp"
+            android:layout_marginTop="107dp"
+    />
+    <TextView
+            android:text="نصف هرفي نعيمي بلدي يوصلك طازج ومقطع تقطيع ثلاجة ومغلف بأكياس مجانا"
+            android:layout_width="351dp"
+            android:layout_height="wrap_content"
+            android:textColor="#32a65b"
+            android:textSize="18sp"
+            android:layout_centerHorizontal="true"
+            android:layout_alignParentTop="true"
+            android:layout_marginTop="214dp"/>
+    <EditText
+            android:layout_width="88dp"
+            android:layout_height="38dp"
+            android:inputType="numberDecimal"
+            android:ems="10"
+            android:layout_alignParentTop="true" android:layout_marginTop="156dp"
+            android:id="@+id/editText" android:layout_alignEnd="@+id/textView31" android:gravity="right"/>
+</RelativeLayout>

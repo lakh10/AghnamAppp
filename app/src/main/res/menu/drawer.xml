@@ -1,0 +1,38 @@
+<?xml version="1.0" encoding="utf-8"?>
+
+<menu xmlns:android="http://schemas.android.com/apk/res/android"
+xmlns:tools="http://schemas.android.com/tools"
+tools:showIn="navigation_view">
+
+        <group android:checkableBehavior="single">
+
+                <item
+                        android:id="@+id/navUser"
+                        android:title="ملف المستخدم"
+                        android:icon="@drawable/usericon"/>
+
+                <item
+                        android:id="@+id/navCart"
+                        android:title="السلة الشرائية"
+                        android:icon="@drawable/order"/>
+
+                <!--<item
+                        android:id="@+id/navOrders"
+                        android:title="طلباتي"/>-->
+
+                <item
+                        android:id="@+id/navAbout"
+                        android:icon="@drawable/freshinfo"
+                        android:title="حسابات فريش"/>
+                <item
+                        android:id="@+id/nav5"
+                        android:icon="@drawable/howtouse"
+                        android:title="تواصل معنا"/>
+
+                <!--<item
+                        android:id="@+id/nav6"
+                        android:title="تواصل معنا"/>-->
+        </group>
+
+
+</menu>

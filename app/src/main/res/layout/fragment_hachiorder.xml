@@ -1,0 +1,44 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content">
+
+    <EditText
+            android:id="@+id/edtQuantity"
+            android:layout_width="40dp"
+            android:layout_height="wrap_content"
+            android:background="#fff"
+            android:hint="0"
+            android:inputType="number" android:layout_alignParentEnd="true" android:layout_alignParentTop="true"
+            android:layout_marginEnd="49dp" android:layout_marginTop="50dp"/>
+    <TextView
+            android:text="الحجم"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:gravity="center"
+            android:textColor="#32a65b"
+            android:id="@+id/textView36"
+            android:layout_alignStart="@+id/edtQuantity" android:layout_alignParentTop="true"
+            android:layout_marginTop="120dp"/>
+    <TextView
+            android:text="الكمية"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:textColor="#32a65b"
+            android:id="@+id/textView37" android:layout_above="@+id/edtQuantity" android:layout_marginBottom="-50dp"
+            android:layout_alignStart="@+id/edtQuantity"/>
+    <Spinner
+            android:layout_width="187dp"
+            android:layout_height="wrap_content"
+            android:id="@+id/spWeight"
+            android:layout_alignParentTop="true" android:layout_alignEnd="@+id/edtQuantity"
+            android:layout_marginTop="160dp"/>
+    <EditText
+            android:layout_width="340dp"
+            android:layout_height="49dp"
+            android:inputType="textPersonName"
+            android:text="ادخل وصف"
+            android:ems="10"
+            android:id="@+id/edtNotes" android:layout_centerHorizontal="true" android:layout_alignParentTop="true"
+            android:layout_marginTop="196dp"/>
+</RelativeLayout>

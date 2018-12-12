@@ -1,0 +1,87 @@
+<resources>
+    <string name="app_name">FreshApp</string>
+    <string name="title_activity_drawer">فريش</string>
+    <string name="navigation_drawer_open">Open navigation drawer</string>
+    <string name="navigation_drawer_close">Close navigation drawer</string>
+    <string name="nav_header_title">Android Studio</string>
+    <string name="nav_header_subtitle">android.studio@android.com</string>
+    <string name="nav_header_desc">Navigation header</string>
+    <string name="action_settings">Settings</string>
+    <string name="Quantity">Quantity</string>
+    <string name="qte">الكمية :</string>
+    <string name="edtNotes_Hint">Notes</string>
+    <string name="btnOrder_Text">إضافة إلى السلة</string>
+    <string name="title_activity_welcome">فريش</string>
+
+    <string name="recyclerItemSheep">نعيمي</string>
+    <string name="recyclerItemHalfSheep">نصف نعيمي</string>
+    <string name="recyclerItemGoat">تيس عارضي</string>
+    <string name="recyclerItemCamel">حاشي بلدي</string>
+    <string name="recyclerItemGroundMeat">عجل بلدي</string>
+    <string name="recyclerItemGroundLamb">حري</string>
+    // *************Weight List***************
+
+    نعيمي//
+
+    <string name="WeightNaemeLabani">لباني 9-12كيلو</string>
+    <string name="WeightNaemeS">صغير 12-15كيلو</string>
+    <string name="WeightNaemeM">وسط 15-17كيلو</string>
+    <string name="WeightNaemeJadaeM">جدع وسط 17-20كيلو</string>
+    <string name="WeightNaemeJadaeT">جدع طيب 20-25كيلو</string>
+    <string name="WeightNaemeJadaeN">جدع ناهي 25-30كيلو</string>
+
+    حاشي//
+
+    <string name="WeightHachi5">5 كيلو</string>
+    <string name="WeightHachi10">10 كيلو</string>
+    <string name="WeightHachi15">15 كيلو</string>
+    <string name="WeightHachi20">20 كيلو</string>
+
+    تيس//
+
+    <string name="WeightTaisS">صغير</string>
+    <string name="WeightTaisM">وسط</string>
+    <string name="WeightTaisL">كبير</string>
+
+    عجل //
+
+    <string name="WeightAjl5">مفروم 5 كيلو</string>
+    <string name="WeightAjl6">مفروم 6 كيلو</string>
+    <string name="WeightAjl7">مفروم 7 كيلو</string>
+    <string name="WeightAjl8">مفروم 8 كيلو</string>
+    <string name="WeightAjl9">مفروم 9 كيلو</string>
+    <string name="WeightAjl10">مفروم 10 كيلو</string>
+
+    // **************Ta9ti3 List***************
+    نعيمي//
+
+    <string name="SlicingFridge">ثلاجة</string>
+    <string name="Slicing2">تفصيل حضرمي</string>
+    <string name="SlicingQuarters">أرباع</string>
+    <string name="SlicingHalfs">أنصاف</string>
+    <string name="SlicingWhole">كاملة</string>
+    <string name="Slicing6">تفطيح</string>
+
+    //***********************************************************
+
+    <string name="next">التالي</string>
+    <string name="skip">تخطي</string>
+    <string name="start">ابدأ</string>
+    <!--<string name="slide_1_title">Daily Workout</string>
+    //<string name="slide_1_desc">Set your daily workout routine by the help of trainer</string>
+    //<string name="slide_2_title">Meditation Techniques</string>
+    //<string name="slide_2_desc">Learn about the different meditation techniques and practice them</string>
+    //<string name="slide_3_title">Diet Chart</string>
+    //<string name="slide_3_desc">Make your diet chart by the help of health experts</string>
+    //<string name="play_again_desc">To see the welcome slider again, goto Settings -> apps -> welcome slider -> clear
+    //    data
+    //</string>
+    //<string name="play_again">Play Again</string>-->
+    <!-- TODO: Remove or change this placeholder text
+    <string name="hello_blank_fragment">Hello blank fragment</string>-->
+    <string name="recovery">هل نسيت كلمة السر !</string>
+
+    <!-- TODO: Remove or change this placeholder text -->
+    <string name="hello_blank_fragment">Hello blank fragment</string>
+    <string name="title_activity_maps_adresse">Map</string>
+</resources>

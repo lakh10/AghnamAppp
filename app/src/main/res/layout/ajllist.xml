@@ -1,0 +1,68 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent">
+
+    <Button
+            android:id="@+id/btnItemOrder4"
+            android:text="إضافة إلى السلة"
+            android:textColor="@android:color/white"
+            android:layout_width="347dp"
+            android:layout_height="wrap_content"
+            android:layout_alignParentBottom="true"
+            android:background="#32a65b"
+
+            android:layout_marginBottom="147dp"
+            android:layout_centerHorizontal="true"/>
+    <TextView
+            android:text="400 ريال"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content" android:layout_alignParentStart="true"
+            android:layout_marginStart="20dp" android:layout_alignTop="@+id/textView41" android:id="@+id/textView42"/>
+    <TextView
+            android:text="المجموع"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content" android:layout_alignParentBottom="true"
+            android:layout_marginBottom="205dp" android:id="@+id/textView41"
+            android:layout_alignEnd="@+id/btnItemOrder4"/>
+    <Spinner
+            android:layout_width="187dp"
+            android:layout_height="wrap_content"
+            android:id="@+id/spinner2"
+            android:layout_alignEnd="@+id/textView41" android:layout_alignParentBottom="true"
+            android:layout_marginBottom="255dp"/>
+    <TextView
+            android:text="الحجم"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:gravity="center"
+            android:textColor="#32a65b"
+            android:id="@+id/textView40"
+            android:layout_alignParentTop="true" android:layout_marginTop="235dp"
+            android:layout_alignEnd="@+id/spinner2"/>
+    <EditText
+            android:id="@+id/edtQuantity3"
+            android:layout_width="40dp"
+            android:layout_height="wrap_content"
+            android:background="#fff"
+            android:hint="0"
+            android:inputType="number"
+            android:layout_marginTop="166dp" android:text="0"
+            android:layout_alignParentTop="true" android:layout_alignStart="@+id/textView41" android:gravity="right"/>
+    <TextView
+            android:text="الكمية"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:gravity="center"
+            android:textColor="#32a65b"
+            android:id="@+id/textView35" android:layout_alignParentTop="true"
+            android:layout_marginTop="122dp" android:layout_alignEnd="@+id/spinner2"/>
+    <android.support.v7.widget.RecyclerView
+            android:id="@+id/recyclerItems"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:padding="10dp"
+            android:layout_marginTop="38dp"
+            android:clickable="true"
+            android:focusable="true" android:layout_alignParentStart="true" android:layout_alignParentTop="true"/>
+</RelativeLayout>
