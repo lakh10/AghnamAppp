@@ -25,10 +25,10 @@ import java.util.List;
 public class CartFragment extends Fragment {
 
 
-    RecyclerView itemsView;
-    TextView txtCartTotal;
-    Button btnOrder;
-    Float Total = 0.0f;
+    private RecyclerView itemsView;
+    private TextView txtCartTotal;
+    private Button btnOrder;
+    private Float Total = 0.0f;
     public CartFragment() {
         // Required empty public constructor
         Total = Session.getInstance().Cart().GetTotal();
@@ -53,13 +53,13 @@ public class CartFragment extends Fragment {
                              Bundle savedInstanceState) {
         return inflater.inflate(R.layout.fragment_cart, container, false);
     }
-    public void LinkControls(View v)
+    private void LinkControls(View v)
     {
         itemsView = (RecyclerView)v.findViewById(R.id.recyclerCartItems);
         txtCartTotal = (TextView)v.findViewById(R.id.txtCartTotal);
         btnOrder = (Button)v.findViewById(R.id.btnCartOrder);
     }
-    public void FillRecyclerView(View v)
+    private void FillRecyclerView(View v)
     {
         if(Session.getInstance().Cart() != null && Session.getInstance().Cart().Items().size() > 0) {
             ArrayList<CartItemCategory> items = new ArrayList<>();
@@ -75,13 +75,14 @@ public class CartFragment extends Fragment {
             itemsView.setLayoutManager(layoutManager);
         }
     }
-    public void AssignListeners()
+    private void AssignListeners()
     {
         btnOrder.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                OrderItemFragment f = new OrderItemFragment();
-               FragmentTransaction fragmentTransaction = getFragmentManager().beginTransaction();
+                assert getFragmentManager() != null;
+                FragmentTransaction fragmentTransaction = getFragmentManager().beginTransaction();
                fragmentTransaction.replace(R.id.homeContainer, f);
                fragmentTransaction.addToBackStack(null);
                fragmentTransaction.commit();

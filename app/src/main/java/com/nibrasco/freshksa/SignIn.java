@@ -17,8 +17,8 @@ import com.nibrasco.freshksa.Model.User;
 
 public class SignIn extends AppCompatActivity {
 
-    EditText edtPhone, edtPwd;
-    Button btnSignIn;
+    private EditText edtPhone, edtPwd;
+    private Button btnSignIn;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);

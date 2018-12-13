@@ -19,7 +19,7 @@ public class UserInfoFragment extends Fragment {
         // Required empty public constructor
     }
 
-    TextView txtName, txtAddress, txtPhone;
+    private TextView txtName, txtAddress, txtPhone;
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
@@ -38,13 +38,13 @@ public class UserInfoFragment extends Fragment {
         //final View v = getView();
 
     }
-    void LinkControls(View v)
+    private void LinkControls(View v)
     {
         txtName = (TextView)v.findViewById(R.id.txtUserInfoName);
         txtAddress = (TextView)v.findViewById(R.id.txtUserInfoAddress);
         txtPhone = (TextView)v.findViewById(R.id.txtUserInfoPhone);
     }
-    void LoadData(final View v)
+    private void LoadData(final View v)
     {
         Snackbar snackbar = Snackbar.make(v, "Loading Data...", Snackbar.LENGTH_INDEFINITE);
         snackbar.show();

@@ -30,10 +30,10 @@ import java.util.concurrent.TimeUnit;
 public class MapsAdresse extends FragmentActivity implements OnMapReadyCallback {
 
     private GoogleMap mMap;
-    FusedLocationProviderClient providerClient;
-    LocationRequest request;
-    LocationCallback callback;
-    Location myLocation;
+    private FusedLocationProviderClient providerClient;
+    private LocationRequest request;
+    private LocationCallback callback;
+    private Location myLocation;
 
     @TargetApi(Build.VERSION_CODES.M)
     @RequiresApi(api = Build.VERSION_CODES.M)
@@ -44,27 +44,34 @@ public class MapsAdresse extends FragmentActivity implements OnMapReadyCallback 
         // Obtain the SupportMapFragment and get notified when the map is ready to be used.
         SupportMapFragment mapFragment = (SupportMapFragment) getSupportFragmentManager()
                 .findFragmentById(R.id.map);
+        assert mapFragment != null;
         mapFragment.getMapAsync(this);
 
-        BuildRequest();
-        BuildCallback();
+
 
         if (ActivityCompat.checkSelfPermission(this, Manifest.permission.ACCESS_FINE_LOCATION) != PackageManager.PERMISSION_GRANTED
                 && ActivityCompat.checkSelfPermission(this, Manifest.permission.ACCESS_COARSE_LOCATION) != PackageManager.PERMISSION_GRANTED) {
-            requestPermissions(new String[]{Manifest.permission.ACCESS_FINE_LOCATION,
-                    Manifest.permission.ACCESS_COARSE_LOCATION}, 1337);
-            return;
+            requestPermissions(new String[]
+                    {
+                         Manifest.permission.ACCESS_FINE_LOCATION,
+                         Manifest.permission.ACCESS_COARSE_LOCATION
+                    }, 1000);
         }
-
-        providerClient = LocationServices.getFusedLocationProviderClient(this);
-        providerClient.requestLocationUpdates(request, callback, Looper.myLooper());
+        else
+        {
+            BuildRequest();
+            BuildCallback();
+            providerClient = LocationServices.getFusedLocationProviderClient(this);
+            providerClient.requestLocationUpdates(request, callback, Looper.myLooper());
+        }
     }
-    void BuildCallback() {
+    private void BuildCallback() {
         callback = new LocationCallback(){
             @Override
             public void onLocationResult(LocationResult locationResult) {
                 Toast.makeText(MapsAdresse.this, "Callback", Toast.LENGTH_SHORT).show();
                 myLocation = locationResult.getLastLocation();
+
                 if(myLocation != null) {
                     LatLng loc = new LatLng(myLocation.getLatitude(), myLocation.getLongitude());
 
@@ -80,13 +87,13 @@ public class MapsAdresse extends FragmentActivity implements OnMapReadyCallback 
             }
         };
     }
-    void BuildRequest() {
-        request  = new LocationRequest();
-        request.setPriority(LocationRequest.PRIORITY_HIGH_ACCURACY);
-        request.setSmallestDisplacement(10f);
-        request.setInterval(5000);
-        request.setFastestInterval(3000);
-        request.setExpirationTime(TimeUnit.SECONDS.toMillis(100));
+    private void BuildRequest() {
+        request  = new LocationRequest()
+                .setPriority(LocationRequest.PRIORITY_HIGH_ACCURACY)
+                .setSmallestDisplacement(10f)
+                .setInterval(5000)
+                .setFastestInterval(3000)
+                .setExpirationTime(TimeUnit.SECONDS.toMillis(100));
     }
 
     @TargetApi(Build.VERSION_CODES.M)
@@ -106,7 +113,7 @@ public class MapsAdresse extends FragmentActivity implements OnMapReadyCallback 
                         if (ActivityCompat.checkSelfPermission(this, Manifest.permission.ACCESS_FINE_LOCATION) != PackageManager.PERMISSION_GRANTED
                                 && ActivityCompat.checkSelfPermission(this, Manifest.permission.ACCESS_COARSE_LOCATION) != PackageManager.PERMISSION_GRANTED) {
                             requestPermissions(new String[]{Manifest.permission.ACCESS_FINE_LOCATION,
-                                    Manifest.permission.ACCESS_COARSE_LOCATION}, 1337);
+                                    Manifest.permission.ACCESS_COARSE_LOCATION}, 1000);
                             return;
                         }
                         providerClient.requestLocationUpdates(request, callback, Looper.myLooper());

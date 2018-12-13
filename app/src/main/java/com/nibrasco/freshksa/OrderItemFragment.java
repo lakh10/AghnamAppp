@@ -22,15 +22,14 @@ import com.nibrasco.freshksa.Model.ViewPagerItemAdapter;
 public class OrderItemFragment extends Fragment{
 
 
-    EditText edtNotes;
-    TextView txtTotal;
-    Button btnConfirm;
+    private EditText edtNotes;
+    private TextView txtTotal;
+    private Button btnConfirm;
 
-
-    ViewPager itemsView;
-    Toolbar toolbar;
-    TabLayout tabLayout;
-    Cart.eCategory selectedCategory = Cart.eCategory.None;
+    private ViewPager itemsView;
+    private Toolbar toolbar;
+    private TabLayout tabLayout;
+    private Cart.eCategory selectedCategory = Cart.eCategory.None;
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {

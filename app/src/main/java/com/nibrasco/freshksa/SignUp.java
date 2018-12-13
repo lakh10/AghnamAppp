@@ -15,8 +15,8 @@ import com.nibrasco.freshksa.Model.User;
 
 public class SignUp extends AppCompatActivity {
 
-    EditText edtPhone, edtName, edtPwd;
-    Button btnSignUp;
+    private EditText edtPhone, edtName, edtPwd;
+    private Button btnSignUp;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);

@@ -43,12 +43,12 @@ public class CamelFragment extends Fragment {
     }
 
 
-    void LinkControls(View v)
+    private void LinkControls(View v)
     {
         spWeight = (Spinner)v.findViewById(R.id.spWeight);
         edtQuantity = (EditText)v.findViewById(R.id.edtQuantity);
     }
-    void LinkListeners()
+    private void LinkListeners()
     {
         spWeight.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
             @Override

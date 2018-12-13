@@ -15,10 +15,10 @@ import com.nibrasco.freshksa.Model.Session;
  */
 public class SheepFragment extends Fragment {
 
-    Spinner spSlicing, spWeight, spPackaging;
-    EditText edtQuantity;
-    RadioGroup rdGrpIntestine;
-    Boolean IntestineValue;
+    private Spinner spSlicing, spWeight, spPackaging;
+    private EditText edtQuantity;
+    private RadioGroup rdGrpIntestine;
+    private Boolean IntestineValue;
     public SheepFragment() {
         Session.getInstance().Item().setTotal(Session.getInstance().Item().getDefaultPrice());
     }
@@ -27,6 +27,7 @@ public class SheepFragment extends Fragment {
         super.onActivityCreated(savedInstanceState);
         final View v = getView();
         LinkControls(v);
+        assert v != null;
         LoadContent(v);
         LinkListeners();
     }
@@ -37,7 +38,7 @@ public class SheepFragment extends Fragment {
     }
 
 
-    void LinkControls(View v)
+    private void LinkControls(View v)
     {
         spSlicing = (Spinner)v.findViewById(R.id.spSlicing);
         spWeight = (Spinner)v.findViewById(R.id.spWeight);
@@ -45,7 +46,7 @@ public class SheepFragment extends Fragment {
         edtQuantity = (EditText)v.findViewById(R.id.edtQuantity);
         rdGrpIntestine = (RadioGroup)v.findViewById(R.id.rdGrpIntestine);
     }
-    void LinkListeners()
+    private void LinkListeners()
     {
         rdGrpIntestine.setOnCheckedChangeListener(new RadioGroup.OnCheckedChangeListener() {
             @Override
