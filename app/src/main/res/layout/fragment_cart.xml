@@ -42,7 +42,7 @@
                 android:textColor="#ffffff"
                 android:layout_height="48dp"
                 android:background="#1a7d41"
-                android:id="@+id/btnCartOrder"
+                android:id="@+id/btnItemOrder"
                 android:layout_alignParentBottom="true"
                 android:layout_centerInParent="true"/>
 

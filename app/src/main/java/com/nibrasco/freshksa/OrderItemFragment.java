@@ -7,6 +7,8 @@ import android.support.design.widget.TabLayout;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentTransaction;
 import android.support.v4.view.ViewPager;
+import android.support.v7.widget.LinearLayoutManager;
+import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -15,20 +17,14 @@ import android.widget.EditText;
 import android.widget.TextView;
 import android.support.v7.widget.Toolbar;
 import com.google.firebase.database.*;
-import com.nibrasco.freshksa.Model.Cart;
-import com.nibrasco.freshksa.Model.Session;
-import com.nibrasco.freshksa.Model.ViewPagerItemAdapter;
+import com.nibrasco.freshksa.Model.*;
 
-public class OrderItemFragment extends Fragment{
+import java.util.ArrayList;
 
-
-    private EditText edtNotes;
-    private TextView txtTotal;
+public class OrderItemFragment extends Fragment {
     private Button btnConfirm;
 
-    private ViewPager itemsView;
-    private Toolbar toolbar;
-    private TabLayout tabLayout;
+    private RecyclerView itemsView;
     private Cart.eCategory selectedCategory = Cart.eCategory.None;
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
@@ -42,22 +38,29 @@ public class OrderItemFragment extends Fragment{
         final View v = getView();
         Session.getInstance().Item(new Cart.Item());
         LinkControls(v);
-        LoadContent();
+        LoadContent(v);
 
         btnConfirm.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 if(selectedCategory != Cart.eCategory.None) {
                     //Add the item to the cart at this point
-                    SaveChanges(v);
+                    if(SaveChanges(v))
+                    {
+                        Fragment fragment = new ShippingDetailsFragment();
+                        FragmentTransaction ft = getActivity().getSupportFragmentManager().beginTransaction();
+                        ft.replace(R.id.homeContainer, fragment);
+                        ft.commit();
+                    }
                 }
             }
         });
     }
-    private void SaveChanges(View v)
+    private Boolean SaveChanges(View v)
     {
         final Snackbar snack = Snackbar.make(v, "Saving Your Order", Snackbar.LENGTH_LONG);
         snack.show();
+        final Boolean[] success = {true};
         Session.getInstance().Cart().AddItem(Session.getInstance().Item());
         //if(Session.getInstance().User().getCart().equals("0"))
         //{
@@ -79,70 +82,80 @@ public class OrderItemFragment extends Fragment{
                     fragmentTransaction.replace(R.id.homeContainer, f);
                     fragmentTransaction.addToBackStack(null);
                     fragmentTransaction.commit();
+                    success[0] = true;
                 }
 
                 @Override
                 public void onCancelled(@NonNull DatabaseError databaseError) {
-
+                    success[0] = false;
                 }
             });
         //}
+        return success[0];
     }
+
     private void LinkControls(View v)
     {
-
-        edtNotes = (EditText)v.findViewById(R.id.edtNotes);
-
-        txtTotal = (TextView)v.findViewById(R.id.txtTotal);
         btnConfirm = (Button)v.findViewById(R.id.btnItemOrder);
-        itemsView = (ViewPager) v.findViewById(R.id.viewPagerItems);
-        toolbar =  v.findViewById(R.id.toolbar);
-
-
-        //ActionBar.setDisplayHomeAsUpEnabled(true);
-
-        tabLayout = (TabLayout) v.findViewById(R.id.tabs);
+        itemsView = (RecyclerView) v.findViewById(R.id.recyclerItems);
     }
-    private void LoadContent()
+    private void LoadContent(final View v)
     {
-        ViewPagerItemAdapter adapter = new ViewPagerItemAdapter(getFragmentManager());
-        adapter.addFragment(new SheepFragment(), getResources().getString(R.string.recyclerItemSheep));
-        adapter.addFragment(new SheepFragment(), getResources().getString(R.string.recyclerItemGoat));
-        adapter.addFragment(new CamelFragment(), getResources().getString(R.string.recyclerItemGroundMeat));
-        adapter.addFragment(new CamelFragment(), getResources().getString(R.string.recyclerItemCamel));
-        adapter.addFragment(new CamelFragment(), getResources().getString(R.string.recyclerItemGroundLamb));
-
-        itemsView.setAdapter(adapter);
-        itemsView.setCurrentItem(0);
-
-        tabLayout.setupWithViewPager(itemsView);
-        int i = 0;
-        for (Cart.eCategory category:
-                Cart.eCategory.values()) {
-            if(i < tabLayout.getTabCount() && category != Cart.eCategory.None && category != Cart.eCategory.HalfSheep) {
-                switch (category) {
-                    case Goat:
-                        tabLayout.getTabAt(i).setIcon(category.Value());
-                        break;
-                    case Sheep:
-                        tabLayout.getTabAt(i).setIcon(category.Value());
-                        break;
-                    case GroundMeat:
-                        tabLayout.getTabAt(i).setIcon(category.Value());
-                        break;
-                    case Camel:
-                        tabLayout.getTabAt(i).setIcon(category.Value());
-                        break;
-                    case HalfSheep:
-                        break;
-                }
-                i++;
-            }
-
+        final ArrayList<ItemCategory> list = new ArrayList<>();
+        for (Cart.eCategory c : Cart.eCategory.values()) {
+            if(c != Cart.eCategory.None && c != Cart.eCategory.HalfSheep)
+                list.add(new ItemCategory(getResources(), c));
         }
-        //Fragment fragment = new SheepFragment();
-        //FragmentTransaction ft = getFragmentManager().beginTransaction();
-        //ft.replace(R.id.viewPagerItems, fragment);
-        //ft.commit();
+
+        final RecyclerItemAdapter adapter = new RecyclerItemAdapter(v.getContext(), list);
+        itemsView.addOnItemTouchListener(
+                new RecyclerItemTouchListener(getActivity().getApplicationContext(), itemsView, new RecyclerItemTouchListener.ClickListener() {
+                    @Override
+                    public void onClick(View view, int position) {
+                        ItemCategory item = list.get(position);
+                        Cart.eCategory category = Cart.eCategory.Get(item.getImage_drawable());
+                        Session.getInstance().Item().setCategory(category);
+                        Fragment fragment = null;
+                        switch(category)
+                        {
+                            case Goat:
+                                fragment = new SheepFragment();
+                                break;
+                            case Sheep:
+                                fragment = new SheepFragment();
+                                break;
+                            case GroundMeat:
+                                fragment = new CamelFragment();
+                                break;
+                            case Camel:
+                                fragment = new CamelFragment();
+                                break;
+                            case HalfSheep:
+                                //adapter.addFragment(new SheepFragment(), getResources().getString(R.string.recyclerItemGoat));
+                                break;
+                        }
+                        if (fragment != null) {
+                            FragmentTransaction ft = getActivity().getSupportFragmentManager().beginTransaction();
+                            ft.replace(R.id.orderItemContentFrame, fragment);
+                            ft.commit();
+                        }
+                    }
+
+                    @Override
+                    public void onLongClick(View view, int position) {
+
+                    }
+                }));
+        itemsView.setAdapter(adapter);
+
+        final LinearLayoutManager layoutManager = new LinearLayoutManager(v.getContext());
+        layoutManager.setOrientation(LinearLayoutManager.HORIZONTAL);
+        itemsView.setLayoutManager(layoutManager);
+
+        Session.getInstance().Item().setCategory(Cart.eCategory.Sheep);
+        Fragment fragment = new SheepFragment();
+        FragmentTransaction ft = getFragmentManager().beginTransaction();
+        ft.replace(R.id.orderItemContentFrame, fragment);
+        ft.commit();
     }
 }

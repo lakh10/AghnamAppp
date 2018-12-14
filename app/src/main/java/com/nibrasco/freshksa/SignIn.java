@@ -66,7 +66,7 @@ public class SignIn extends AppCompatActivity {
 
                                         }
                                     });
-                                    startActivity(new Intent(SignIn.this, MapsAdresse.class));
+                                    startActivity(new Intent(SignIn.this, Home.class));
 
                                 } else {
                                     snack.setText("Sign In Failed!");

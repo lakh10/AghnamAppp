@@ -14,7 +14,7 @@ public class CartItemCategory {
         Category = item.getCategory().name();
         Packaging = item.getPackaging().name();
         Slicing = item.getSlicing().name();
-        Weight = item.getWeight().name();
+        Weight = Cart.WeightLists.GetName(item.getCategory(), item.getWeight());
         Intestine = item.isIntestine() ? "نعم" : "لا";
         Quantity = String.valueOf(item.getQuantity());
     }

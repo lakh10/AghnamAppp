@@ -57,7 +57,7 @@ public class CartFragment extends Fragment {
     {
         itemsView = (RecyclerView)v.findViewById(R.id.recyclerCartItems);
         txtCartTotal = (TextView)v.findViewById(R.id.txtCartTotal);
-        btnOrder = (Button)v.findViewById(R.id.btnCartOrder);
+        btnOrder = (Button)v.findViewById(R.id.btnItemOrder);
     }
     private void FillRecyclerView(View v)
     {

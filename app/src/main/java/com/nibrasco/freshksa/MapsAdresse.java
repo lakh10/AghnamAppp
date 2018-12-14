@@ -1,7 +1,9 @@
 package com.nibrasco.freshksa;
 
 import android.Manifest;
+import android.annotation.SuppressLint;
 import android.annotation.TargetApi;
+import android.content.Context;
 import android.content.pm.PackageManager;
 import android.location.*;
 import android.location.LocationListener;
@@ -14,6 +16,7 @@ import android.support.v4.app.ActivityCompat;
 import android.support.v4.app.FragmentActivity;
 import android.os.Bundle;
 
+import android.support.v4.content.ContextCompat;
 import android.util.Log;
 import android.widget.Toast;
 import com.google.android.gms.location.*;
@@ -27,13 +30,16 @@ import java.io.IOException;
 import java.util.Locale;
 import java.util.concurrent.TimeUnit;
 
-public class MapsAdresse extends FragmentActivity implements OnMapReadyCallback {
+public class MapsAdresse extends FragmentActivity implements OnMapReadyCallback, LocationListener {
 
     private GoogleMap mMap;
     private FusedLocationProviderClient providerClient;
     private LocationRequest request;
     private LocationCallback callback;
     private Location myLocation;
+    private long UPDATE_INTERVAL = 10 * 1000;  /* 10 secs */
+    private long FASTEST_INTERVAL = 2000; /* 2 sec */
+
 
     @TargetApi(Build.VERSION_CODES.M)
     @RequiresApi(api = Build.VERSION_CODES.M)
@@ -42,28 +48,13 @@ public class MapsAdresse extends FragmentActivity implements OnMapReadyCallback 
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_maps_adresse);
         // Obtain the SupportMapFragment and get notified when the map is ready to be used.
-        SupportMapFragment mapFragment = (SupportMapFragment) getSupportFragmentManager()
-                .findFragmentById(R.id.map);
-        assert mapFragment != null;
-        mapFragment.getMapAsync(this);
-
-
-
-        if (ActivityCompat.checkSelfPermission(this, Manifest.permission.ACCESS_FINE_LOCATION) != PackageManager.PERMISSION_GRANTED
-                && ActivityCompat.checkSelfPermission(this, Manifest.permission.ACCESS_COARSE_LOCATION) != PackageManager.PERMISSION_GRANTED) {
-            requestPermissions(new String[]
-                    {
-                         Manifest.permission.ACCESS_FINE_LOCATION,
-                         Manifest.permission.ACCESS_COARSE_LOCATION
-                    }, 1000);
-        }
-        else
-        {
-            BuildRequest();
-            BuildCallback();
-            providerClient = LocationServices.getFusedLocationProviderClient(this);
-            providerClient.requestLocationUpdates(request, callback, Looper.myLooper());
-        }
+        //SupportMapFragment mapFragment = (SupportMapFragment) getSupportFragmentManager()
+        //        .findFragmentById(R.id.map);
+        //assert mapFragment != null;
+        //mapFragment.getMapAsync(this);
+        MapView mapView = findViewById(R.id.map);
+        mapView.getMapAsync(this);
+        startLocationUpdates();
     }
     private void BuildCallback() {
         callback = new LocationCallback(){
@@ -95,6 +86,43 @@ public class MapsAdresse extends FragmentActivity implements OnMapReadyCallback 
                 .setFastestInterval(3000)
                 .setExpirationTime(TimeUnit.SECONDS.toMillis(100));
     }
+    private boolean checkPermissions() {
+        if (ContextCompat.checkSelfPermission(this,
+                Manifest.permission.ACCESS_FINE_LOCATION) == PackageManager.PERMISSION_GRANTED) {
+            return true;
+        } else {
+            requestPermissions();
+            return false;
+        }
+    }
+    private void requestPermissions() {
+        ActivityCompat.requestPermissions(this,
+                new String[]{Manifest.permission.ACCESS_FINE_LOCATION},
+                1000);
+    }
+
+    @SuppressLint("MissingPermission")
+    protected void startLocationUpdates() {
+
+        // Create the location request to start receiving updates
+        BuildRequest();
+
+        // Create LocationSettingsRequest object using location request
+        LocationSettingsRequest.Builder builder = new LocationSettingsRequest.Builder();
+        builder.addLocationRequest(request);
+        LocationSettingsRequest locationSettingsRequest = builder.build();
+
+        // Check whether location settings are satisfied
+        // https://developers.google.com/android/reference/com/google/android/gms/location/SettingsClient
+        SettingsClient settingsClient = LocationServices.getSettingsClient(this);
+        settingsClient.checkLocationSettings(locationSettingsRequest);
+
+        BuildCallback();
+        // new Google API SDK v11 uses getFusedLocationProviderClient(this)
+        LocationServices.getFusedLocationProviderClient(this).requestLocationUpdates(request, callback,
+                Looper.myLooper());
+    }
+
 
     @TargetApi(Build.VERSION_CODES.M)
     @RequiresApi(api = Build.VERSION_CODES.M)
@@ -147,10 +175,11 @@ public class MapsAdresse extends FragmentActivity implements OnMapReadyCallback 
                 //mMap.setMyLocationEnabled(true);
                 //mMap.setOnMyLocationChangeListener(this);
                 requestPermissions(new String[]{Manifest.permission.ACCESS_FINE_LOCATION,
-                        Manifest.permission.ACCESS_COARSE_LOCATION}, 1337);
+                        Manifest.permission.ACCESS_COARSE_LOCATION}, 1000);
                 if (PackageManager.PERMISSION_GRANTED == checkSelfPermission(Manifest.permission.ACCESS_FINE_LOCATION)) {
                     try {
-                        mMap.getUiSettings().setMyLocationButtonEnabled(true);
+
+
                     } catch (SecurityException e) {
                         Log.d("Err", e.getMessage());
 
@@ -159,5 +188,27 @@ public class MapsAdresse extends FragmentActivity implements OnMapReadyCallback 
             }
 
         }
+    }
+
+    @Override
+    public void onLocationChanged(Location location) {
+        LatLng latLng = new LatLng(location.getLatitude(), location.getLongitude());
+        CameraUpdate cameraUpdate = CameraUpdateFactory.newLatLngZoom(latLng, 10);
+        mMap.animateCamera(cameraUpdate);
+    }
+
+    @Override
+    public void onStatusChanged(String provider, int status, Bundle extras) {
+
+    }
+
+    @Override
+    public void onProviderEnabled(String provider) {
+
+    }
+
+    @Override
+    public void onProviderDisabled(String provider) {
+
     }
 }

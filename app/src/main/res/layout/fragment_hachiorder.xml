@@ -33,12 +33,50 @@
             android:id="@+id/spWeight"
             android:layout_alignParentTop="true" android:layout_alignEnd="@+id/edtQuantity"
             android:layout_marginTop="160dp"/>
-    <EditText
-            android:layout_width="340dp"
-            android:layout_height="49dp"
-            android:inputType="textPersonName"
-            android:text="ادخل وصف"
-            android:ems="10"
-            android:id="@+id/edtNotes" android:layout_centerHorizontal="true" android:layout_alignParentTop="true"
-            android:layout_marginTop="196dp"/>
+    <LinearLayout
+
+            android:orientation="vertical"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_alignParentStart="true"
+            android:layout_alignParentTop="true" android:layout_marginTop="199dp">
+        <EditText
+                android:id="@+id/edtNotes"
+                android:layout_width="match_parent"
+                android:layout_height="100dp"
+                android:gravity="end"
+                android:background="#ffffff"
+                android:layout_marginTop="10dp"
+                android:paddingLeft="20dp"
+                android:paddingRight="20dp"/>
+        <RelativeLayout
+                android:orientation="horizontal"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="5dp"
+                android:paddingRight="10dp"
+                android:paddingLeft="10dp">
+
+            <TextView
+                    android:text="0.0"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:textColor="#32a65b"
+                    android:id="@+id/txtTotalItem"
+                    android:gravity="center"
+                    android:layout_alignParentStart="true"
+                    android:layout_alignParentTop="true"
+                    android:layout_marginStart="128dp"/>
+
+            <TextView
+                    android:text="@string/Total"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:textColor="#32a65b"
+                    android:gravity="center" android:layout_alignParentEnd="true"
+                    android:layout_alignParentTop="true" android:layout_marginEnd="114dp"/>
+
+
+        </RelativeLayout>
+    </LinearLayout>
 </RelativeLayout>

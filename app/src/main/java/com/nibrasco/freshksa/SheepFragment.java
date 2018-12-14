@@ -3,6 +3,8 @@ package com.nibrasco.freshksa;
 
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
+import android.text.Editable;
+import android.text.TextWatcher;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -10,26 +12,27 @@ import android.widget.*;
 import com.nibrasco.freshksa.Model.Cart;
 import com.nibrasco.freshksa.Model.Session;
 
+import java.util.ArrayList;
+
 /**
  * A simple {@link Fragment} subclass.
  */
 public class SheepFragment extends Fragment {
 
     private Spinner spSlicing, spWeight, spPackaging;
-    private EditText edtQuantity;
+    private TextView txtTotal;
+    private EditText edtQuantity, edtNotes;
     private RadioGroup rdGrpIntestine;
     private Boolean IntestineValue;
+    Cart.Item currentItem;
     public SheepFragment() {
-        Session.getInstance().Item().setTotal(Session.getInstance().Item().getDefaultPrice());
+        currentItem = Session.getInstance().Item();
+        currentItem.setTotal(Session.getInstance().Item().getDefaultPrice());
     }
 
     public void onActivityCreated(Bundle savedInstanceState) {
         super.onActivityCreated(savedInstanceState);
-        final View v = getView();
-        LinkControls(v);
-        assert v != null;
-        LoadContent(v);
-        LinkListeners();
+
     }
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
@@ -37,6 +40,13 @@ public class SheepFragment extends Fragment {
         return inflater.inflate(R.layout.fragment_naemiorder, container, false);
     }
 
+    @Override
+    public void onStart() {
+        super.onStart();
+        final View v = getView();
+        assert v != null;
+        LoadContent(v);
+    }
 
     private void LinkControls(View v)
     {
@@ -45,6 +55,8 @@ public class SheepFragment extends Fragment {
         spPackaging = (Spinner)v.findViewById(R.id.spPackaging);
         edtQuantity = (EditText)v.findViewById(R.id.edtQuantity);
         rdGrpIntestine = (RadioGroup)v.findViewById(R.id.rdGrpIntestine);
+        edtNotes = (EditText)v.findViewById(R.id.edtNotes);
+        txtTotal = (TextView)v.findViewById(R.id.txtTotalItem);
     }
     private void LinkListeners()
     {
@@ -59,17 +71,16 @@ public class SheepFragment extends Fragment {
                         IntestineValue = false;
                         break;
                 }
+                //No specific pricing
             }
         });
         spPackaging.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
             @Override
             public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
-                if(position != spPackaging.getSelectedItemPosition())
-                    Session.getInstance().Item().setPackaging(
-                        Cart.ePackaging.Get((
-                                (Cart.ePackaging)(parent.getItemAtPosition(position)))
-                                .Value())
-                );
+                if(position != spPackaging.getSelectedItemPosition()) {
+                    Session.getInstance().Item().setPackaging((int)(parent.getItemAtPosition(position)));
+                }
+                //No specific pricing
             }
 
             @Override
@@ -80,12 +91,9 @@ public class SheepFragment extends Fragment {
         spWeight.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
             @Override
             public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
-                if(position != spWeight.getSelectedItemPosition())
-                    Session.getInstance().Item().setWeight(
-                        Cart.eWeight.Get((
-                                (Cart.eWeight)(parent.getItemAtPosition(position)))
-                                .Value())
-                );
+                if(position != spWeight.getSelectedItemPosition()) {
+                    Session.getInstance().Item().setWeight((int)(parent.getItemAtPosition(position)));
+                }
             }
 
             @Override
@@ -97,11 +105,7 @@ public class SheepFragment extends Fragment {
             @Override
             public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
                 if(position != spSlicing.getSelectedItemPosition()) {
-                    Session.getInstance().Item().setSlicing(
-                        Cart.eSlicing.Get((
-                                (Cart.eSlicing)(parent.getItemAtPosition(position)))
-                                .Value())
-                );
+                    Session.getInstance().Item().setSlicing((int)parent.getItemAtPosition(position));
                 }
             }
 
@@ -110,19 +114,39 @@ public class SheepFragment extends Fragment {
 
             }
         });
+        edtNotes.addTextChangedListener(new TextWatcher() {
+            @Override
+            public void beforeTextChanged(CharSequence s, int start, int count, int after) {
+
+            }
+
+            @Override
+            public void onTextChanged(CharSequence s, int start, int before, int count) {
+
+            }
+
+            @Override
+            public void afterTextChanged(Editable s) {
+                Session.getInstance().Item().setNotes(s.toString());
+            }
+        });
     }
     private void LoadContent(View v)
     {
+        LinkControls(v);
+
         ArrayAdapter adapter = new ArrayAdapter<>(v.getContext(), android.R.layout.simple_spinner_item, Cart.eSlicing.values());
         adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
         spSlicing.setAdapter(adapter);
         int spinnerPosition = adapter.getPosition(Cart.eSlicing.None);
         spSlicing.setSelection(spinnerPosition);
 
-        adapter = new ArrayAdapter<>(v.getContext(), android.R.layout.simple_spinner_item, Cart.eWeight.values());
+
+        ArrayList<String> list = Cart.WeightLists.GetNames(Session.getInstance().Item().getCategory());
+        adapter = new ArrayAdapter<>(v.getContext(), android.R.layout.simple_spinner_item, list);
         adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
         spWeight.setAdapter(adapter);
-        spinnerPosition = adapter.getPosition(Cart.eWeight.None);
+        spinnerPosition = adapter.getPosition(0);
         spWeight.setSelection(spinnerPosition);
 
 
@@ -131,5 +155,6 @@ public class SheepFragment extends Fragment {
         spPackaging.setAdapter(adapter);
         spinnerPosition = adapter.getPosition(Cart.ePackaging.None);
         spPackaging.setSelection(spinnerPosition);
+        LinkListeners();
     }
 }

@@ -7,12 +7,12 @@ import android.support.v4.app.Fragment;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.AdapterView;
-import android.widget.ArrayAdapter;
-import android.widget.EditText;
-import android.widget.Spinner;
+import android.widget.*;
 import com.nibrasco.freshksa.Model.Cart;
 import com.nibrasco.freshksa.Model.Session;
+
+import java.util.ArrayList;
+import java.util.Map;
 
 /**
  * A simple {@link Fragment} subclass.
@@ -20,33 +20,40 @@ import com.nibrasco.freshksa.Model.Session;
 public class CamelFragment extends Fragment {
 
     Spinner spWeight;
-    EditText edtQuantity;
+    private TextView txtTotal;
+    private EditText edtQuantity, edtNotes;
     public CamelFragment() {
-        // Required empty public constructor
+        Session.getInstance().Item().setWeight(0);
         Session.getInstance().Item().setIntestine(false);
-        Session.getInstance().Item().setSlicing(Cart.eSlicing.None);
-        Session.getInstance().Item().setPackaging(Cart.ePackaging.None);
+        Session.getInstance().Item().setSlicing(Cart.eSlicing.None.Value());
+        Session.getInstance().Item().setPackaging(Cart.ePackaging.None.Value());
         Session.getInstance().Item().setTotal(Session.getInstance().Item().getDefaultPrice());
     }
 
     public void onActivityCreated(Bundle savedInstanceState) {
         super.onActivityCreated(savedInstanceState);
-        final View v = getView();
-        LinkControls(v);
-        LoadContent(v);
-        LinkListeners();
+
     }
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
+
         return inflater.inflate(R.layout.fragment_hachiorder, container, false);
     }
 
+    @Override
+    public void onStart() {
+        super.onStart();
+        final View v = getView();
+        LoadContent(v);
+    }
 
     private void LinkControls(View v)
     {
         spWeight = (Spinner)v.findViewById(R.id.spWeight);
         edtQuantity = (EditText)v.findViewById(R.id.edtQuantity);
+        edtNotes = (EditText)v.findViewById(R.id.edtNotes);
+        txtTotal = (TextView)v.findViewById(R.id.txtTotalItem);
     }
     private void LinkListeners()
     {
@@ -54,13 +61,9 @@ public class CamelFragment extends Fragment {
             @Override
             public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
                 if(position != spWeight.getSelectedItemPosition())
-                Session.getInstance().Item().setWeight(
-                        Cart.eWeight.Get((
-                                (Cart.eWeight)(parent.getItemAtPosition(position)))
-                                .Value())
+                Session.getInstance().Item().setWeight(((int)(parent.getItemAtPosition(position)))
                 );
             }
-
             @Override
             public void onNothingSelected(AdapterView<?> parent) {
 
@@ -69,11 +72,16 @@ public class CamelFragment extends Fragment {
     }
     private void LoadContent(View v)
     {
-        ArrayAdapter adapter = new ArrayAdapter<>(v.getContext(), android.R.layout.simple_spinner_item, Cart.eWeight.values());
+        LinkControls(v);
+
+        ArrayList<Cart.WeightLists.Weight> list = Cart.WeightLists.GetList(Session.getInstance().Item().getCategory());
+        ArrayAdapter adapter = new ArrayAdapter<>(v.getContext(), android.R.layout.simple_spinner_item, list);
         adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
         spWeight.setAdapter(adapter);
-        int spinnerPosition = adapter.getPosition(Cart.eWeight.None);
+        int spinnerPosition = adapter.getPosition(0);
         spWeight.setSelection(spinnerPosition);
+
+        LinkListeners();
     }
 }
 

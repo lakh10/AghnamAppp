@@ -5,11 +5,85 @@ import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseReference;
 import com.nibrasco.freshksa.R;
 
-import java.util.ArrayList;
-import java.util.List;
+import java.util.*;
 
 public class Cart {
 
+    public static class WeightLists
+    {
+        public static class Weight
+        {
+            Float Price;
+            String Name;
+
+            public Weight(Float price, String name) {
+                Price = price;
+                Name = name;
+            }
+        }
+        private static ArrayList<Weight> Weights;
+
+        public static String GetName(eCategory Category, int index)
+        {
+            Weights = GetList(Category);
+            if(index < Weights.size())
+                return Weights.get(index).Name;
+            return "NaN";
+        }
+        public static float GetPrice(eCategory Category, int index)
+        {
+            Weights = GetList(Category);
+            if (index < Weights.size())
+                return Weights.get(index).Price;
+            return -1;
+        }
+
+        public static ArrayList<Weight> GetList(eCategory Category){
+            Weights = new ArrayList<>();
+            switch (Category){
+                case HalfSheep:
+                    Weights.add( new Weight(660.0f, "X"));
+                    break;
+                case Sheep:
+                    Weights.add( new Weight(950.0f, "A"));
+                    Weights.add( new Weight(1030.0f, "B"));
+                    Weights.add( new Weight(1120.0f, "C"));
+                    Weights.add( new Weight(1210.0f, "D"));
+                    Weights.add( new Weight(1290.0f, "E"));
+                    Weights.add( new Weight(1370.0f, "F"));
+                    break;
+                case Goat:
+                    Weights.add( new Weight(850.0f, "A"));
+                    Weights.add( new Weight(920.0f, "B"));
+                    Weights.add( new Weight(990.0f, "C"));
+                    break;
+                case Camel:
+                    Weights.add( new Weight(400.0f, "A"));
+                    Weights.add( new Weight(600.0f, "B"));
+                    Weights.add( new Weight(800.0f, "C"));
+                    Weights.add( new Weight(950.0f, "D"));
+                    break;
+                case GroundMeat:
+                    Weights.add( new Weight(400.0f, "A"));
+                    Weights.add( new Weight(430.0f, "B"));
+                    break;
+                default:
+
+            }
+            return Weights;
+        }
+
+        public static ArrayList<String> GetNames(eCategory Category)
+        {
+            ArrayList<String> list = new ArrayList<>();
+            Weights = GetList(Category);
+            for (Weight w:
+                 Weights) {
+                list.add(w.Name);
+            }
+            return list;
+        }
+    }
     public enum eWeight
     {
         None(-1),
@@ -34,6 +108,26 @@ public class Cart {
         }
     }
 
+    public enum eTime
+    {
+        Noon(0),
+        AfterNoon(1),
+        Evening(2);
+        private final int value;
+        eTime(int value) {
+            this.value = value;
+        }
+
+        public int Value() {
+            return value;
+        }
+        public static eTime Get(int value){
+            for(eTime t : values()){
+                if(t.value == value) return t;
+            }
+            return Noon;
+        }
+    }
     public enum eSlicing
     {
         None(0),
@@ -111,15 +205,15 @@ public class Cart {
         private String Notes = "";
         private eSlicing Slicing = eSlicing.None;
         private ePackaging Packaging = ePackaging.None;
-        private eWeight Weight = eWeight.ExtraSmall;
+        private int Weight = -1;
         private float Total = 0.0f;
 
         public eCategory getCategory() {
             return Category;
         }
 
-        public void setCategory(eCategory category) {
-            Category = category;
+        public void setCategory(int category) {
+            Category = eCategory.Get(category);
         }
 
         public int getQuantity() {
@@ -150,24 +244,25 @@ public class Cart {
             return Slicing;
         }
 
-        public void setSlicing(eSlicing slicing) {
-            Slicing = slicing;
+        public void setSlicing(int slicing) {
+            Slicing = eSlicing.Get(slicing);
         }
 
         public ePackaging getPackaging() {
             return Packaging;
         }
 
-        public void setPackaging(ePackaging packaging) {
-            Packaging = packaging;
+        public void setPackaging(int packaging) {
+            Packaging = ePackaging.Get(packaging);
         }
 
-        public eWeight getWeight() {
+        public int getWeight() {
             return Weight;
         }
 
-        public void setWeight(eWeight weight) {
-            Weight = weight;
+        public void setWeight(int weightIndex) {
+            Weight = weightIndex;
+            Total = WeightLists.GetPrice(Category, weightIndex);
         }
 
         public float getTotal() {
@@ -202,19 +297,6 @@ public class Cart {
 
         }
 
-        //public Item(eCategory category, int quantity, boolean intestine,
-        //            String notes, eSlicing slicing, ePackaging packaging,
-        //            eWeight weight, float total) {
-        //    Category = category;
-        //    Quantity = quantity;
-        //    Intestine = intestine;
-        //    Notes = notes;
-        //    Slicing = slicing;
-        //    Packaging = packaging;
-        //    Weight = weight;
-        //    Total = total;
-        //}
-
         public Item(DataSnapshot itemSnap)
         {
             Category = eCategory.Get(Integer.parseInt(itemSnap.getKey()));
@@ -224,7 +306,7 @@ public class Cart {
             Packaging  = ePackaging.Get(Integer.parseInt(itemSnap.child("Packaging").getValue().toString()));
             Quantity = Integer.parseInt(itemSnap.child("Quantity").getValue().toString());
             Slicing = eSlicing.Get(Integer.parseInt(itemSnap.child("Slicing").getValue().toString()));
-            Weight = eWeight.Get(Integer.parseInt(itemSnap.child("Weight").getValue().toString()));
+            Weight = Integer.parseInt(itemSnap.child("Weight").getValue().toString());
         }
         public void MapToDbRef(DatabaseReference itemsRef)
         {
@@ -235,7 +317,7 @@ public class Cart {
             itemRef.child("Quantity").setValue(Quantity);
             itemRef.child("Slicing").setValue(Slicing.value);
             itemRef.child("Total").setValue(Total);
-            itemRef.child("Weight").setValue(Weight.value);
+            itemRef.child("Weight").setValue(Weight);
         }
 
         public String ToString()
@@ -244,13 +326,14 @@ public class Cart {
                     + "\nQuantity : " +  Quantity
                     + "\nPackaging : " + Packaging.value
                     + "\nSlicing : " + Slicing.value
-                    + "\nWeight : " + Weight.value
+                    + "\nWeight : " + WeightLists.GetName(Category, Weight)
                     + "\nNotes : " + Notes
                     + "\nTotal : " + Total;
         }
 
     }
 
+    private eTime TimeOfDelivery;
     private String Address;
     private List<Item> Items;
 
@@ -261,6 +344,15 @@ public class Cart {
     {
         Address += address.getLocality() + " " + address.getCountryName();
     }
+
+    public eTime getTimeOfDelivery() {
+        return TimeOfDelivery;
+    }
+
+    public void setTimeOfDelivery(int TimeOfDelivery) {
+        this.TimeOfDelivery = eTime.Get(TimeOfDelivery);
+    }
+
     public Item GetItem(int index)
     {
         return Items.get(index);
@@ -281,11 +373,13 @@ public class Cart {
 
     public Cart() {
         Address = "N/A";
+        TimeOfDelivery = eTime.Noon;
         Items = new ArrayList<Item>();
     }
 
     public Cart(String address) {
         Address = address;
+        TimeOfDelivery = eTime.Noon;
         Items = new ArrayList<Item>();
     }
 
@@ -298,6 +392,7 @@ public class Cart {
     public Cart(DataSnapshot cart)
     {
         Address = cart.child("Address").getValue(String.class);
+        TimeOfDelivery = eTime.Get(Integer.parseInt(cart.child("TimeOfDelivery").getValue().toString()));
         Items = new ArrayList<Item>();
         if(cart.child("Items").exists() || cart.child("Items").hasChildren())
         {
@@ -314,6 +409,7 @@ public class Cart {
     public void MapToDbRef(DatabaseReference cartRef)
     {
         cartRef.child("Address").setValue(Address);
+        cartRef.child("TimeOfDelivery").setValue(TimeOfDelivery.Value());
         if(Items.size() > 0){
             DatabaseReference itemsRef = cartRef.child("Items");
             for (Item item : Items) {
