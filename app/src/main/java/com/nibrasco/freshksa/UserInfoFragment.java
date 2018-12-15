@@ -21,7 +21,7 @@ public class UserInfoFragment extends Fragment {
 
     private TextView txtName, txtAddress, txtPhone;
     @Override
-    public View onCreateView(LayoutInflater inflater, ViewGroup container,
+    public View onCreateView(@NonNull LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
 
         return inflater.inflate(R.layout.fragment_userprofil, container, false);
@@ -46,6 +46,7 @@ public class UserInfoFragment extends Fragment {
     }
     private void LoadData(final View v)
     {
+        // TODO: insert this into message var below -> getResources().getString(R.string.msgLoading)
         Snackbar snackbar = Snackbar.make(v, "Loading Data...", Snackbar.LENGTH_INDEFINITE);
         snackbar.show();
         User usr = Session.getInstance().User();

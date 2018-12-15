@@ -25,7 +25,6 @@ public class OrderItemFragment extends Fragment {
     private Button btnConfirm;
 
     private RecyclerView itemsView;
-    private Cart.eCategory selectedCategory = Cart.eCategory.None;
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
@@ -43,7 +42,7 @@ public class OrderItemFragment extends Fragment {
         btnConfirm.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                if(selectedCategory != Cart.eCategory.None) {
+                if(Session.getInstance().Item().getCategory() != Cart.eCategory.None) {
                     //Add the item to the cart at this point
                     if(SaveChanges(v))
                     {
@@ -113,8 +112,8 @@ public class OrderItemFragment extends Fragment {
                     @Override
                     public void onClick(View view, int position) {
                         ItemCategory item = list.get(position);
-                        Cart.eCategory category = Cart.eCategory.Get(item.getImage_drawable());
-                        Session.getInstance().Item().setCategory(category);
+                        Session.getInstance().Item().setCategory(item.getImage_drawable());
+                        Cart.eCategory category = Session.getInstance().Item().getCategory();
                         Fragment fragment = null;
                         switch(category)
                         {
@@ -152,7 +151,7 @@ public class OrderItemFragment extends Fragment {
         layoutManager.setOrientation(LinearLayoutManager.HORIZONTAL);
         itemsView.setLayoutManager(layoutManager);
 
-        Session.getInstance().Item().setCategory(Cart.eCategory.Sheep);
+        Session.getInstance().Item().setCategory(Cart.eCategory.Sheep.Value());
         Fragment fragment = new SheepFragment();
         FragmentTransaction ft = getFragmentManager().beginTransaction();
         ft.replace(R.id.orderItemContentFrame, fragment);

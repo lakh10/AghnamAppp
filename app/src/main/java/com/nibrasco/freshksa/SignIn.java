@@ -36,7 +36,9 @@ public class SignIn extends AppCompatActivity {
                 final String phone = edtPhone.getText().toString();
                 final String pwd = edtPwd.getText().toString();
                 if(!phone.equals("") &&  !pwd.equals("")) {
-                    final Snackbar snack = Snackbar.make(v, "Authenticating...", Snackbar.LENGTH_INDEFINITE);
+                    // TODO: insert this into message var below -> getResources().getString(R.string.msgSignInLoadingProfile)
+                    String message = "Authenticating...";
+                    final Snackbar snack = Snackbar.make(v, message, Snackbar.LENGTH_INDEFINITE);
                     snack.show();
 
                     tblUser.addListenerForSingleValueEvent(new ValueEventListener() {
@@ -47,7 +49,8 @@ public class SignIn extends AppCompatActivity {
 
                                 User user = new User(dataSnapshot.child(phone));
                                 if (user.getPassword().equals(pwd)) {
-                                    snack.setText("Sign In Successfull!");
+                                    String message = "Sign In Successfull!";
+                                    snack.setText(message);
                                     TextView textView = (TextView) snack.getView().findViewById(android.support.design.R.id.snackbar_text);
                                     textView.setTextColor(Color.GREEN);
                                     snack.show();
@@ -69,14 +72,16 @@ public class SignIn extends AppCompatActivity {
                                     startActivity(new Intent(SignIn.this, Home.class));
 
                                 } else {
-                                    snack.setText("Sign In Failed!");
+                                    String message = "Sign In Failed!";
+                                    snack.setText(message);
                                     TextView textView = (TextView) snack.getView().findViewById(android.support.design.R.id.snackbar_text);
                                     textView.setTextColor(Color.RED);
                                     snack.show();
                                 }
                             } else {
-                                snack.dismiss();
-                                snack.setText("User Inexistant, please create and Account!");
+                                // TODO: insert this into message var below -> getResources().getString(R.string.msgSignInInexistant)
+                                String message = "User Inexistant, please create and Account!";
+                                snack.setText(message);
                                 TextView textView = (TextView) snack.getView().findViewById(android.support.design.R.id.snackbar_text);
                                 textView.setTextColor(Color.YELLOW);
                                 snack.show();

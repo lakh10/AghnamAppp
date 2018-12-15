@@ -53,6 +53,10 @@ public class User {
         Password = password;
     }
 
+
+    public void AddOrder(String id){
+        Orders.add(id);
+    }
     public User() {
     }
 
@@ -71,14 +75,17 @@ public class User {
         Password = userSnap.child("Password").getValue(String.class);
         Cart = userSnap.child("Cart").getValue(String.class);
         Orders = new ArrayList<>();
-        DataSnapshot ordersSnap = userSnap.child("Orders");
-        if(ordersSnap.getChildrenCount() >= 1)
-        {
-            for(DataSnapshot orderSnap : ordersSnap.getChildren())
+        if (userSnap.hasChild("Orders")){
+            DataSnapshot ordersSnap = userSnap.child("Orders");
+            if(ordersSnap.getChildrenCount() >= 1)
             {
-                Orders.add(orderSnap.getKey());
+                for(DataSnapshot orderSnap : ordersSnap.getChildren())
+                {
+                    Orders.add(orderSnap.getKey());
+                }
             }
         }
+
     }
 
     public void MapToDbRef(DatabaseReference userRef)
@@ -88,9 +95,6 @@ public class User {
         userRef.child("Cart").setValue(Cart);
 
         DatabaseReference ordersRef = userRef.child("Orders");
-        MapOrdersToDbRef(ordersRef);
-    }
-    public void MapOrdersToDbRef(DatabaseReference ordersRef){
         if(Orders.size() == 0) {
             ordersRef.child("0").setValue("");
         } else {

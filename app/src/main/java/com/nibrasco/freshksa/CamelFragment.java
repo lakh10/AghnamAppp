@@ -4,6 +4,8 @@ package com.nibrasco.freshksa;
 
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
+import android.text.Editable;
+import android.text.TextWatcher;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -61,12 +63,45 @@ public class CamelFragment extends Fragment {
             @Override
             public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
                 if(position != spWeight.getSelectedItemPosition())
-                Session.getInstance().Item().setWeight(((int)(parent.getItemAtPosition(position)))
-                );
+                Session.getInstance().Item().setWeight((int)(parent.getItemAtPosition(position)));
+                String totalTxt = Float.toString(Session.getInstance().Item().getTotal());
+                txtTotal.setText(totalTxt);
             }
             @Override
             public void onNothingSelected(AdapterView<?> parent) {
 
+            }
+        });
+        edtQuantity.addTextChangedListener(new TextWatcher() {
+            @Override
+            public void beforeTextChanged(CharSequence s, int start, int count, int after) {
+
+            }
+
+            @Override
+            public void onTextChanged(CharSequence s, int start, int before, int count) {
+
+            }
+
+            @Override
+            public void afterTextChanged(Editable s) {
+                Session.getInstance().Item().setQuantity(Integer.parseInt(s.toString()));
+            }
+        });
+        edtNotes.addTextChangedListener(new TextWatcher() {
+            @Override
+            public void beforeTextChanged(CharSequence s, int start, int count, int after) {
+
+            }
+
+            @Override
+            public void onTextChanged(CharSequence s, int start, int before, int count) {
+
+            }
+
+            @Override
+            public void afterTextChanged(Editable s) {
+                Session.getInstance().Item().setNotes(s.toString());
             }
         });
     }
@@ -78,9 +113,9 @@ public class CamelFragment extends Fragment {
         ArrayAdapter adapter = new ArrayAdapter<>(v.getContext(), android.R.layout.simple_spinner_item, list);
         adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
         spWeight.setAdapter(adapter);
-        int spinnerPosition = adapter.getPosition(0);
-        spWeight.setSelection(spinnerPosition);
-
+        spWeight.setSelection(0);
+        String totalTxt = Float.toString(Session.getInstance().Item().getTotal());
+        txtTotal.setText(totalTxt);
         LinkListeners();
     }
 }

@@ -26,8 +26,8 @@ public class CartFragment extends Fragment {
 
 
     private RecyclerView itemsView;
-    private TextView txtCartTotal;
-    private Button btnOrder;
+    private TextView txtCartTotal, btnOrder;
+    private Button btnConfirmCart;
     private Float Total = 0.0f;
     public CartFragment() {
         // Required empty public constructor
@@ -57,7 +57,8 @@ public class CartFragment extends Fragment {
     {
         itemsView = (RecyclerView)v.findViewById(R.id.recyclerCartItems);
         txtCartTotal = (TextView)v.findViewById(R.id.txtCartTotal);
-        btnOrder = (Button)v.findViewById(R.id.btnItemOrder);
+        btnOrder = (TextView) v.findViewById(R.id.btnItemOrder);
+        btnConfirmCart = (Button)v.findViewById(R.id.btnConfirmCart);
     }
     private void FillRecyclerView(View v)
     {
@@ -86,6 +87,17 @@ public class CartFragment extends Fragment {
                fragmentTransaction.replace(R.id.homeContainer, f);
                fragmentTransaction.addToBackStack(null);
                fragmentTransaction.commit();
+            }
+        });
+        btnConfirmCart.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                ShippingDetailsFragment f = new ShippingDetailsFragment();
+                assert getFragmentManager() != null;
+                FragmentTransaction fragmentTransaction = getFragmentManager().beginTransaction();
+                fragmentTransaction.replace(R.id.homeContainer, f);
+                fragmentTransaction.addToBackStack(null);
+                fragmentTransaction.commit();
             }
         });
     }

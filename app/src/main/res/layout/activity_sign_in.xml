@@ -9,7 +9,7 @@
         android:background="#f1f1f1">
 
     <TextView
-            android:text="تسجيل الدخول"
+            android:text="@string/SignInTitle"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content" android:id="@+id/textView2"
             android:layout_alignParentTop="true" android:layout_marginTop="50dp"
@@ -24,7 +24,7 @@
             android:layout_marginBottom="212dp">
 
         <TextView
-                android:text="رقم الهاتف"
+                android:text="@string/SignInPhoneLabelTxt"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:textColor="#32a65b"
@@ -44,7 +44,7 @@
                 android:inputType="phone"/>
 
         <TextView
-                android:text="كلمة السر"
+                android:text="@string/SignInPwdLabelTxt"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:textColor="#32a65b"
@@ -62,7 +62,7 @@
     </LinearLayout>
     <Button
             android:id="@+id/btnSignIn"
-            android:text="دخول"
+            android:text="@string/SignInConfirmTxt"
             android:textColor="@android:color/white"
             android:layout_width="351dp"
             android:layout_height="wrap_content"

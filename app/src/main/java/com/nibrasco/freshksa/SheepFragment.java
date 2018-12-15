@@ -23,7 +23,6 @@ public class SheepFragment extends Fragment {
     private TextView txtTotal;
     private EditText edtQuantity, edtNotes;
     private RadioGroup rdGrpIntestine;
-    private Boolean IntestineValue;
     Cart.Item currentItem;
     public SheepFragment() {
         currentItem = Session.getInstance().Item();
@@ -65,13 +64,13 @@ public class SheepFragment extends Fragment {
             public void onCheckedChanged(RadioGroup group, int checkedId) {
                 switch (group.getCheckedRadioButtonId()) {
                     case R.id.rdInt_Yes:
-                        IntestineValue = true;
+                        currentItem.setIntestine(true);
                         break;
                     case R.id.rdInt_No:
-                        IntestineValue = false;
+                        currentItem.setIntestine(false);
                         break;
                 }
-                //No specific pricing
+                Session.getInstance().Item(currentItem);
             }
         });
         spPackaging.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
@@ -93,6 +92,7 @@ public class SheepFragment extends Fragment {
             public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
                 if(position != spWeight.getSelectedItemPosition()) {
                     Session.getInstance().Item().setWeight((int)(parent.getItemAtPosition(position)));
+                    txtTotal.setText(Float.toString(Session.getInstance().Item().getTotal()));
                 }
             }
 
@@ -155,6 +155,7 @@ public class SheepFragment extends Fragment {
         spPackaging.setAdapter(adapter);
         spinnerPosition = adapter.getPosition(Cart.ePackaging.None);
         spPackaging.setSelection(spinnerPosition);
+        txtTotal.setText(Float.toString(Session.getInstance().Item().getTotal()));
         LinkListeners();
     }
 }

@@ -7,18 +7,18 @@
         android:paddingBottom="15dp" android:paddingLeft="15dp" android:paddingRight="15dp">
 
 
-    <android.support.v7.widget.RecyclerView
-            android:id="@+id/recyclerCartItems"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:padding="10dp"
-            android:layout_marginTop="15dp"/>
     <LinearLayout
             android:orientation="vertical"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_alignParentBottom="true">
+            android:layout_alignParentTop="true">
 
+        <android.support.v7.widget.RecyclerView
+                android:id="@+id/recyclerCartItems"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:padding="10dp"
+                android:layout_marginTop="15dp"/>
         <RelativeLayout
                 android:orientation="vertical"
                 android:background="#bee1e6e5"
@@ -42,10 +42,17 @@
                 android:textColor="#ffffff"
                 android:layout_height="48dp"
                 android:background="#1a7d41"
-                android:id="@+id/btnItemOrder"
+                android:id="@+id/btnConfirmCart"
                 android:layout_alignParentBottom="true"
                 android:layout_centerInParent="true"/>
-
+        <TextView
+                android:id="@+id/btnItemOrder"
+                android:textColor="#1a7d41"
+                android:text="Order New Item"
+                android:layout_gravity="center"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                />
     </LinearLayout>
 
 </RelativeLayout>

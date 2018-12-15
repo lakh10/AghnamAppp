@@ -85,4 +85,23 @@
     <string name="hello_blank_fragment">Hello blank fragment</string>
     <string name="title_activity_maps_adresse">Map</string>
     <string name="Total">Total</string>
+    <string name="msgSignInInexistant"/>
+    <string name="msgSignInLoadingProfile"/>
+    <string name="msgPaymentSaving"/>
+    <string name="msgSignUpRegister"/>
+    <string name="msgSignUpSuccess"/>
+    <string name="msgSignInRegisterFailed"/>
+    <string name="SignInTitle">تسجيل الدخول</string>
+    <string name="SignInPhoneLabelTxt">رقم الهاتف</string>
+    <string name="SignInPwdLabelTxt">كلمة السر</string>
+    <string name="SignInConfirmTxt">دخول</string>
+    <string name="SignUpTitle">حساب جديد</string>
+    <string name="SignUpPhoneLabelTxt">رقم الهاتف</string>
+    <string name="SignUpNameTxt">الإسم الكامل</string>
+    <string name="SignUpPwdLabelTxt">كلمة السر</string>
+    <string name="WelcomeNextTxt">التالي</string>
+    <string name="WelcomeSkipTxt">تخطي</string>
+    <string name="AppSlogan">فريش عنوان للجودة</string>
+    <string name="MainSignUpTxt">حساب جديد</string>
+    <string name="MainSignInTxt">تسجيل الدخول</string>
 </resources>

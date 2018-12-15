@@ -8,7 +8,7 @@
         android:background="#f1f1f1">
 
     <TextView
-            android:text="حساب جديد"
+            android:text="@string/SignUpTitle"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_gravity="right"
@@ -28,7 +28,7 @@
             android:layout_marginBottom="146dp">
 
         <TextView
-                android:text="رقم الهاتف"
+                android:text="@string/SignUpPhoneLabelTxt"
                 android:layout_width="match_parent"
                 android:gravity="right"
                 android:textColor="#32a65b"
@@ -51,7 +51,7 @@
                 android:layout_marginBottom="10dp"/>
 
         <TextView
-                android:text="الإسم الكامل"
+                android:text="@string/SignUpNameTxt"
                 android:layout_width="match_parent"
                 android:gravity="right"
                 android:textColor="#32a65b"
@@ -69,7 +69,7 @@
                 android:inputType="textCapWords"
                 android:paddingTop="10dp"/>
         <TextView
-                android:text="كلمة السر"
+                android:text="@string/SignUpPwdLabelTxt"
                 android:layout_width="match_parent"
                 android:gravity="right"
                 android:textColor="#32a65b"

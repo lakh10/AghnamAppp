@@ -12,16 +12,23 @@
 
     <ImageView
             android:layout_width="216dp"
-            android:layout_height="175dp" app:srcCompat="@drawable/chose" android:id="@+id/imageView4"
-            android:layout_weight="1" android:layout_centerHorizontal="true" android:layout_alignParentTop="true"
-            android:layout_marginTop="97dp" android:contentDescription="TODO"/>
+            android:layout_height="175dp"
+            app:srcCompat="@drawable/chose"
+            android:id="@+id/imageView4"
+            android:layout_centerHorizontal="true"
+            android:layout_alignParentTop="true"
+            android:layout_marginTop="97dp"
+            android:contentDescription="Title"/>
     <TextView
-            android:text="فريش عنوان للجودة"
+            android:text="@string/AppSlogan"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:textColor="#32a65b"
-            android:id="@+id/textView" android:layout_centerHorizontal="true"
-            android:textSize="24sp" android:layout_alignParentBottom="true" android:layout_marginBottom="200dp"/>
+            android:id="@+id/textView"
+            android:layout_centerHorizontal="true"
+            android:textSize="24sp"
+            android:layout_alignParentBottom="true"
+            android:layout_marginBottom="200dp"/>
     <LinearLayout
             android:weightSum="2"
             android:orientation="horizontal"
@@ -31,7 +38,7 @@
 
         <Button
                 android:id="@+id/btnSignUp"
-                android:text="حساب جديد"
+                android:text="@string/MainSignUpTxt"
                 android:textColor="@android:color/white"
                 android:layout_weight="1"
                 android:layout_width="0dp"
@@ -41,7 +48,7 @@
         />
         <Button
                 android:id="@+id/btnSignIn"
-                android:text="تسجيل الدخول"
+                android:text="@string/MainSignInTxt"
                 android:textColor="@android:color/white"
                 android:layout_weight="1"
                 android:layout_width="0dp"

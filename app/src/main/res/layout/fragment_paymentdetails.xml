@@ -33,24 +33,25 @@
             android:text="1"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_alignTop="@+id/textView12" android:id="@+id/textView27"
-            android:layout_alignStart="@+id/txtUserPhone"/>
+            android:layout_alignTop="@+id/textView12" android:id="@+id/txtOrderCount"
+            android:layout_alignStart="@+id/txtDeliveryCost"/>
     <TextView
             android:text="مجاني"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content" android:layout_alignTop="@+id/textView17"
-            android:layout_alignStart="@+id/txtUserAddress" android:id="@+id/txtUserPhone"/>
+            android:layout_alignStart="@+id/txtOrderTotal" android:id="@+id/txtDeliveryCost"/>
     <TextView
             android:text="Total"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_alignStart="@+id/checkBox" android:id="@+id/txtUserAddress"
+            android:layout_alignStart="@+id/checkBox" android:id="@+id/txtOrderTotal"
             android:layout_alignTop="@+id/textView19"/>
-    <CheckBox
-            android:text="حساب بنكي"
+    <EditText
+            android:hint="حساب بنكي"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:id="@+id/checkBox"
+            android:id="@+id/edtBankAccount"
+            android:textSize="15dp"
             android:layout_alignParentStart="true" android:layout_marginStart="61dp"
             android:layout_alignParentBottom="true" android:layout_marginBottom="178dp"/>
     <TextView
@@ -63,7 +64,7 @@
             android:text="توثيق الطلب"
             android:layout_width="171dp"
             android:layout_height="wrap_content" android:layout_alignParentBottom="true"
-            android:layout_marginBottom="57dp" android:id="@+id/button"
+            android:layout_marginBottom="57dp" android:id="@+id/btnPaymentConfirm"
             android:background="#32a65b" android:layout_centerHorizontal="true"
             android:textColor="@android:color/white"/>
 </RelativeLayout>

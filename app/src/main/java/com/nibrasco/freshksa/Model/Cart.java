@@ -68,7 +68,7 @@ public class Cart {
                     Weights.add( new Weight(430.0f, "B"));
                     break;
                 default:
-
+                    break;
             }
             return Weights;
         }
@@ -82,29 +82,6 @@ public class Cart {
                 list.add(w.Name);
             }
             return list;
-        }
-    }
-    public enum eWeight
-    {
-        None(-1),
-        ExtraSmall(0),
-        Small(1),
-        Medium(2),
-        Big(3),
-        ExtraBig(4);
-        private final int value;
-        eWeight(int value) {
-            this.value = value;
-        }
-
-        public int Value() {
-            return value;
-        }
-        public static eWeight Get(int value){
-            for(eWeight t : values()){
-                if(t.value == value) return t;
-            }
-            return None;
         }
     }
 
@@ -262,7 +239,7 @@ public class Cart {
 
         public void setWeight(int weightIndex) {
             Weight = weightIndex;
-            Total = WeightLists.GetPrice(Category, weightIndex);
+            Total = WeightLists.GetPrice(Category, Weight);
         }
 
         public float getTotal() {
@@ -335,7 +312,16 @@ public class Cart {
 
     private eTime TimeOfDelivery;
     private String Address;
+    private String BankAccount;
     private List<Item> Items;
+
+    public String getBankAccount() {
+        return BankAccount;
+    }
+
+    public void setBankAccount(String bankAccount) {
+        BankAccount = bankAccount;
+    }
 
     public String getAddress() {
         return Address;
@@ -353,6 +339,10 @@ public class Cart {
         this.TimeOfDelivery = eTime.Get(TimeOfDelivery);
     }
 
+    public Integer GetCount()
+    {
+        return Items.size();
+    }
     public Item GetItem(int index)
     {
         return Items.get(index);
@@ -374,12 +364,14 @@ public class Cart {
     public Cart() {
         Address = "N/A";
         TimeOfDelivery = eTime.Noon;
+        BankAccount = "0";
         Items = new ArrayList<Item>();
     }
 
     public Cart(String address) {
         Address = address;
         TimeOfDelivery = eTime.Noon;
+        BankAccount = "0";
         Items = new ArrayList<Item>();
     }
 
@@ -393,6 +385,7 @@ public class Cart {
     {
         Address = cart.child("Address").getValue(String.class);
         TimeOfDelivery = eTime.Get(Integer.parseInt(cart.child("TimeOfDelivery").getValue().toString()));
+        //BankAccount = cart.child("BankAccount").getValue().toString();
         Items = new ArrayList<Item>();
         if(cart.child("Items").exists() || cart.child("Items").hasChildren())
         {
@@ -410,6 +403,7 @@ public class Cart {
     {
         cartRef.child("Address").setValue(Address);
         cartRef.child("TimeOfDelivery").setValue(TimeOfDelivery.Value());
+        cartRef.child("BankAccount").setValue(BankAccount);
         if(Items.size() > 0){
             DatabaseReference itemsRef = cartRef.child("Items");
             for (Item item : Items) {
