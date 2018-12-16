@@ -44,6 +44,14 @@ public class PaymentDetailsFragment extends Fragment {
                              Bundle savedInstanceState) {
         return inflater.inflate(R.layout.fragment_paymentdetails, container, false);
     }
+
+    @Override
+    public void onStart() {
+        super.onStart();
+        final View v = getView();
+        LoadContent(v);
+    }
+
     private void LinkControls(View v){
         txtCount = (TextView)v.findViewById(R.id.txtOrderCount);
         txtTotal = (TextView)v.findViewById(R.id.txtOrderTotal);
@@ -62,8 +70,7 @@ public class PaymentDetailsFragment extends Fragment {
         btnConfirm.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                // TODO: insert this into message var below -> getResources().getString(R.string.msgPaymentSaving)
-                String message = "Saving Your Order!";
+                String message = getResources().getString(R.string.msgPaymentSaving);
                 Snackbar snackbar = Snackbar.make(v, message, Snackbar.LENGTH_LONG);
                 snackbar.show();
                 String Account = edtAccount.getText().toString();

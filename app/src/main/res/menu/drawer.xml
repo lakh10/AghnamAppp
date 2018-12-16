@@ -9,7 +9,8 @@ tools:showIn="navigation_view">
                 <item
                         android:id="@+id/navUser"
                         android:title="ملف المستخدم"
-                        android:icon="@drawable/usericon"/>
+                        android:icon="@drawable/usericon"
+                />
 
                 <item
                         android:id="@+id/navCart"

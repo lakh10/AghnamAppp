@@ -1,6 +1,6 @@
 package com.nibrasco.freshksa.Model;
 
-import android.location.Address;
+import android.widget.ArrayAdapter;
 import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseReference;
 import com.nibrasco.freshksa.R;
@@ -9,7 +9,7 @@ import java.util.*;
 
 public class Cart {
 
-    public static class WeightLists
+    public static class Lists
     {
         public static class Weight
         {
@@ -21,72 +21,157 @@ public class Cart {
                 Name = name;
             }
         }
-        private static ArrayList<Weight> Weights;
+        public static class Slicing{
+            String Name;
 
-        public static String GetName(eCategory Category, int index)
-        {
-            Weights = GetList(Category);
-            if(index < Weights.size())
+            public Slicing(String name){
+                Name = name;
+            }
+        }
+        public static class Category{
+            String Name;
+
+            public Category(String name){
+                Name = name;
+            }
+        }
+        public static class Packaging{
+            String Name;
+
+            public Packaging(String name){
+                Name = name;
+            }
+        }
+
+        private static ArrayList<Weight> Weights;
+        private static ArrayList<Slicing> Slicings;
+        private static ArrayList<Category> Categories;
+        private static ArrayList<Packaging> Packages;
+
+        public static String GetWeightName(eCategory Category, int index) {
+            Weights = GetWeights(Category);
+            if(index >= 0 && index < Weights.size())
                 return Weights.get(index).Name;
             return "NaN";
         }
-        public static float GetPrice(eCategory Category, int index)
-        {
-            Weights = GetList(Category);
-            if (index < Weights.size())
+        public static float GetWeightPrice(eCategory Category, int index) {
+            Weights = GetWeights(Category);
+            if (index >= 0 && index < Weights.size())
                 return Weights.get(index).Price;
             return -1;
         }
-
-        public static ArrayList<Weight> GetList(eCategory Category){
+        public static ArrayList<Weight> GetWeights(eCategory Category){
             Weights = new ArrayList<>();
             switch (Category){
                 case HalfSheep:
-                    Weights.add( new Weight(660.0f, "X"));
+                    Weights.add( new Weight(660.0f, "نصف نعيمي"));
                     break;
                 case Sheep:
-                    Weights.add( new Weight(950.0f, "A"));
-                    Weights.add( new Weight(1030.0f, "B"));
-                    Weights.add( new Weight(1120.0f, "C"));
-                    Weights.add( new Weight(1210.0f, "D"));
-                    Weights.add( new Weight(1290.0f, "E"));
-                    Weights.add( new Weight(1370.0f, "F"));
+                    Weights.add( new Weight(950.0f, "لباني 9 13 كيلو"));
+                    Weights.add( new Weight(1030.0f, "صغير 12 15 كيلو"));
+                    Weights.add( new Weight(1120.0f, "وسط 15 17 كيلو"));
+                    Weights.add( new Weight(1210.0f, "جدع وسط 17 20 كيلو"));
+                    Weights.add( new Weight(1290.0f, "جدع طيب 20 25 كيلو"));
+                    Weights.add( new Weight(1370.0f, "جدع ناهي 25 30 كيلو"));
                     break;
                 case Goat:
-                    Weights.add( new Weight(850.0f, "A"));
-                    Weights.add( new Weight(920.0f, "B"));
-                    Weights.add( new Weight(990.0f, "C"));
+                    Weights.add( new Weight(850.0f, "صغير"));
+                    Weights.add( new Weight(920.0f, "وسط"));
+                    Weights.add( new Weight(990.0f, "كبير"));
                     break;
                 case Camel:
-                    Weights.add( new Weight(400.0f, "A"));
-                    Weights.add( new Weight(600.0f, "B"));
-                    Weights.add( new Weight(800.0f, "C"));
-                    Weights.add( new Weight(950.0f, "D"));
+                    Weights.add( new Weight(400.0f, "5 كيلو"));
+                    Weights.add( new Weight(600.0f, "10 كيلو"));
+                    Weights.add( new Weight(800.0f, "15 كيلو"));
+                    Weights.add( new Weight(950.0f, "20 كيلو"));
                     break;
                 case GroundMeat:
-                    Weights.add( new Weight(400.0f, "A"));
-                    Weights.add( new Weight(430.0f, "B"));
+                    Weights.add( new Weight(400.0f, "مفروم 5 كيلو"));
+                    Weights.add( new Weight(430.0f, "مفروم 6 كيلو"));
                     break;
                 default:
                     break;
             }
             return Weights;
         }
-
-        public static ArrayList<String> GetNames(eCategory Category)
-        {
+        public static ArrayList<String> GetWeightNames(eCategory Category) {
             ArrayList<String> list = new ArrayList<>();
-            Weights = GetList(Category);
+            Weights = GetWeights(Category);
             for (Weight w:
                  Weights) {
                 list.add(w.Name);
             }
             return list;
         }
+
+        public static ArrayList<String> GetSlicingNames(){
+            ArrayList<String> list = new ArrayList<>();
+            for (Slicing s:
+                 GetSlicings()) {
+                list.add(s.Name);
+            }
+            return list;
+        }
+        public static String GetSlicingName(int index){
+            return GetSlicingNames().get(index);
+        }
+        public static ArrayList<Slicing> GetSlicings(){
+            Slicings = new ArrayList<Slicing>();
+
+            Slicings.add(new Slicing("ثلاجة"));
+            Slicings.add(new Slicing("أنصاف"));
+            Slicings.add(new Slicing("أرباع"));
+            Slicings.add(new Slicing("كامل"));
+
+            return Slicings;
+        }
+
+        public static ArrayList<String> GetCategoryNames(){
+            ArrayList<String> list = new ArrayList<>();
+            for (Category s:
+                    GetCategories()) {
+                list.add(s.Name);
+            }
+            return list;
+        }
+        public static String GetCategoryName(int index){
+            return GetCategoryNames().get(index);
+        }
+        public static ArrayList<Category> GetCategories(){
+            Categories = new ArrayList<Category>();
+
+            Categories.add(new Category("نعيمي"));
+            Categories.add(new Category("عجل بلدي"));
+            Categories.add(new Category("تيس عارضي"));
+            Categories.add(new Category("حاشي بلدي"));
+            Categories.add(new Category("نصف نعيمي"));
+
+            return Categories;
+        }
+
+        public static ArrayList<String> GetPackagingNames(){
+            ArrayList<String> list = new ArrayList<>();
+            for (Category s:
+                    GetCategories()) {
+                list.add(s.Name);
+            }
+            return list;
+        }
+        public static String GetPackagingName(int index){
+            return GetPackagingNames().get(index);
+        }
+        public static ArrayList<Packaging> GetPackages(){
+            Packages = new ArrayList<Packaging>();
+
+            Packages.add(new Packaging("بدون"));
+            Packages.add(new Packaging("كيس"));
+            Packages.add(new Packaging("أطباق"));
+
+            return Packages;
+        }
     }
 
-    public enum eTime
-    {
+    public enum eTime {
         Noon(0),
         AfterNoon(1),
         Evening(2);
@@ -105,13 +190,11 @@ public class Cart {
             return Noon;
         }
     }
-    public enum eSlicing
-    {
-        None(0),
-        Fridge(1),
-        Halfs(2),
-        Quarters(3),
-        Whole(4);
+    public enum eSlicing {
+        Fridge(0),
+        Halfs(1),
+        Quarters(2),
+        Whole(3);
         private final int value;
         eSlicing(int value) {
             this.value = value;
@@ -124,12 +207,10 @@ public class Cart {
             for(eSlicing t : values()){
                 if(t.value == value) return t;
             }
-            return None;
+            return Fridge;
         }
     }
-
-    public enum ePackaging
-    {
+    public enum ePackaging {
         None(0),
         Bags(1),
         Plates(2);
@@ -148,12 +229,10 @@ public class Cart {
             return None;
         }
     }
-
-    public enum eCategory
-    {
+    public enum eCategory {
         None(-1),
         Sheep(R.drawable.naeme),
-        Lamb(R.drawable.hree),
+        //Lamb(R.drawable.hree),
         Goat(R.drawable.tais),
         GroundMeat(R.drawable.ajl),
         Camel(R.drawable.hashe),
@@ -172,6 +251,22 @@ public class Cart {
             }
             return None;
         }
+
+        public int At() {
+            switch (this){
+                case Sheep:
+                    return 0;
+                case Goat:
+                    return 1;
+                case GroundMeat:
+                    return 2;
+                case Camel:
+                    return 3;
+                case HalfSheep:
+                    return 4;
+            }
+            return -1;
+        }
     }
 
     public static class Item {
@@ -180,7 +275,7 @@ public class Cart {
         private int Quantity = 0;
         private boolean Intestine = false;
         private String Notes = "";
-        private eSlicing Slicing = eSlicing.None;
+        private eSlicing Slicing = eSlicing.Fridge;
         private ePackaging Packaging = ePackaging.None;
         private int Weight = -1;
         private float Total = 0.0f;
@@ -239,11 +334,10 @@ public class Cart {
 
         public void setWeight(int weightIndex) {
             Weight = weightIndex;
-            Total = WeightLists.GetPrice(Category, Weight);
         }
 
         public float getTotal() {
-            return Total;
+            return Lists.GetWeightPrice(Category, Weight);
         }
 
         public void setTotal(float total) {
@@ -303,7 +397,7 @@ public class Cart {
                     + "\nQuantity : " +  Quantity
                     + "\nPackaging : " + Packaging.value
                     + "\nSlicing : " + Slicing.value
-                    + "\nWeight : " + WeightLists.GetName(Category, Weight)
+                    + "\nWeight : " + Lists.GetWeightName(Category, Weight)
                     + "\nNotes : " + Notes
                     + "\nTotal : " + Total;
         }
@@ -326,9 +420,9 @@ public class Cart {
     public String getAddress() {
         return Address;
     }
-    public void setAddress(android.location.Address address)
+    public void setAddress(String address)
     {
-        Address += address.getLocality() + " " + address.getCountryName();
+        Address += address;
     }
 
     public eTime getTimeOfDelivery() {

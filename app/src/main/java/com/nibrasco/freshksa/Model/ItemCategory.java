@@ -16,9 +16,6 @@ public class ItemCategory {
             case Sheep:
                 name = r.getString(R.string.recyclerItemSheep);
                 break;
-            case Lamb:
-                name = r.getString(R.string.recyclerItemSheep);
-                break;
             case Camel:
                 name = r.getString(R.string.recyclerItemCamel);
                 break;

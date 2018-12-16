@@ -19,6 +19,7 @@
     <string name="recyclerItemCamel">حاشي بلدي</string>
     <string name="recyclerItemGroundMeat">عجل بلدي</string>
     <string name="recyclerItemGroundLamb">حري</string>
+
     // *************Weight List***************
 
     نعيمي//
@@ -84,13 +85,17 @@
     <!-- TODO: Remove or change this placeholder text -->
     <string name="hello_blank_fragment">Hello blank fragment</string>
     <string name="title_activity_maps_adresse">Map</string>
-    <string name="Total">Total</string>
-    <string name="msgSignInInexistant"/>
-    <string name="msgSignInLoadingProfile"/>
-    <string name="msgPaymentSaving"/>
-    <string name="msgSignUpRegister"/>
-    <string name="msgSignUpSuccess"/>
-    <string name="msgSignInRegisterFailed"/>
+    <string name="Total">المجموع</string>
+    <string name="msgSignInInexistant">مستخدم غير موجود ندعوكم لتسجيل حساب جديد</string>
+    <string name="msgSignInLoadingProfile">التحقق من الحساب...</string>
+    <string name="msgPaymentSaving">طلبك طور التحضير</string>
+    <string name="msgSignUpRegister">حفظ الحساب...</string>
+    <string name="msgSignUpSuccess">تم الحفظ بنجاح</string>
+    <string name="msgSignInRegisterFailed">رقم هاتف موجود مسبقا , ضع رقم غير مستخدم سابقا</string>
+    <!-- TODO: change this placeholder text -->
+    <string name="msgSignInEmpty">تحقق من ملئ جميع الخانات</string>
+    <string name="msgSignInSuccess" type="id">تم الدخول !</string>
+    <string name="msgSignInFailed" type="id">تحقق من المعلومات المطروحة !</string>
     <string name="SignInTitle">تسجيل الدخول</string>
     <string name="SignInPhoneLabelTxt">رقم الهاتف</string>
     <string name="SignInPwdLabelTxt">كلمة السر</string>
@@ -104,4 +109,6 @@
     <string name="AppSlogan">فريش عنوان للجودة</string>
     <string name="MainSignUpTxt">حساب جديد</string>
     <string name="MainSignInTxt">تسجيل الدخول</string>
+    <string name="msgUserInfoLoading">تحميل البيانات...</string>
+    <string name="btnItemOrderTxt">طلب جديد</string>
 </resources>

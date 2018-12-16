@@ -32,8 +32,8 @@ public class SignUp extends AppCompatActivity {
         btnSignUp.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                // TODO: insert this into message var below -> getResources().getString(R.string.msgSignUpRegister)
-                final Snackbar snack = Snackbar.make(v, "Registering Your Account...", Snackbar.LENGTH_LONG);
+                String message = getResources().getString(R.string.msgSignUpRegister);
+                final Snackbar snack = Snackbar.make(v, message, Snackbar.LENGTH_LONG);
                 snack.setActionTextColor(Color.WHITE).show();
                 tblUser.addListenerForSingleValueEvent(new ValueEventListener() {
                     @Override
@@ -45,8 +45,7 @@ public class SignUp extends AppCompatActivity {
                                     phone = edtPhone.getText().toString();
                             Session.getInstance().User(new User(name, pwd));
                             Session.getInstance().User().MapToDbRef(tblUser.child(phone));
-                            // TODO: insert this into message var below -> getResources().getString(R.string.msgSignUpSuccess)
-                            snack.setText("Account Registered Successfully")
+                            snack.setText(getResources().getString(R.string.msgSignUpSuccess))
                                     .setActionTextColor(Color.GREEN).show();
                             startActivity(new Intent(SignUp.this, Home.class));
                             snack.dismiss();
@@ -54,8 +53,7 @@ public class SignUp extends AppCompatActivity {
                         else
                         {
                             snack.dismiss();
-                            // TODO: insert this into message var below -> getResources().getString(R.string.msgSignInRegisterFailed)
-                            snack.setText("Phone number already exists, please choose another phone number!")
+                            snack.setText(getResources().getString(R.string.msgSignInRegisterFailed))
                                     .setActionTextColor(Color.RED).show();
                         }
                     }

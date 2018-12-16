@@ -28,11 +28,14 @@
             android:id="@+id/textView37" android:layout_above="@+id/edtQuantity" android:layout_marginBottom="-50dp"
             android:layout_alignStart="@+id/edtQuantity"/>
     <Spinner
-            android:layout_width="187dp"
-            android:layout_height="wrap_content"
-            android:id="@+id/spWeight"
-            android:layout_alignParentTop="true" android:layout_alignEnd="@+id/edtQuantity"
-            android:layout_marginTop="160dp"/>
+            android:layout_width="176dp"
+            android:layout_height="26dp"
+            android:textSize="18sp"
+            android:id="@+id/spWeightCamel"
+            android:spinnerMode="dialog"
+            android:background="#ffffff"
+            android:accessibilityHeading="false" android:layout_centerVertical="true"
+            android:layout_alignEnd="@+id/edtQuantity"/>
     <LinearLayout
 
             android:orientation="vertical"

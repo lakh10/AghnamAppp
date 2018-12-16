@@ -90,7 +90,7 @@ public class SheepFragment extends Fragment {
         spWeight.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
             @Override
             public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
-                if(position != spWeight.getSelectedItemPosition()) {
+                if(position != parent.getSelectedItemPosition()) {
                     Session.getInstance().Item().setWeight((int)(parent.getItemAtPosition(position)));
                     txtTotal.setText(Float.toString(Session.getInstance().Item().getTotal()));
                 }
@@ -135,27 +135,26 @@ public class SheepFragment extends Fragment {
     {
         LinkControls(v);
 
-        ArrayAdapter adapter = new ArrayAdapter<>(v.getContext(), android.R.layout.simple_spinner_item, Cart.eSlicing.values());
-        adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
-        spSlicing.setAdapter(adapter);
-        int spinnerPosition = adapter.getPosition(Cart.eSlicing.None);
-        spSlicing.setSelection(spinnerPosition);
-
-
-        ArrayList<String> list = Cart.WeightLists.GetNames(Session.getInstance().Item().getCategory());
-        adapter = new ArrayAdapter<>(v.getContext(), android.R.layout.simple_spinner_item, list);
+        ArrayList<String> list = Cart.Lists.GetWeightNames(Session.getInstance().Item().getCategory());
+        ArrayAdapter adapter = new ArrayAdapter<>(v.getContext(), android.R.layout.simple_spinner_item, list);
         adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
         spWeight.setAdapter(adapter);
-        spinnerPosition = adapter.getPosition(0);
-        spWeight.setSelection(spinnerPosition);
+        spWeight.setSelection(0);
+        txtTotal.setText(Float.toString(Session.getInstance().Item().getTotal()));
 
+        list = Cart.Lists.GetSlicingNames();
+        adapter = new ArrayAdapter<>(v.getContext(), android.R.layout.simple_spinner_item, list);
+        adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
+        spSlicing.setAdapter(adapter);
+        spSlicing.setSelection(0);
 
-        adapter = new ArrayAdapter<>(v.getContext(), android.R.layout.simple_spinner_item, Cart.ePackaging.values());
+        list = Cart.Lists.GetPackagingNames();
+        adapter = new ArrayAdapter<>(v.getContext(), android.R.layout.simple_spinner_item, list);
         adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
         spPackaging.setAdapter(adapter);
-        spinnerPosition = adapter.getPosition(Cart.ePackaging.None);
-        spPackaging.setSelection(spinnerPosition);
+        spPackaging.setSelection(0);
         txtTotal.setText(Float.toString(Session.getInstance().Item().getTotal()));
+
         LinkListeners();
     }
 }

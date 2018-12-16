@@ -38,6 +38,7 @@ public class CartFragment extends Fragment {
         super.onActivityCreated(savedInstanceState);
 
         View v = getView();
+
         LinkControls(v);
         DisplayValues();
         FillRecyclerView(v);

@@ -27,8 +27,8 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:id="@+id/textView21" android:gravity="right"
-            android:textColor="#32a65b" android:layout_alignEnd="@+id/textView19"
-            android:layout_alignTop="@+id/checkBox"/>
+            android:textColor="#32a65b"
+            android:layout_alignStart="@+id/textView19" android:layout_alignBaseline="@+id/edtBankAccount"/>
     <TextView
             android:text="1"
             android:layout_width="wrap_content"
@@ -44,8 +44,8 @@
             android:text="Total"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_alignStart="@+id/checkBox" android:id="@+id/txtOrderTotal"
-            android:layout_alignTop="@+id/textView19"/>
+            android:id="@+id/txtOrderTotal"
+            android:layout_alignTop="@+id/textView19" android:layout_toStartOf="@+id/btnPaymentConfirm"/>
     <EditText
             android:hint="حساب بنكي"
             android:layout_width="wrap_content"

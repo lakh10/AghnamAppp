@@ -4,38 +4,29 @@
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:background="#f1f1F1"
-        android:paddingBottom="15dp" android:paddingLeft="15dp" android:paddingRight="15dp">
+        android:paddingBottom="15dp">
 
 
-    <LinearLayout
+
+
+    <RelativeLayout
             android:orientation="vertical"
+            android:background="#bee1e6e5"
             android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_alignParentTop="true">
-
-        <android.support.v7.widget.RecyclerView
-                android:id="@+id/recyclerCartItems"
-                android:layout_width="match_parent"
-                android:layout_height="match_parent"
-                android:padding="10dp"
-                android:layout_marginTop="15dp"/>
-        <RelativeLayout
-                android:orientation="vertical"
-                android:background="#bee1e6e5"
-                android:layout_width="match_parent"
-                android:layout_height="match_parent">
-            <TextView
-                    android:text="المجموع"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_alignParentRight="true"
-            />
-            <TextView
-                    android:text="0"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:id="@+id/txtCartTotal"/>
-        </RelativeLayout>
+            android:layout_height="match_parent"
+            android:layout_alignParentBottom="true">
+        <TextView
+                android:text="المجموع"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_alignParentEnd="true" android:layout_marginEnd="16dp"
+                android:layout_alignTop="@+id/txtCartTotal"/>
+        <TextView
+                android:text="0"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:id="@+id/txtCartTotal" android:layout_alignParentStart="true"
+                android:layout_marginStart="35dp" android:layout_above="@+id/btnConfirmCart"/>
         <Button
                 android:text="إتمام عملية الشراء"
                 android:layout_width="match_parent"
@@ -43,16 +34,22 @@
                 android:layout_height="48dp"
                 android:background="#1a7d41"
                 android:id="@+id/btnConfirmCart"
-                android:layout_alignParentBottom="true"
-                android:layout_centerInParent="true"/>
+                android:layout_alignParentStart="true" android:layout_above="@+id/btnItemOrder"/>
         <TextView
                 android:id="@+id/btnItemOrder"
                 android:textColor="#1a7d41"
-                android:text="Order New Item"
+                android:text="@string/btnItemOrderTxt"
                 android:layout_gravity="center"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                />
-    </LinearLayout>
+                android:layout_centerHorizontal="true" android:layout_alignParentBottom="true"/>
+        <android.support.v7.widget.RecyclerView
+                android:id="@+id/recyclerCartItems"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:padding="10dp"
+                android:layout_alignParentStart="true" android:layout_alignParentTop="true"/>
+    </RelativeLayout>
+
 
 </RelativeLayout>

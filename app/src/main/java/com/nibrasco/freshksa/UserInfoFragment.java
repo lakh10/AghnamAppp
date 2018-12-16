@@ -26,6 +26,7 @@ public class UserInfoFragment extends Fragment {
 
         return inflater.inflate(R.layout.fragment_userprofil, container, false);
     }
+
     public void onActivityCreated(Bundle savedInstanceState) {
         super.onActivityCreated(savedInstanceState);
         final View v = getView();
@@ -46,8 +47,8 @@ public class UserInfoFragment extends Fragment {
     }
     private void LoadData(final View v)
     {
-        // TODO: insert this into message var below -> getResources().getString(R.string.msgLoading)
-        Snackbar snackbar = Snackbar.make(v, "Loading Data...", Snackbar.LENGTH_INDEFINITE);
+        String message = getResources().getString(R.string.msgUserInfoLoading);
+        Snackbar snackbar = Snackbar.make(v, message, Snackbar.LENGTH_INDEFINITE);
         snackbar.show();
         User usr = Session.getInstance().User();
         txtPhone.setText(usr.getPhone());

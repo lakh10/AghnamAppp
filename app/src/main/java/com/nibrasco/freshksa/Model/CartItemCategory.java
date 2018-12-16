@@ -11,10 +11,10 @@ public class CartItemCategory {
 
     public CartItemCategory(Cart.Item item) {
         image_drawable = item.getCategory().Value();
-        Category = item.getCategory().name();
-        Packaging = item.getPackaging().name();
-        Slicing = item.getSlicing().name();
-        Weight = Cart.WeightLists.GetName(item.getCategory(), item.getWeight());
+        Category = Cart.Lists.GetCategoryName(item.getCategory().At());
+        Packaging = Cart.Lists.GetPackagingName(item.getPackaging().Value());
+        Slicing = Cart.Lists.GetSlicingName(item.getSlicing().Value());
+        Weight = Cart.Lists.GetWeightName(item.getCategory(), item.getWeight());
         Intestine = item.isIntestine() ? "نعم" : "لا";
         Quantity = String.valueOf(item.getQuantity());
     }

@@ -14,7 +14,6 @@ import com.nibrasco.freshksa.Model.Cart;
 import com.nibrasco.freshksa.Model.Session;
 
 import java.util.ArrayList;
-import java.util.Map;
 
 /**
  * A simple {@link Fragment} subclass.
@@ -27,7 +26,7 @@ public class CamelFragment extends Fragment {
     public CamelFragment() {
         Session.getInstance().Item().setWeight(0);
         Session.getInstance().Item().setIntestine(false);
-        Session.getInstance().Item().setSlicing(Cart.eSlicing.None.Value());
+        Session.getInstance().Item().setSlicing(Cart.eSlicing.Fridge.Value());
         Session.getInstance().Item().setPackaging(Cart.ePackaging.None.Value());
         Session.getInstance().Item().setTotal(Session.getInstance().Item().getDefaultPrice());
     }
@@ -52,7 +51,7 @@ public class CamelFragment extends Fragment {
 
     private void LinkControls(View v)
     {
-        spWeight = (Spinner)v.findViewById(R.id.spWeight);
+        spWeight = (Spinner)v.findViewById(R.id.spWeightCamel);
         edtQuantity = (EditText)v.findViewById(R.id.edtQuantity);
         edtNotes = (EditText)v.findViewById(R.id.edtNotes);
         txtTotal = (TextView)v.findViewById(R.id.txtTotalItem);
@@ -109,13 +108,14 @@ public class CamelFragment extends Fragment {
     {
         LinkControls(v);
 
-        ArrayList<Cart.WeightLists.Weight> list = Cart.WeightLists.GetList(Session.getInstance().Item().getCategory());
+        ArrayList<String> list = Cart.Lists.GetWeightNames(Session.getInstance().Item().getCategory());
         ArrayAdapter adapter = new ArrayAdapter<>(v.getContext(), android.R.layout.simple_spinner_item, list);
         adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
         spWeight.setAdapter(adapter);
         spWeight.setSelection(0);
         String totalTxt = Float.toString(Session.getInstance().Item().getTotal());
         txtTotal.setText(totalTxt);
+
         LinkListeners();
     }
 }

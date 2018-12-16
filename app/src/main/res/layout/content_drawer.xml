@@ -12,6 +12,7 @@
 <FrameLayout
         android:id="@+id/homeContainer"
         android:layout_width="match_parent"
-        android:layout_height="match_parent"/>
+        android:layout_height="match_parent"
+        android:layoutDirection="ltr"/>
 
 </android.support.constraint.ConstraintLayout>

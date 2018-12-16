@@ -36,8 +36,7 @@ public class SignIn extends AppCompatActivity {
                 final String phone = edtPhone.getText().toString();
                 final String pwd = edtPwd.getText().toString();
                 if(!phone.equals("") &&  !pwd.equals("")) {
-                    // TODO: insert this into message var below -> getResources().getString(R.string.msgSignInLoadingProfile)
-                    String message = "Authenticating...";
+                    String message = getResources().getString(R.string.msgSignInLoadingProfile);
                     final Snackbar snack = Snackbar.make(v, message, Snackbar.LENGTH_INDEFINITE);
                     snack.show();
 
@@ -49,7 +48,8 @@ public class SignIn extends AppCompatActivity {
 
                                 User user = new User(dataSnapshot.child(phone));
                                 if (user.getPassword().equals(pwd)) {
-                                    String message = "Sign In Successfull!";
+                                    // TODO: replace the string with the
+                                    String message = getResources().getString(R.string.msgSignInSuccess);
                                     snack.setText(message);
                                     TextView textView = (TextView) snack.getView().findViewById(android.support.design.R.id.snackbar_text);
                                     textView.setTextColor(Color.GREEN);
@@ -60,7 +60,7 @@ public class SignIn extends AppCompatActivity {
                                         @Override
                                         public void onDataChange(@NonNull DataSnapshot cartsSnap) {
                                             String id = Session.getInstance().User().getCart();
-                                            if (cartsSnap.child(id).exists())
+                                            if (cartsSnap.hasChild(id))
                                                 Session.getInstance().Cart(new Cart(cartsSnap.child(id)));
                                         }
 
@@ -72,15 +72,14 @@ public class SignIn extends AppCompatActivity {
                                     startActivity(new Intent(SignIn.this, Home.class));
 
                                 } else {
-                                    String message = "Sign In Failed!";
+                                    String message = getResources().getString(R.string.msgSignInFailed);
                                     snack.setText(message);
                                     TextView textView = (TextView) snack.getView().findViewById(android.support.design.R.id.snackbar_text);
                                     textView.setTextColor(Color.RED);
                                     snack.show();
                                 }
                             } else {
-                                // TODO: insert this into message var below -> getResources().getString(R.string.msgSignInInexistant)
-                                String message = "User Inexistant, please create and Account!";
+                                String message = getResources().getString(R.string.msgSignInInexistant);
                                 snack.setText(message);
                                 TextView textView = (TextView) snack.getView().findViewById(android.support.design.R.id.snackbar_text);
                                 textView.setTextColor(Color.YELLOW);
@@ -95,7 +94,8 @@ public class SignIn extends AppCompatActivity {
                     });
                 }
                 else{
-                    Snackbar.make(v, "Fields cannot be empty!", Snackbar.LENGTH_LONG).show();
+
+                    Snackbar.make(v, getResources().getString(R.string.msgSignInEmpty), Snackbar.LENGTH_LONG).show();
                 }
             }
         });
