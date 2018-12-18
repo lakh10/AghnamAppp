@@ -21,7 +21,7 @@
 
     />
     <EditText
-            android:id="@+id/edtName"
+            android:id="@+id/edtSignUpName"
             android:layout_width="338dp"
             android:layout_height="45dp"
             android:background="#90cfcaca"
@@ -37,6 +37,6 @@
             android:text="أدخل كود التفعيل"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content" android:layout_alignParentTop="true" android:layout_marginTop="185dp"
-            android:layout_alignEnd="@+id/edtName" android:id="@+id/textView6"/>
+            android:layout_alignEnd="@+id/edtSignUpName" android:id="@+id/textView6"/>
 
 </RelativeLayout>

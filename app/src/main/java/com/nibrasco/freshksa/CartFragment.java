@@ -38,11 +38,20 @@ public class CartFragment extends Fragment {
         super.onActivityCreated(savedInstanceState);
 
         View v = getView();
-
         LinkControls(v);
         DisplayValues();
-        FillRecyclerView(v);
+        if(Session.getInstance().Cart() != null && Session.getInstance().Cart().Items().size() > 0) {
+            FillRecyclerView(v);
+        }
         AssignListeners();
+        //else  {
+        //    OrderItemFragment f = new OrderItemFragment();
+        //    assert getFragmentManager() != null;
+        //    FragmentTransaction fragmentTransaction = getFragmentManager().beginTransaction();
+        //    fragmentTransaction.replace(R.id.homeContainer, f);
+        //    fragmentTransaction.addToBackStack(null);
+        //    fragmentTransaction.commit();
+        //}
     }
 
     private void DisplayValues() {

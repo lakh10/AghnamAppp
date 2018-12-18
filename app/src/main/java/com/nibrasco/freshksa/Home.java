@@ -92,7 +92,6 @@ public class Home extends AppCompatActivity
         // Handle navigation view item clicks here.
         int id = item.getItemId();
         Fragment fragment = null;
-        Bundle bundle = new Bundle();
         switch (id)
         {
             case R.id.navUser:

@@ -4,18 +4,18 @@ import android.provider.ContactsContract;
 import com.google.firebase.database.DatabaseReference;
 
 public class Delivery {
-    private String CartId;
+    //private String CartId;
     private String Address;
     private String Account;
     private String UserName;
 
-    public String getCartId() {
-        return CartId;
-    }
-
-    public void setCartId(String cartId) {
-        CartId = cartId;
-    }
+    //public String getCartId() {
+    //    return CartId;
+    //}
+//
+    //public void setCartId(String cartId) {
+   //    CartId = cartId;
+   //}
 
     public String getAddress() {
         return Address;
@@ -42,15 +42,14 @@ public class Delivery {
     }
 
     public void Delivery(){
-        CartId = Session.getInstance().User().getCart();
+        //CartId = Session.getInstance().User().getCart();
         Address = Session.getInstance().Cart().getAddress();
         Account = Session.getInstance().Cart().getBankAccount();
         UserName = Session.getInstance().User().getName();
     }
     public void MapToDbRef(DatabaseReference dRef){
-        DatabaseReference ref = dRef.child(CartId);
-        ref.child("Address").setValue(Address);
-        ref.child("Account").setValue(Account);
-        ref.child("UserName").setValue(UserName);
+        dRef.child("Address").setValue(Address);
+        dRef.child("Account").setValue(Account);
+        dRef.child("UserName").setValue(UserName);
     }
 }

@@ -63,6 +63,8 @@
                             android:background="#fefefe"
                             android:id="@+id/spSlicing"
                             android:layout_weight="1"
+                            android:gravity="center"
+                            android:layoutDirection="rtl"
                             android:layout_marginTop="5dp" android:spinnerMode="dialog"/>
                 </LinearLayout>
                 <LinearLayout
@@ -82,8 +84,10 @@
                             android:layout_height="26dp"
                             android:textSize="18sp"
                             android:id="@+id/spWeight"
+                            android:gravity="center"
                             android:spinnerMode="dialog"
                             android:background="#ffffff"
+                            android:layoutDirection="rtl"
                             android:layout_marginTop="5dp" android:accessibilityHeading="false"/>
                 </LinearLayout>
 
@@ -109,6 +113,7 @@
                         android:layout_width="176dp"
                         android:layout_height="26dp"
                         android:layout_gravity="right"
+                        android:layoutDirection="rtl"
                         android:background="#fefefe"
                         android:layout_weight="1"
                         android:spinnerMode="dialog"

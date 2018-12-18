@@ -18,8 +18,6 @@ public class RecyclerItemAdapter
 {
     //private final List<Fragment> fragments = new ArrayList<>();
     //private final List<String> titles = new ArrayList<>();
-
-
     //public ViewPagerItemAdapter(FragmentManager fm) {
     //    super(fm);
     //}
@@ -31,7 +29,7 @@ public class RecyclerItemAdapter
     //public Fragment getItem(int i) {
     //    return fragments.get(i);
     //}
-//
+    //
     //@Override
     //public int getCount() {
     //    return fragments.size();
@@ -48,8 +46,8 @@ public class RecyclerItemAdapter
 //
         public ItemHolder(@NonNull View itemView) {
             super(itemView);
-            title = (TextView) itemView.findViewById(R.id.title);
-            resource = (ImageView) itemView.findViewById(R.id.resource);
+            title = (TextView) itemView.findViewById(R.id.txtCategory);
+            resource = (ImageView) itemView.findViewById(R.id.CategoryResource);
         }
         public void bind(final ItemCategory item) {
             resource.setImageResource(item.getImage_drawable());

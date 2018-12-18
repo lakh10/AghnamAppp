@@ -21,9 +21,9 @@ public class SignUp extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_sign_up);
-        edtPhone = (EditText)findViewById(R.id.edtPhone);
-        edtPwd = (EditText)findViewById(R.id.edtPwd);
-        edtName = (EditText)findViewById(R.id.edtName);
+        edtPhone = (EditText)findViewById(R.id.edtSignUpPhone);
+        edtPwd = (EditText)findViewById(R.id.edtSignUpPwd);
+        edtName = (EditText)findViewById(R.id.edtSignUpName);
         btnSignUp = (Button)findViewById(R.id.btnSignUp);
 
         final FirebaseDatabase db = FirebaseDatabase.getInstance();

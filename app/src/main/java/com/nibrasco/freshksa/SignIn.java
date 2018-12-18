@@ -5,10 +5,10 @@ import android.graphics.Color;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.design.widget.Snackbar;
+import android.support.design.widget.TextInputEditText;
 import android.support.v7.app.AppCompatActivity;
 import android.view.View;
 import android.widget.Button;
-import android.widget.EditText;
 import android.widget.TextView;
 import com.google.firebase.database.*;
 import com.nibrasco.freshksa.Model.Cart;
@@ -17,16 +17,16 @@ import com.nibrasco.freshksa.Model.User;
 
 public class SignIn extends AppCompatActivity {
 
-    private EditText edtPhone, edtPwd;
+    private TextInputEditText edtPhone, edtPwd;
     private Button btnSignIn;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_sign_in);
-        edtPhone = (EditText)findViewById(R.id.edtPhone);
-        edtPwd = (EditText)findViewById(R.id.edtPwd);
+        edtPhone = (TextInputEditText)findViewById(R.id.edtPhone);
+        edtPwd = (TextInputEditText)findViewById(R.id.edtPwd);
 
-        btnSignIn = (Button)findViewById(R.id.btnSignIn);
+        btnSignIn = findViewById(R.id.edtSignUpPhone);
 
         final FirebaseDatabase db = FirebaseDatabase.getInstance();
         final DatabaseReference tblUser = db.getReference("User");
@@ -60,8 +60,13 @@ public class SignIn extends AppCompatActivity {
                                         @Override
                                         public void onDataChange(@NonNull DataSnapshot cartsSnap) {
                                             String id = Session.getInstance().User().getCart();
-                                            if (cartsSnap.hasChild(id))
+                                            if (!id.equals("0"))
                                                 Session.getInstance().Cart(new Cart(cartsSnap.child(id)));
+                                            else {
+                                                Session.getInstance().Cart(new Cart());
+                                                Session.getInstance().User().setCart(Long.toString(cartsSnap.getChildrenCount()));
+                                                Session.getInstance().User().MapToDbRef(tblUser.child(Session.getInstance().User().getPhone()));
+                                            }
                                         }
 
                                         @Override

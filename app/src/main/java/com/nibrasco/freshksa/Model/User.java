@@ -77,11 +77,9 @@ public class User {
         Orders = new ArrayList<>();
         if (userSnap.hasChild("Orders")){
             DataSnapshot ordersSnap = userSnap.child("Orders");
-            if(ordersSnap.getChildrenCount() >= 1)
-            {
-                for(DataSnapshot orderSnap : ordersSnap.getChildren())
-                {
-                    Orders.add(orderSnap.getKey());
+            if(!ordersSnap.hasChild("0") && ordersSnap.getChildrenCount() >= 1) {
+                for (DataSnapshot orderSnap : ordersSnap.getChildren()) {
+                    AddOrder(orderSnap.getKey());
                 }
             }
         }

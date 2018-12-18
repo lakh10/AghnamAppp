@@ -1,6 +1,5 @@
 package com.nibrasco.freshksa.Model;
 
-import android.widget.ArrayAdapter;
 import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseReference;
 import com.nibrasco.freshksa.R;
@@ -151,9 +150,9 @@ public class Cart {
 
         public static ArrayList<String> GetPackagingNames(){
             ArrayList<String> list = new ArrayList<>();
-            for (Category s:
-                    GetCategories()) {
-                list.add(s.Name);
+            for (Packaging p:
+                    GetPackages()) {
+                list.add(p.Name);
             }
             return list;
         }
@@ -161,7 +160,7 @@ public class Cart {
             return GetPackagingNames().get(index);
         }
         public static ArrayList<Packaging> GetPackages(){
-            Packages = new ArrayList<Packaging>();
+            Packages = new ArrayList<>();
 
             Packages.add(new Packaging("بدون"));
             Packages.add(new Packaging("كيس"));
@@ -475,8 +474,7 @@ public class Cart {
         Items = items;
     }
     */
-    public Cart(DataSnapshot cart)
-    {
+    public Cart(DataSnapshot cart) {
         Address = cart.child("Address").getValue(String.class);
         TimeOfDelivery = eTime.Get(Integer.parseInt(cart.child("TimeOfDelivery").getValue().toString()));
         //BankAccount = cart.child("BankAccount").getValue().toString();
@@ -493,8 +491,7 @@ public class Cart {
         }
     }
 
-    public void MapToDbRef(DatabaseReference cartRef)
-    {
+    public void MapToDbRef(DatabaseReference cartRef) {
         cartRef.child("Address").setValue(Address);
         cartRef.child("TimeOfDelivery").setValue(TimeOfDelivery.Value());
         cartRef.child("BankAccount").setValue(BankAccount);
@@ -506,8 +503,8 @@ public class Cart {
         }
 
     }
-    public float GetTotal()
-    {
+
+    public float GetTotal() {
         if (Items.size() > 0)
         {
             float t = 0.0f;
@@ -519,8 +516,8 @@ public class Cart {
         }
         return 0.0f;
     }
-    public String ToString()
-    {
+
+    public String ToString() {
         String obj = "Address = " + Address + "\nItems(Count = " + Items.size() + "):\n";
         for(Item item : Items)
         {

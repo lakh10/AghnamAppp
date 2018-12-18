@@ -46,10 +46,11 @@ public class OrderItemFragment extends Fragment {
                     //Add the item to the cart at this point
                     if(SaveChanges(v))
                     {
-                        Fragment fragment = new ShippingDetailsFragment();
-                        FragmentTransaction ft = getActivity().getSupportFragmentManager().beginTransaction();
-                        ft.replace(R.id.homeContainer, fragment);
-                        ft.commit();
+                        CartFragment f = new CartFragment();
+                        FragmentTransaction fragmentTransaction = getFragmentManager().beginTransaction();
+                        fragmentTransaction.replace(R.id.homeContainer, f);
+                        fragmentTransaction.addToBackStack(null);
+                        fragmentTransaction.commit();
                     }
                 }
             }
@@ -68,19 +69,11 @@ public class OrderItemFragment extends Fragment {
             tblCart.addListenerForSingleValueEvent(new ValueEventListener() {
                 @Override
                 public void onDataChange(@NonNull DataSnapshot cartsSnap) {
-                    if(Session.getInstance().User().getCart().equals("0")) {
-                        long count = cartsSnap.getChildrenCount();
-                        Session.getInstance().Cart().MapToDbRef(tblCart.child(Long.toString(count)));
-                    }
-                    else {
-                        Session.getInstance().Cart().MapToDbRef(tblCart.child(Session.getInstance().User().getCart()));
-                    }
+
+                    DatabaseReference cartRef = tblCart.child(Session.getInstance().User().getCart());
+                    Session.getInstance().Item().MapToDbRef(cartRef.child("Items"));
+
                     snack.dismiss();
-                    CartFragment f = new CartFragment();
-                    FragmentTransaction fragmentTransaction = getFragmentManager().beginTransaction();
-                    fragmentTransaction.replace(R.id.homeContainer, f);
-                    fragmentTransaction.addToBackStack(null);
-                    fragmentTransaction.commit();
                     success[0] = true;
                 }
 

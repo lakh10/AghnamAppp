@@ -110,7 +110,7 @@ public class CamelFragment extends Fragment {
 
         ArrayList<String> list = Cart.Lists.GetWeightNames(Session.getInstance().Item().getCategory());
         ArrayAdapter adapter = new ArrayAdapter<>(v.getContext(), android.R.layout.simple_spinner_item, list);
-        adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
+        //adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
         spWeight.setAdapter(adapter);
         spWeight.setSelection(0);
         String totalTxt = Float.toString(Session.getInstance().Item().getTotal());

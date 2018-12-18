@@ -3,6 +3,7 @@ package com.nibrasco.freshksa;
 import android.content.Intent;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
+import android.support.design.button.MaterialButton;
 import android.support.v7.app.AppCompatActivity;
 import android.view.View;
 import android.widget.Button;
@@ -12,13 +13,13 @@ import com.nibrasco.freshksa.Model.Cart;
 
 public class MainActivity extends AppCompatActivity {
 
-    Button btnSignIn, btnSignUp;
+    MaterialButton btnSignIn, btnSignUp;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
-        btnSignIn = (Button)findViewById(R.id.btnSignIn);
-        btnSignUp = (Button)findViewById(R.id.btnSignUp);
+        btnSignIn = (MaterialButton)findViewById(R.id.btnMainSignIn);
+        btnSignUp = (MaterialButton)findViewById(R.id.btnMainSignUp);
 //
 //
         btnSignIn.setOnClickListener(new View.OnClickListener() {

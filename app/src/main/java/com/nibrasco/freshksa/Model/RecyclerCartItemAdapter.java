@@ -29,8 +29,9 @@ public class RecyclerCartItemAdapter extends RecyclerView.Adapter<RecyclerCartIt
             Packaging = (TextView) itemView.findViewById(R.id.txtCartItemPackaging);
             Intestine = (TextView) itemView.findViewById(R.id.txtCartItemIntestine);
             Slicing = (TextView) itemView.findViewById(R.id.txtCartItemSlicing);
-            resource = (ImageView) itemView.findViewById(R.id.cartItemImage);
+            resource = (ImageView) itemView.findViewById(R.id.resource);
         }
+
     }
     public RecyclerCartItemAdapter(Context ctx, List<CartItemCategory> items)
     {

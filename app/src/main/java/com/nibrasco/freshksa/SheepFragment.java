@@ -140,7 +140,6 @@ public class SheepFragment extends Fragment {
         adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
         spWeight.setAdapter(adapter);
         spWeight.setSelection(0);
-        txtTotal.setText(Float.toString(Session.getInstance().Item().getTotal()));
 
         list = Cart.Lists.GetSlicingNames();
         adapter = new ArrayAdapter<>(v.getContext(), android.R.layout.simple_spinner_item, list);

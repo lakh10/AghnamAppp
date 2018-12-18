@@ -34,7 +34,9 @@
             android:id="@+id/spWeightCamel"
             android:spinnerMode="dialog"
             android:background="#ffffff"
-            android:accessibilityHeading="false" android:layout_centerVertical="true"
+            android:layoutDirection="rtl"
+            android:accessibilityHeading="false"
+            android:layout_centerVertical="true"
             android:layout_alignEnd="@+id/edtQuantity"/>
     <LinearLayout
 

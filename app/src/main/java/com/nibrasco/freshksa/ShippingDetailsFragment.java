@@ -83,7 +83,7 @@ public class ShippingDetailsFragment extends Fragment {
             public void onClick(View v) {
                 PaymentDetailsFragment fragment = new PaymentDetailsFragment();
                 FragmentTransaction ft = getActivity().getSupportFragmentManager().beginTransaction();
-                ft.replace(R.id.orderItemContentFrame, fragment);
+                ft.replace(R.id.homeContainer, fragment);
                 ft.commit();
             }
         });
