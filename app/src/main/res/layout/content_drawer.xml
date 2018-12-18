@@ -9,10 +9,10 @@
         tools:showIn="@layout/app_bar_drawer"
         tools:context=".Home">
 
-<FrameLayout
-        android:id="@+id/homeContainer"
-        android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:layoutDirection="ltr"/>
+    <FrameLayout
+            android:id="@+id/homeContainer"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:layoutDirection="ltr" android:padding="8dp"/>
 
 </android.support.constraint.ConstraintLayout>

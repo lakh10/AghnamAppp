@@ -2,6 +2,7 @@ package com.nibrasco.freshksa;
 
 
 import android.os.Bundle;
+import android.support.design.widget.TextInputEditText;
 import android.support.v4.app.Fragment;
 import android.text.Editable;
 import android.text.TextWatcher;
@@ -21,11 +22,16 @@ public class SheepFragment extends Fragment {
 
     private Spinner spSlicing, spWeight, spPackaging;
     private TextView txtTotal;
-    private EditText edtQuantity, edtNotes;
+    private EditText edtQuantity;
+    TextInputEditText edtNotes;
     private RadioGroup rdGrpIntestine;
     Cart.Item currentItem;
     public SheepFragment() {
         currentItem = Session.getInstance().Item();
+        currentItem.setWeight(0);
+        currentItem.setIntestine(false);
+        currentItem.setSlicing(Cart.eSlicing.Fridge.Value());
+        currentItem.setPackaging(Cart.ePackaging.None.Value());
         currentItem.setTotal(Session.getInstance().Item().getDefaultPrice());
     }
 
@@ -53,8 +59,8 @@ public class SheepFragment extends Fragment {
         spWeight = (Spinner)v.findViewById(R.id.spWeight);
         spPackaging = (Spinner)v.findViewById(R.id.spPackaging);
         edtQuantity = (EditText)v.findViewById(R.id.edtQuantity);
-        rdGrpIntestine = (RadioGroup)v.findViewById(R.id.rdGrpIntestine);
-        edtNotes = (EditText)v.findViewById(R.id.edtNotes);
+        rdGrpIntestine = (RadioGroup)v.findViewById(R.id.rdGrpInt);
+        edtNotes = (TextInputEditText)v.findViewById(R.id.edtSNotes);
         txtTotal = (TextView)v.findViewById(R.id.txtTotalItem);
     }
     private void LinkListeners()

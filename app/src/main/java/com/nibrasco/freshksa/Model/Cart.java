@@ -235,7 +235,7 @@ public class Cart {
         Goat(R.drawable.tais),
         GroundMeat(R.drawable.ajl),
         Camel(R.drawable.hashe),
-        HalfSheep(0);
+        HalfSheep(R.drawable.half_sheep);
         private final int value;
         eCategory(int value) {
             this.value = value;
@@ -421,7 +421,7 @@ public class Cart {
     }
     public void setAddress(String address)
     {
-        Address += address;
+        Address = address;
     }
 
     public eTime getTimeOfDelivery() {
@@ -475,10 +475,10 @@ public class Cart {
     }
     */
     public Cart(DataSnapshot cart) {
-        Address = cart.child("Address").getValue(String.class);
-        TimeOfDelivery = eTime.Get(Integer.parseInt(cart.child("TimeOfDelivery").getValue().toString()));
+        Address = cart.hasChild("Address")? cart.child("Address").getValue(String.class) : "";
+        TimeOfDelivery = cart.hasChild("TimeOfDelivery")? eTime.Get(Integer.parseInt(cart.child("TimeOfDelivery").getValue().toString())) : eTime.Noon;
         //BankAccount = cart.child("BankAccount").getValue().toString();
-        Items = new ArrayList<Item>();
+        Items = new ArrayList<>();
         if(cart.child("Items").exists() || cart.child("Items").hasChildren())
         {
             DataSnapshot itemsSnap = cart.child("Items");

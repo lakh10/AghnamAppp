@@ -32,7 +32,6 @@
             android:layout_height="26dp"
             android:textSize="18sp"
             android:id="@+id/spWeightCamel"
-            android:spinnerMode="dialog"
             android:background="#ffffff"
             android:layoutDirection="rtl"
             android:accessibilityHeading="false"

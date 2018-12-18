@@ -40,18 +40,16 @@ public class CartFragment extends Fragment {
         View v = getView();
         LinkControls(v);
         DisplayValues();
-        if(Session.getInstance().Cart() != null && Session.getInstance().Cart().Items().size() > 0) {
+        Boolean flipListeners = Session.getInstance().Cart() != null && Session.getInstance().Cart().Items().size() > 0;
+        if(flipListeners) {
             FillRecyclerView(v);
+            AssignListeners(flipListeners);
         }
-        AssignListeners();
-        //else  {
-        //    OrderItemFragment f = new OrderItemFragment();
-        //    assert getFragmentManager() != null;
-        //    FragmentTransaction fragmentTransaction = getFragmentManager().beginTransaction();
-        //    fragmentTransaction.replace(R.id.homeContainer, f);
-        //    fragmentTransaction.addToBackStack(null);
-        //    fragmentTransaction.commit();
-        //}
+        else {
+            btnOrder.setVisibility(View.GONE);
+            btnConfirmCart.setText(btnOrder.getText());
+            AssignListeners(flipListeners);
+        }
     }
 
     private void DisplayValues() {
@@ -63,15 +61,13 @@ public class CartFragment extends Fragment {
                              Bundle savedInstanceState) {
         return inflater.inflate(R.layout.fragment_cart, container, false);
     }
-    private void LinkControls(View v)
-    {
+    private void LinkControls(View v) {
         itemsView = (RecyclerView)v.findViewById(R.id.recyclerCartItems);
         txtCartTotal = (TextView)v.findViewById(R.id.txtCartTotal);
         btnOrder = (TextView) v.findViewById(R.id.btnItemOrder);
         btnConfirmCart = (Button)v.findViewById(R.id.btnConfirmCart);
     }
-    private void FillRecyclerView(View v)
-    {
+    private void FillRecyclerView(View v) {
         if(Session.getInstance().Cart() != null && Session.getInstance().Cart().Items().size() > 0) {
             ArrayList<CartItemCategory> items = new ArrayList<>();
             List<Cart.Item> cartItems = Session.getInstance().Cart().Items();
@@ -86,9 +82,8 @@ public class CartFragment extends Fragment {
             itemsView.setLayoutManager(layoutManager);
         }
     }
-    private void AssignListeners()
-    {
-        btnOrder.setOnClickListener(new View.OnClickListener() {
+    private void AssignListeners(Boolean flipped) {
+        View.OnClickListener orderListener = new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                OrderItemFragment f = new OrderItemFragment();
@@ -98,8 +93,8 @@ public class CartFragment extends Fragment {
                fragmentTransaction.addToBackStack(null);
                fragmentTransaction.commit();
             }
-        });
-        btnConfirmCart.setOnClickListener(new View.OnClickListener() {
+        };
+        View.OnClickListener shippingListener = new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 ShippingDetailsFragment f = new ShippingDetailsFragment();
@@ -109,6 +104,13 @@ public class CartFragment extends Fragment {
                 fragmentTransaction.addToBackStack(null);
                 fragmentTransaction.commit();
             }
-        });
+        };
+
+        if (!flipped) {
+            btnConfirmCart.setOnClickListener(orderListener);
+        }else {
+            btnConfirmCart.setOnClickListener(shippingListener);
+            btnOrder.setOnClickListener(orderListener);
+        }
     }
 }

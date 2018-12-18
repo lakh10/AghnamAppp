@@ -111,4 +111,7 @@
     <string name="MainSignInTxt">تسجيل الدخول</string>
     <string name="msgUserInfoLoading">تحميل البيانات...</string>
     <string name="btnItemOrderTxt">طلب جديد</string>
+    <string name="shippingDetailTime">وقت التوصيل</string>
+    <string name="shippingDetailsUserName">الإسم الكامل</string>
+    <string name="ShippingDetailsPhoneLabel">رقم الهاتف</string>
 </resources>

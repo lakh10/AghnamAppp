@@ -1,204 +1,161 @@
 <?xml version="1.0" encoding="utf-8"?>
-<RelativeLayout
+<android.support.constraint.ConstraintLayout
         xmlns:android="http://schemas.android.com/apk/res/android"
-        xmlns:tools="http://schemas.android.com/tools"
+        xmlns:app="http://schemas.android.com/apk/res-auto" xmlns:tools="http://schemas.android.com/tools"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:background="#f1f1f1"
+        android:background="@android:color/white"
         tools:context=".OrderItemFragment">
-        <LinearLayout
-                android:orientation="vertical"
+
+
+    <TextView
+            android:text="الكمية"
+            android:layout_width="64dp"
+            android:layout_height="wrap_content"
+            android:gravity="center"
+            android:textColor="@color/colorPrimary"
+            android:id="@+id/textView20" app:layout_constraintTop_toTopOf="parent"
+            android:layout_marginTop="16dp" app:layout_constraintEnd_toEndOf="parent" android:layout_marginEnd="64dp"
+            android:layout_marginRight="64dp"/>
+
+    <EditText
+            android:id="@+id/edtQuantity"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:background="#fff"
+            android:hint="0"
+            android:inputType="number"
+            android:text="0"
+            app:layout_constraintTop_toBottomOf="@+id/textView20" app:layout_constraintEnd_toEndOf="@+id/textView20"
+            app:layout_constraintStart_toStartOf="@+id/textView20"
+    />
+
+
+    <TextView
+            android:text="التقطيع"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:textColor="@color/colorPrimary"
+            android:id="@+id/txtSlicing"
+            android:gravity="center"
+            app:layout_constraintTop_toTopOf="@+id/textView29" app:layout_constraintEnd_toStartOf="@+id/textView29"
+            android:layout_marginEnd="128dp" android:layout_marginRight="128dp"
+            app:layout_constraintBottom_toBottomOf="@+id/textView29"/>
+    <Spinner
+            android:layout_height="30dp"
+            android:background="#fefefe"
+            android:id="@+id/spSlicing"
+            android:gravity="center"
+            android:layoutDirection="rtl"
+            app:layout_constraintTop_toBottomOf="@+id/txtSlicing" app:layout_constraintEnd_toEndOf="@+id/txtSlicing"
+            app:layout_constraintStart_toStartOf="@+id/txtSlicing"
+            android:layout_width="109dp"/>
+
+
+    <TextView
+            android:text="الوزن"
+            android:layout_width="62dp"
+            android:layout_height="wrap_content"
+            android:textColor="@color/colorPrimary"
+            android:layout_marginTop="16dp"
+            app:layout_constraintTop_toBottomOf="@+id/edtQuantity" android:id="@+id/textView29"
+            app:layout_constraintEnd_toEndOf="@+id/textView20"
+    />
+    <Spinner
+            android:layout_width="0dp"
+            android:layout_height="0dp"
+            android:textSize="18sp"
+            android:id="@+id/spWeight"
+            android:gravity="center"
+            android:background="#ffffff"
+            android:layoutDirection="rtl"
+            android:accessibilityHeading="false"
+            app:layout_constraintTop_toBottomOf="@+id/textView29"
+            app:layout_constraintEnd_toEndOf="@+id/textView29" app:layout_constraintStart_toEndOf="@+id/spSlicing"
+            android:layout_marginLeft="32dp" android:layout_marginStart="32dp"
+            app:layout_constraintHorizontal_bias="1.0" app:layout_constraintBottom_toBottomOf="@+id/spSlicing"
+    />
+    <Spinner
+            android:id="@+id/spPackaging"
+            android:layout_width="120dp"
+            android:layout_height="29dp"
+            android:layoutDirection="rtl"
+            android:background="#fefefe" app:layout_constraintTop_toBottomOf="@+id/textView32"
+            app:layout_constraintEnd_toEndOf="@+id/textView32"
+    />
+
+
+    <TextView
+            android:text="التعليب"
+            android:layout_width="73dp"
+            android:layout_height="wrap_content"
+            android:textColor="@color/colorPrimary"
+            app:layout_constraintEnd_toEndOf="@+id/textView29"
+            android:layout_marginTop="16dp"
+            app:layout_constraintTop_toBottomOf="@+id/spWeight" android:id="@+id/textView32"/>
+    <TextView
+            android:text="المصارن"
+            android:layout_width="68dp"
+            android:layout_height="wrap_content"
+            android:textColor="@color/colorPrimary"
+            app:layout_constraintEnd_toEndOf="@+id/textView32"
+            android:layout_marginTop="16dp"
+            app:layout_constraintTop_toBottomOf="@+id/spPackaging" android:id="@+id/textView33"/>
+    <TextView
+            android:text="0.0"
+            android:layout_width="58dp"
+            android:layout_height="wrap_content"
+            android:textColor="#32a65b"
+            android:id="@+id/txtTotalItem"
+            app:layout_constraintEnd_toStartOf="@+id/textView34" android:layout_marginEnd="32dp"
+            android:layout_marginRight="32dp" app:layout_constraintTop_toTopOf="@+id/textView34"
+    />
+
+    <TextView
+            android:text="@string/Total"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:textColor="@color/colorPrimary"
+            android:id="@+id/textView34" app:layout_constraintEnd_toEndOf="@+id/textView33"
+            app:layout_constraintBottom_toBottomOf="parent" android:layout_marginBottom="32dp"/>
+    <RadioGroup
+            android:id="@+id/rdGrpInt"
+            android:layout_width="160dp"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal" app:layout_constraintEnd_toEndOf="@+id/textView33"
+            app:layout_constraintTop_toBottomOf="@+id/textView33">
+        <RadioButton
+                android:id="@+id/rdInt_No"
+                android:text="لا"
+                android:textColor="#32a65b"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content" android:layout_weight="1" tools:layout_editor_absoluteY="325dp"
+                tools:layout_editor_absoluteX="69dp"/>
+        <RadioButton
+                android:id="@+id/rdInt_Yes"
+                android:text="نعم"
+                android:textColor="#32a65b"
+                android:layout_width="89dp"
+                android:layout_height="wrap_content"
+                android:textColorLink="#32a65b" android:checked="true" tools:checked="true" android:layout_weight="1"
+                tools:layout_editor_absoluteY="334dp" tools:layout_editor_absoluteX="125dp"/>
+    </RadioGroup>
+    <android.support.design.widget.TextInputLayout
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_marginBottom="16dp"
+            app:layout_constraintBottom_toTopOf="@+id/textView34"
+            app:layout_constraintStart_toStartOf="parent" app:layout_constraintHorizontal_bias="0.5"
+            app:layout_constraintEnd_toEndOf="parent" android:layout_marginEnd="16dp" android:layout_marginRight="16dp"
+            android:layout_marginLeft="16dp" android:layout_marginStart="16dp" android:layout_marginTop="16dp"
+            app:layout_constraintTop_toBottomOf="@+id/rdGrpInt">
+
+        <android.support.design.widget.TextInputEditText
+                android:id="@+id/edtSNotes"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_marginTop="5dp"
-                android:layout_gravity="center">
-            <LinearLayout
-                    android:id="@+id/layoutQuantity"
-                    android:layout_gravity="right"
-                    android:orientation="vertical"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content">
-                <TextView
-                        android:text="الكمية"
-                        android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
-                        android:gravity="center"
-                        android:textColor="#32a65b"
-                        android:layout_marginTop="10dp"/>
-
-                <EditText
-                        android:id="@+id/edtQuantity"
-                        android:layout_width="68dp"
-                        android:layout_height="wrap_content"
-                        android:background="#fff"
-                        android:hint="0"
-                        android:inputType="number"
-                        android:layout_marginTop="5dp" android:text="0"/>
-            </LinearLayout>
-
-            <RelativeLayout
-                    android:orientation="horizontal"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:layout_marginTop="5dp"
-                    android:paddingRight="10dp"
-                    android:paddingLeft="10dp">
-                <LinearLayout
-                        android:id="@+id/layoutSlicing"
-                        android:layout_alignParentLeft="true"
-                        android:orientation="vertical"
-                        android:layout_width="162dp"
-                        android:layout_height="wrap_content">
-                    <TextView
-                            android:text="التقطيع"
-                            android:layout_width="match_parent"
-                            android:layout_height="wrap_content"
-                            android:textColor="#32a65b"
-                            android:id="@+id/txtSlicing"
-                            android:gravity="center"/>
-                    <Spinner
-                            android:layout_width="176dp"
-                            android:layout_height="26dp"
-                            android:layout_gravity="right"
-                            android:background="#fefefe"
-                            android:id="@+id/spSlicing"
-                            android:layout_weight="1"
-                            android:gravity="center"
-                            android:layoutDirection="rtl"
-                            android:layout_marginTop="5dp" android:spinnerMode="dialog"/>
-                </LinearLayout>
-                <LinearLayout
-                        android:id="@+id/layoutSize"
-                        android:layout_alignParentRight="true"
-                        android:orientation="vertical"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content">
-                    <TextView
-                            android:text="الوزن"
-                            android:layout_width="match_parent"
-                            android:layout_height="wrap_content"
-                            android:textColor="#32a65b"
-                            android:gravity="center"/>
-                    <Spinner
-                            android:layout_width="176dp"
-                            android:layout_height="26dp"
-                            android:textSize="18sp"
-                            android:id="@+id/spWeight"
-                            android:gravity="center"
-                            android:spinnerMode="dialog"
-                            android:background="#ffffff"
-                            android:layoutDirection="rtl"
-                            android:layout_marginTop="5dp" android:accessibilityHeading="false"/>
-                </LinearLayout>
-
-            </RelativeLayout>
-
-            <LinearLayout
-                    android:id="@+id/layoutPackaging"
-                    android:layout_gravity="right"
-                    android:orientation="vertical"
-                    android:layout_width="179dp"
-                    android:layout_height="wrap_content"
-                    android:layout_marginTop="5dp"
-                    android:layout_marginRight="8dp">
-                <TextView
-                        android:text="التعليب"
-                        android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
-                        android:textColor="#32a65b"
-                        android:gravity="center"
-                        android:id="@+id/txtPackaging"/>
-                <Spinner
-                        android:id="@+id/spPackaging"
-                        android:layout_width="176dp"
-                        android:layout_height="26dp"
-                        android:layout_gravity="right"
-                        android:layoutDirection="rtl"
-                        android:background="#fefefe"
-                        android:layout_weight="1"
-                        android:spinnerMode="dialog"
-                        android:layout_marginTop="5dp"/>
-            </LinearLayout>
-            <LinearLayout
-                    android:layout_gravity="right"
-                    android:orientation="vertical"
-                    android:layout_width="127dp"
-                    android:layout_height="wrap_content"
-                    android:layout_marginTop="5dp">
-                <TextView
-                        android:text="المصارن"
-                        android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
-                        android:textColor="#32a65b"
-                        android:gravity="center"
-                        android:id="@+id/txtInt"/>
-
-                <RadioGroup
-                        android:id="@+id/rdGrpIntestine"
-                        android:layout_width="108dp"
-                        android:orientation="horizontal"
-                        android:layout_height="wrap_content"
-                        android:paddingTop="5dp">
-                    <RadioButton
-                            android:id="@+id/rdInt_Yes"
-                            android:text="نعم"
-                            android:textColor="#32a65b"
-                            android:layout_width="wrap_content"
-                            android:layout_height="wrap_content"
-                            android:layout_weight="1"
-                            android:textColorLink="#32a65b" android:checked="true" tools:checked="true"/>
-                    <RadioButton
-                            android:id="@+id/rdInt_No"
-                            android:text="لا"
-                            android:textColor="#32a65b"
-                            android:layout_width="wrap_content"
-                            android:layout_height="wrap_content"
-                            android:layout_weight="1"/>
-                </RadioGroup>
-            </LinearLayout>
-            <LinearLayout
-                    android:orientation="vertical"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content">
-                <EditText
-                        android:id="@+id/edtNotes"
-                        android:layout_width="match_parent"
-                        android:layout_height="100dp"
-                        android:gravity="end"
-                        android:background="#ffffff"
-                        android:layout_marginTop="10dp"
-                        android:paddingLeft="20dp"
-                        android:paddingRight="20dp"/>
-                <RelativeLayout
-                        android:orientation="horizontal"
-                        android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
-                        android:layout_marginTop="5dp"
-                        android:paddingRight="10dp"
-                        android:paddingLeft="10dp">
-
-                    <TextView
-                            android:text="0.0"
-                            android:layout_width="wrap_content"
-                            android:layout_height="wrap_content"
-                            android:textColor="#32a65b"
-                            android:id="@+id/txtTotalItem"
-                            android:gravity="center"
-                            android:layout_alignParentStart="true"
-                            android:layout_alignParentTop="true"
-                            android:layout_marginStart="128dp"/>
-
-                    <TextView
-                            android:text="@string/Total"
-                            android:layout_width="wrap_content"
-                            android:layout_height="wrap_content"
-                            android:textColor="#32a65b"
-                            android:gravity="center" android:layout_alignParentEnd="true"
-                            android:layout_alignParentTop="true" android:layout_marginEnd="114dp"/>
+                android:hint="hint" android:lines="4"/>
+    </android.support.design.widget.TextInputLayout>
 
 
-                </RelativeLayout>
-            </LinearLayout>
-        </LinearLayout>
-
-</RelativeLayout>
+</android.support.constraint.ConstraintLayout>

@@ -32,37 +32,45 @@ public class SignUp extends AppCompatActivity {
         btnSignUp.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                String message = getResources().getString(R.string.msgSignUpRegister);
-                final Snackbar snack = Snackbar.make(v, message, Snackbar.LENGTH_LONG);
-                snack.setActionTextColor(Color.WHITE).show();
-                tblUser.addListenerForSingleValueEvent(new ValueEventListener() {
-                    @Override
-                    public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
-                        if(!dataSnapshot.child(edtPhone.getText().toString()).exists()) {
-                            snack.dismiss();
-                            String name = edtName.getText().toString(),
-                                    pwd = edtPwd.getText().toString(),
-                                    phone = edtPhone.getText().toString();
-                            Session.getInstance().User(new User(name, pwd));
-                            Session.getInstance().User().MapToDbRef(tblUser.child(phone));
-                            snack.setText(getResources().getString(R.string.msgSignUpSuccess))
-                                    .setActionTextColor(Color.GREEN).show();
-                            startActivity(new Intent(SignUp.this, Home.class));
-                            snack.dismiss();
-                        }
-                        else
-                        {
-                            snack.dismiss();
-                            snack.setText(getResources().getString(R.string.msgSignInRegisterFailed))
-                                    .setActionTextColor(Color.RED).show();
-                        }
-                    }
+                final String name = edtName.getText().toString(),
+                        pwd = edtPwd.getText().toString(),
+                        phone = edtPhone.getText().toString();
+                if(!phone.equals("") &&  !pwd.equals("")) {
+                    String message = getResources().getString(R.string.msgSignUpRegister);
+                    final Snackbar snack = Snackbar.make(v, message, Snackbar.LENGTH_LONG);
+                    snack.setActionTextColor(Color.WHITE).show();
+                    tblUser.addListenerForSingleValueEvent(new ValueEventListener() {
+                        @Override
+                        public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
+                            if (!dataSnapshot.child(edtPhone.getText().toString()).exists()) {
+                                snack.dismiss();
 
-                    @Override
-                    public void onCancelled(@NonNull DatabaseError databaseError) {
+                                Session.getInstance().User(new User(name, pwd));
+                                Session.getInstance().User().MapToDbRef(tblUser.child(phone));
+                                snack.setText(getResources().getString(R.string.msgSignUpSuccess))
+                                        .setActionTextColor(Color.GREEN)
+                                        .show();
+                                startActivity(new Intent(SignUp.this, Home.class));
+                                snack.dismiss();
+                            } else {
+                                snack.dismiss();
+                                snack.setText(getResources().getString(R.string.msgSignInRegisterFailed))
+                                        .setActionTextColor(Color.RED).show();
+                            }
+                        }
 
-                    }
-                });
+                        @Override
+                        public void onCancelled(@NonNull DatabaseError databaseError) {
+
+                        }
+                    });
+                }
+                else{
+
+                    Snackbar.make(v, getResources().getString(R.string.msgSignInEmpty), Snackbar.LENGTH_LONG)
+                            .setActionTextColor(Color.YELLOW)
+                            .show();
+                }
             }
         });
     }

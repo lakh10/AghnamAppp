@@ -7,6 +7,7 @@ import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
 import android.support.design.widget.Snackbar;
+import android.support.design.widget.TextInputEditText;
 import android.support.v4.app.Fragment;
 import android.text.Editable;
 import android.text.TextWatcher;
@@ -27,7 +28,7 @@ import com.nibrasco.freshksa.Model.User;
  */
 public class PaymentDetailsFragment extends Fragment {
     private TextView txtCount, txtTotal;
-    private EditText edtAccount;
+    TextInputEditText edtAccount;
     private Button btnConfirm;
     public PaymentDetailsFragment() {
         // Required empty public constructor
@@ -54,7 +55,7 @@ public class PaymentDetailsFragment extends Fragment {
     private void LinkControls(View v){
         txtCount = (TextView)v.findViewById(R.id.txtOrderCount);
         txtTotal = (TextView)v.findViewById(R.id.txtOrderTotal);
-        edtAccount = (EditText)v.findViewById(R.id.edtBankAccount);
+        edtAccount = (TextInputEditText)v.findViewById(R.id.edtPaymentAccount);
         btnConfirm = (Button)v.findViewById(R.id.btnPaymentConfirm);
     }
     private void LoadContent(View v){
@@ -92,20 +93,6 @@ public class PaymentDetailsFragment extends Fragment {
 
                         }
                     });
-
-                    final DatabaseReference tblDelivery = db.getReference("Delivery");
-                    tblDelivery.addListenerForSingleValueEvent(new ValueEventListener() {
-                        @Override
-                        public void onDataChange(@NonNull DataSnapshot deliverySnap) {
-                            Delivery d = new Delivery();
-                            d.MapToDbRef(tblDelivery.child(user.getCart()));
-                        }
-
-                        @Override
-                        public void onCancelled(@NonNull DatabaseError databaseError) {
-
-                        }
-                    });
                     final DatabaseReference tblUser = db.getReference("User");
 
                     tblUser.addListenerForSingleValueEvent(new ValueEventListener() {
@@ -117,6 +104,7 @@ public class PaymentDetailsFragment extends Fragment {
                             user.setCart("0");
                             user.MapToDbRef(tblUser.child(usrId));
                             Session.getInstance().User(user);
+                            Session.getInstance().Cart(new Cart(cart.getAddress()));
                         }
 
                         @Override
@@ -124,10 +112,7 @@ public class PaymentDetailsFragment extends Fragment {
 
                         }
                     });
-
                     snackbar.dismiss();
-
-
             }
         });
     }

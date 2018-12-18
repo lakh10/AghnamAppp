@@ -95,7 +95,7 @@ public class OrderItemFragment extends Fragment {
     {
         final ArrayList<ItemCategory> list = new ArrayList<>();
         for (Cart.eCategory c : Cart.eCategory.values()) {
-            if(c != Cart.eCategory.None && c != Cart.eCategory.HalfSheep)
+            if(c != Cart.eCategory.None)
                 list.add(new ItemCategory(getResources(), c));
         }
 

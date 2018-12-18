@@ -19,12 +19,12 @@ public class UserInfoFragment extends Fragment {
         // Required empty public constructor
     }
 
-    private TextView txtName, txtAddress, txtPhone;
+    private TextView txtName, txtPhone;
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
 
-        return inflater.inflate(R.layout.fragment_userprofil, container, false);
+        return inflater.inflate(R.layout.fragment_user_info2, container, false);
     }
 
     public void onActivityCreated(Bundle savedInstanceState) {
@@ -42,7 +42,6 @@ public class UserInfoFragment extends Fragment {
     private void LinkControls(View v)
     {
         txtName = (TextView)v.findViewById(R.id.txtUserInfoName);
-        txtAddress = (TextView)v.findViewById(R.id.txtUserInfoAddress);
         txtPhone = (TextView)v.findViewById(R.id.txtUserInfoPhone);
     }
     private void LoadData(final View v)
@@ -52,7 +51,6 @@ public class UserInfoFragment extends Fragment {
         snackbar.show();
         User usr = Session.getInstance().User();
         txtPhone.setText(usr.getPhone());
-        txtAddress.setText(Session.getInstance().Cart().getAddress());
         txtName.setText(usr.getName());
         snackbar.dismiss();
     }
