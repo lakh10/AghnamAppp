@@ -1,7 +1,9 @@
 <?xml version="1.0" encoding="utf-8"?>
-<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
-                android:layout_width="match_parent"
-                android:layout_height="match_parent">
+<android.support.constraint.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+                                             xmlns:app="http://schemas.android.com/apk/res-auto"
+                                             xmlns:tools="http://schemas.android.com/tools"
+                                             android:layout_width="match_parent"
+                                             android:layout_height="match_parent">
 
     <TextView
             android:text="الكمية"
@@ -10,25 +12,44 @@
             android:gravity="center"
             android:textColor="#32a65b"
             android:id="@+id/textView31"
-            android:layout_alignParentEnd="true"
-            android:layout_alignParentTop="true"
-            android:layout_marginEnd="30dp"
-            android:layout_marginTop="107dp"
-    />
+            android:layout_marginEnd="24dp"
+            android:layout_marginTop="24dp"
+            app:layout_constraintTop_toTopOf="parent" app:layout_constraintEnd_toEndOf="parent"
+            android:layout_marginRight="24dp"/>
     <TextView
             android:text="نصف هرفي نعيمي بلدي يوصلك طازج ومقطع تقطيع ثلاجة ومغلف بأكياس مجانا"
             android:layout_width="351dp"
             android:layout_height="wrap_content"
             android:textColor="#32a65b"
             android:textSize="18sp"
-            android:layout_centerHorizontal="true"
-            android:layout_alignParentTop="true"
-            android:layout_marginTop="214dp"/>
+            android:layout_marginTop="24dp"
+            app:layout_constraintLeft_toLeftOf="parent" app:layout_constraintRight_toRightOf="parent"
+            android:id="@+id/textView27" app:layout_constraintTop_toBottomOf="@+id/edtQuantity"
+            app:layout_constraintEnd_toEndOf="parent"
+            android:layout_marginEnd="16dp" android:layout_marginRight="16dp" android:layout_marginLeft="16dp"
+            app:layout_constraintHorizontal_bias="0.0"/>
     <EditText
-            android:layout_width="88dp"
-            android:layout_height="38dp"
-            android:inputType="numberDecimal"
-            android:ems="10"
-            android:layout_alignParentTop="true" android:layout_marginTop="156dp"
-            android:id="@+id/editText" android:layout_alignEnd="@+id/textView31" android:gravity="right"/>
-</RelativeLayout>
+            android:id="@+id/edtQuantity"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:background="#fff"
+            android:hint="1"
+            android:inputType="number"
+            app:layout_constraintTop_toBottomOf="@+id/textView31"
+            app:layout_constraintEnd_toEndOf="@+id/textView31"
+            app:layout_constraintStart_toStartOf="@+id/textView31"
+    />
+    <Button
+            android:id="@+id/btnItemOrder"
+            android:text="@string/btnOrder_Text"
+            android:textColor="@android:color/white"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:background="#32a65b"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintHorizontal_bias="0.5" app:layout_constraintEnd_toEndOf="parent"
+            android:layout_marginLeft="8dp" android:layout_marginStart="8dp" android:layout_marginEnd="8dp"
+            android:layout_marginRight="8dp"
+            app:layout_constraintBottom_toBottomOf="parent" android:layout_marginBottom="32dp"
+            android:layout_marginTop="8dp" app:layout_constraintTop_toBottomOf="@+id/textView27"/>
+</android.support.constraint.ConstraintLayout>

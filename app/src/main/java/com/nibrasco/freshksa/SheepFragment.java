@@ -2,14 +2,18 @@ package com.nibrasco.freshksa;
 
 
 import android.os.Bundle;
+import android.support.annotation.NonNull;
+import android.support.design.widget.Snackbar;
 import android.support.design.widget.TextInputEditText;
 import android.support.v4.app.Fragment;
+import android.support.v4.app.FragmentTransaction;
 import android.text.Editable;
 import android.text.TextWatcher;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.*;
+import com.google.firebase.database.*;
 import com.nibrasco.freshksa.Model.Cart;
 import com.nibrasco.freshksa.Model.Session;
 
@@ -20,6 +24,7 @@ import java.util.ArrayList;
  */
 public class SheepFragment extends Fragment {
 
+    private Button btnConfirm;
     private Spinner spSlicing, spWeight, spPackaging;
     private TextView txtTotal;
     private EditText edtQuantity;
@@ -28,6 +33,7 @@ public class SheepFragment extends Fragment {
     Cart.Item currentItem;
     public SheepFragment() {
         currentItem = Session.getInstance().Item();
+        currentItem.setQuantity(1);
         currentItem.setWeight(0);
         currentItem.setIntestine(false);
         currentItem.setSlicing(Cart.eSlicing.Fridge.Value());
@@ -55,6 +61,7 @@ public class SheepFragment extends Fragment {
 
     private void LinkControls(View v)
     {
+        btnConfirm = (Button)v.findViewById(R.id.btnItemOrder);
         spSlicing = (Spinner)v.findViewById(R.id.spSlicing);
         spWeight = (Spinner)v.findViewById(R.id.spWeight);
         spPackaging = (Spinner)v.findViewById(R.id.spPackaging);
@@ -76,14 +83,14 @@ public class SheepFragment extends Fragment {
                         currentItem.setIntestine(false);
                         break;
                 }
-                Session.getInstance().Item(currentItem);
             }
         });
         spPackaging.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
             @Override
             public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
                 if(position != spPackaging.getSelectedItemPosition()) {
-                    Session.getInstance().Item().setPackaging((int)(parent.getItemAtPosition(position)));
+                    currentItem.setPackaging((int)(parent.getItemAtPosition(position)));
+                    Session.getInstance().Item(currentItem);
                 }
                 //No specific pricing
             }
@@ -97,8 +104,8 @@ public class SheepFragment extends Fragment {
             @Override
             public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
                 if(position != parent.getSelectedItemPosition()) {
-                    Session.getInstance().Item().setWeight((int)(parent.getItemAtPosition(position)));
-                    txtTotal.setText(Float.toString(Session.getInstance().Item().getTotal()));
+                    currentItem.setWeight((int)(parent.getItemAtPosition(position)));
+                    txtTotal.setText(Float.toString(currentItem.getTotal()));
                 }
             }
 
@@ -111,13 +118,32 @@ public class SheepFragment extends Fragment {
             @Override
             public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
                 if(position != spSlicing.getSelectedItemPosition()) {
-                    Session.getInstance().Item().setSlicing((int)parent.getItemAtPosition(position));
+                    currentItem.setSlicing((int)parent.getItemAtPosition(position));
+                    txtTotal.setText(Float.toString(currentItem.getTotal()));
                 }
             }
 
             @Override
             public void onNothingSelected(AdapterView<?> parent) {
 
+            }
+        });
+        edtQuantity.addTextChangedListener(new TextWatcher() {
+            @Override
+            public void beforeTextChanged(CharSequence s, int start, int count, int after) {
+
+            }
+
+            @Override
+            public void onTextChanged(CharSequence s, int start, int before, int count) {
+
+            }
+
+            @Override
+            public void afterTextChanged(Editable s) {
+                int qte = Integer.parseInt(s.toString().equals("") ? "1" : s.toString());
+                currentItem.setQuantity(qte);
+                txtTotal.setText(Float.toString(currentItem.getTotal()));
             }
         });
         edtNotes.addTextChangedListener(new TextWatcher() {
@@ -133,7 +159,23 @@ public class SheepFragment extends Fragment {
 
             @Override
             public void afterTextChanged(Editable s) {
-                Session.getInstance().Item().setNotes(s.toString());
+                currentItem.setNotes(s.toString());
+            }
+        });
+        btnConfirm.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                if(Session.getInstance().Item().getCategory() != Cart.eCategory.None) {
+                    //Add the item to the cart at this point
+                    if(SaveChanges(v))
+                    {
+                        CartFragment f = new CartFragment();
+                        FragmentTransaction fragmentTransaction = getFragmentManager().beginTransaction();
+                        fragmentTransaction.replace(R.id.homeContainer, f);
+                        fragmentTransaction.addToBackStack(null);
+                        fragmentTransaction.commit();
+                    }
+                }
             }
         });
     }
@@ -161,5 +203,33 @@ public class SheepFragment extends Fragment {
         txtTotal.setText(Float.toString(Session.getInstance().Item().getTotal()));
 
         LinkListeners();
+    }
+    private Boolean SaveChanges(View v) {
+        final Snackbar snack = Snackbar.make(v, "Saving Your Order", Snackbar.LENGTH_LONG);
+        snack.show();
+        final Boolean[] success = {true};
+        Session.getInstance().Cart().AddItem(Session.getInstance().Item());
+        //if(Session.getInstance().User().getCart().equals("0"))
+        //{
+        final FirebaseDatabase db = FirebaseDatabase.getInstance();
+        final DatabaseReference tblCart = db.getReference("Cart");
+        tblCart.addListenerForSingleValueEvent(new ValueEventListener() {
+            @Override
+            public void onDataChange(@NonNull DataSnapshot cartsSnap) {
+
+                DatabaseReference cartRef = tblCart.child(Session.getInstance().User().getCart());
+                Session.getInstance().Item().MapToDbRef(cartRef.child("Items"));
+
+                snack.dismiss();
+                success[0] = true;
+            }
+
+            @Override
+            public void onCancelled(@NonNull DatabaseError databaseError) {
+                success[0] = false;
+            }
+        });
+        //}
+        return success[0];
     }
 }

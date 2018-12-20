@@ -22,7 +22,7 @@ import com.nibrasco.freshksa.Model.*;
 import java.util.ArrayList;
 
 public class OrderItemFragment extends Fragment {
-    private Button btnConfirm;
+
 
     private RecyclerView itemsView;
     @Override
@@ -38,26 +38,8 @@ public class OrderItemFragment extends Fragment {
         Session.getInstance().Item(new Cart.Item());
         LinkControls(v);
         LoadContent(v);
-
-        btnConfirm.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                if(Session.getInstance().Item().getCategory() != Cart.eCategory.None) {
-                    //Add the item to the cart at this point
-                    if(SaveChanges(v))
-                    {
-                        CartFragment f = new CartFragment();
-                        FragmentTransaction fragmentTransaction = getFragmentManager().beginTransaction();
-                        fragmentTransaction.replace(R.id.homeContainer, f);
-                        fragmentTransaction.addToBackStack(null);
-                        fragmentTransaction.commit();
-                    }
-                }
-            }
-        });
     }
-    private Boolean SaveChanges(View v)
-    {
+    private Boolean SaveChanges(View v) {
         final Snackbar snack = Snackbar.make(v, "Saving Your Order", Snackbar.LENGTH_LONG);
         snack.show();
         final Boolean[] success = {true};
@@ -88,7 +70,7 @@ public class OrderItemFragment extends Fragment {
 
     private void LinkControls(View v)
     {
-        btnConfirm = (Button)v.findViewById(R.id.btnItemOrder);
+
         itemsView = (RecyclerView) v.findViewById(R.id.recyclerItems);
     }
     private void LoadContent(final View v)
@@ -123,7 +105,7 @@ public class OrderItemFragment extends Fragment {
                                 fragment = new CamelFragment();
                                 break;
                             case HalfSheep:
-                                //adapter.addFragment(new SheepFragment(), getResources().getString(R.string.recyclerItemGoat));
+                                fragment = new HalfFragment();
                                 break;
                         }
                         if (fragment != null) {

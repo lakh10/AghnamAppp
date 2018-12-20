@@ -336,7 +336,7 @@ public class Cart {
         }
 
         public float getTotal() {
-            return Lists.GetWeightPrice(Category, Weight);
+            return Lists.GetWeightPrice(Category, Weight) * Quantity;
         }
 
         public void setTotal(float total) {
