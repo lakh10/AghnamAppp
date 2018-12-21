@@ -9,6 +9,7 @@ import android.support.annotation.Nullable;
 import android.support.design.widget.Snackbar;
 import android.support.design.widget.TextInputEditText;
 import android.support.v4.app.Fragment;
+import android.support.v4.app.FragmentTransaction;
 import android.text.Editable;
 import android.text.TextWatcher;
 import android.view.LayoutInflater;
@@ -113,6 +114,10 @@ public class PaymentDetailsFragment extends Fragment {
                         }
                     });
                     snackbar.dismiss();
+                    CartFragment cartFragment = new CartFragment();
+                 FragmentTransaction ft = getActivity().getSupportFragmentManager().beginTransaction();
+                 ft.replace(R.id.homeContainer, cartFragment);
+                 ft.commit();
             }
         });
     }

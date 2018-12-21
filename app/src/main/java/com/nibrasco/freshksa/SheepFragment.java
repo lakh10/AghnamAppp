@@ -28,7 +28,7 @@ public class SheepFragment extends Fragment {
     private Spinner spSlicing, spWeight, spPackaging;
     private TextView txtTotal;
     private EditText edtQuantity;
-    TextInputEditText edtNotes;
+    EditText edtNotes;
     private RadioGroup rdGrpIntestine;
     Cart.Item currentItem;
     public SheepFragment() {
@@ -66,8 +66,8 @@ public class SheepFragment extends Fragment {
         spWeight = (Spinner)v.findViewById(R.id.spWeight);
         spPackaging = (Spinner)v.findViewById(R.id.spPackaging);
         edtQuantity = (EditText)v.findViewById(R.id.edtQuantity);
-        rdGrpIntestine = (RadioGroup)v.findViewById(R.id.rdGrpInt);
-        edtNotes = (TextInputEditText)v.findViewById(R.id.edtSNotes);
+        rdGrpIntestine = (RadioGroup)v.findViewById(R.id.rdGrpIntestine);
+        edtNotes = (EditText)v.findViewById(R.id.edtNotes);
         txtTotal = (TextView)v.findViewById(R.id.txtTotalItem);
     }
     private void LinkListeners()
@@ -142,8 +142,9 @@ public class SheepFragment extends Fragment {
             @Override
             public void afterTextChanged(Editable s) {
                 int qte = Integer.parseInt(s.toString().equals("") ? "1" : s.toString());
-                currentItem.setQuantity(qte);
-                txtTotal.setText(Float.toString(currentItem.getTotal()));
+                    currentItem.setQuantity(qte >= 1 ? qte : 1);
+                    txtTotal.setText(Float.toString(currentItem.getTotal()));
+
             }
         });
         edtNotes.addTextChangedListener(new TextWatcher() {
@@ -187,19 +188,19 @@ public class SheepFragment extends Fragment {
         ArrayAdapter adapter = new ArrayAdapter<>(v.getContext(), android.R.layout.simple_spinner_item, list);
         adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
         spWeight.setAdapter(adapter);
-        spWeight.setSelection(0);
+        //spWeight.setSelection(0);
 
         list = Cart.Lists.GetSlicingNames();
         adapter = new ArrayAdapter<>(v.getContext(), android.R.layout.simple_spinner_item, list);
         adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
         spSlicing.setAdapter(adapter);
-        spSlicing.setSelection(0);
+        //spSlicing.setSelection(0);
 
         list = Cart.Lists.GetPackagingNames();
         adapter = new ArrayAdapter<>(v.getContext(), android.R.layout.simple_spinner_item, list);
         adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
         spPackaging.setAdapter(adapter);
-        spPackaging.setSelection(0);
+        //spPackaging.setSelection(0);
         txtTotal.setText(Float.toString(Session.getInstance().Item().getTotal()));
 
         LinkListeners();

@@ -36,8 +36,9 @@ public class Cart {
         }
         public static class Packaging{
             String Name;
-
-            public Packaging(String name){
+            Float Price;
+            public Packaging(Float price, String name){
+                Price = price;
                 Name = name;
             }
         }
@@ -162,11 +163,17 @@ public class Cart {
         public static ArrayList<Packaging> GetPackages(){
             Packages = new ArrayList<>();
 
-            Packages.add(new Packaging("بدون"));
-            Packages.add(new Packaging("كيس"));
-            Packages.add(new Packaging("أطباق"));
+            Packages.add(new Packaging(0.0f, "بدون"));
+            Packages.add(new Packaging(30.0f,"كيس"));
+            Packages.add(new Packaging(40.0f, "أطباق"));
 
             return Packages;
+        }
+        public static float GetPackagingPrice(int index) {
+            Packages = GetPackages();
+            if (index >= 0 && index < Packages.size())
+                return Weights.get(index).Price;
+            return -1;
         }
     }
 
@@ -336,7 +343,9 @@ public class Cart {
         }
 
         public float getTotal() {
-            return Lists.GetWeightPrice(Category, Weight) * Quantity;
+            return (Total =  Lists.GetWeightPrice(Category, Weight)
+                    + Lists.GetPackagingPrice(Packaging.Value()))
+                    * Quantity;
         }
 
         public void setTotal(float total) {
@@ -510,7 +519,7 @@ public class Cart {
             float t = 0.0f;
             for (Item i:
                  Items) {
-                t += i.Total;
+                t += i.getTotal();
             }
             return t;
         }

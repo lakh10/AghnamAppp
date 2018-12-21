@@ -28,6 +28,14 @@ public class WelcomeActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
 
+
+        if (!isTaskRoot()
+        && getIntent().hasCategory(Intent.CATEGORY_LAUNCHER)
+        && getIntent().getAction() != null
+        && getIntent().getAction().equals(Intent.ACTION_MAIN)){
+            finish();
+            return;
+        }
         // Checking for first time launch - before calling setContentView()
         prefManager = new PreferenceManager(this);
        /* if (!prefManager.isFirstTimeLaunch()) {

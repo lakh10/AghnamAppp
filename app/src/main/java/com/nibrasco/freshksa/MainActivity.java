@@ -18,6 +18,14 @@ public class MainActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
+        if (!isTaskRoot()
+                && getIntent().hasCategory(Intent.CATEGORY_LAUNCHER)
+                && getIntent().getAction() != null
+                && getIntent().getAction().equals(Intent.ACTION_MAIN)){
+            finish();
+            return;
+        }
+
         btnSignIn = (MaterialButton)findViewById(R.id.btnMainSignIn);
         btnSignUp = (MaterialButton)findViewById(R.id.btnMainSignUp);
 //
@@ -38,28 +46,10 @@ public class MainActivity extends AppCompatActivity {
         });
         //OutputToDB();
     }
-    void OutputToDB()
-    {
-        final FirebaseDatabase db = FirebaseDatabase.getInstance();
-        final DatabaseReference tblUser = db.getReference("Cart");
-        tblUser.addValueEventListener(new ValueEventListener() {
-            @Override
-            public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
-                if(dataSnapshot.child("1").exists()) {
 
-                    Cart cart = new Cart(dataSnapshot.child("1"));
-
-                    Toast.makeText(MainActivity.this, cart.ToString(), Toast.LENGTH_SHORT).show();
-                }
-            }
-
-            @Override
-            public void onCancelled(@NonNull DatabaseError databaseError) {
-
-            }
-        });
+    @Override
+    protected void onStart() {
+        super.onStart();
     }
-
-
 }
 
