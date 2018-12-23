@@ -92,6 +92,6 @@
             android:layoutDirection="rtl"
             android:accessibilityHeading="false"
             app:layout_constraintEnd_toEndOf="@+id/edtQuantity" app:layout_constraintTop_toTopOf="@+id/textView36"
-    tools:targetApi="jelly_bean_mr1"/>
+    />
 
 </android.support.constraint.ConstraintLayout>

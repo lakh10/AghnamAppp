@@ -8,14 +8,23 @@
     <fragment android:id="@+id/map"
               android:name="com.google.android.gms.maps.SupportMapFragment"
               android:layout_width="match_parent" android:layout_height="match_parent"/>
+
     <android.support.design.widget.FloatingActionButton
-            android:src="@drawable/icon_mylocation"
-            android:layout_width="64dp"
-            android:layout_height="68dp"
-            android:clickable="true"
-            android:id="@+id/fabMyLocation" map:layout_constraintEnd_toEndOf="parent"
-            android:layout_marginEnd="16dp" android:layout_marginRight="16dp"
-            map:layout_constraintBottom_toBottomOf="parent" android:layout_marginBottom="16dp"
-            map:layout_constraintDimensionRatio="h,16:16"/>
+        android:id="@+id/fabMyLocation"
+        android:layout_width="0dp"
+        android:layout_height="55dp"
+        android:clickable="true"
+        android:src="@drawable/icon_mylocation"
+        map:backgroundTint="@color/common_google_signin_btn_text_dark_pressed"
+        tools:layout_editor_absoluteX="328dp"
+        tools:layout_editor_absoluteY="492dp" />
+
+    <Button
+        android:id="@+id/confirmadresse"
+        android:layout_width="145dp"
+        android:layout_height="51dp"
+        android:text="تم"
+        tools:layout_editor_absoluteX="120dp"
+        tools:layout_editor_absoluteY="492dp" />
 
 </android.support.constraint.ConstraintLayout>

@@ -28,6 +28,7 @@
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
                         android:hint="الإسم الكامل"
+                        android:gravity="right"
                         android:inputType="text|textCapWords|textCapSentences" android:id="@+id/edtSignUpName"
                         style="@style/ThemeOverlay.MaterialComponents.TextInputEditText.OutlinedBox"/>
             </android.support.design.widget.TextInputLayout>
@@ -57,7 +58,9 @@
                 <android.support.design.widget.TextInputEditText
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
-                        android:hint="رقم الهاتف" android:inputType="number|phone"
+                        android:hint="رقم الهاتف"
+                        android:gravity="right"
+                    android:inputType="number|phone"
                         style="@style/ThemeOverlay.MaterialComponents.TextInputEditText.OutlinedBox"
                         android:id="@+id/edtSignUpPhone"/>
             </android.support.design.widget.TextInputLayout>
@@ -75,7 +78,9 @@
                 <android.support.design.widget.TextInputEditText
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
-                        android:hint="كلمة السر" android:inputType="textPassword" android:id="@+id/edtSignUpPwd"
+                        android:hint="كلمة السر"
+                        android:gravity="right"
+                        android:inputType="textPassword" android:id="@+id/edtSignUpPwd"
                         style="@style/ThemeOverlay.MaterialComponents.TextInputEditText.OutlinedBox"/>
             </android.support.design.widget.TextInputLayout>
             <TextView
