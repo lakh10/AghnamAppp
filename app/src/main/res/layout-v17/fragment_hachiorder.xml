@@ -1,0 +1,97 @@
+<?xml version="1.0" encoding="utf-8"?>
+<android.support.constraint.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+                                             xmlns:app="http://schemas.android.com/apk/res-auto"
+                                             xmlns:tools="http://schemas.android.com/tools"
+                                             android:layout_width="match_parent"
+                                             android:layout_height="match_parent">
+
+    <EditText
+            android:id="@+id/edtQuantity"
+            android:layout_width="18dp"
+            android:layout_height="36dp"
+            android:background="#fff"
+            android:inputType="number"
+            android:hint="1" tools:layout_editor_absoluteY="22dp" app:layout_constraintEnd_toStartOf="@+id/textView37"
+            android:layout_marginEnd="32dp" android:layout_marginRight="32dp"/>
+    <TextView
+            android:text="الحجم"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:gravity="center"
+            android:textColor="#32a65b"
+            android:id="@+id/textView36"
+            android:layout_marginTop="32dp"
+            app:layout_constraintTop_toBottomOf="@+id/textView37" app:layout_constraintEnd_toEndOf="@+id/textView37"
+    />
+    <TextView
+            android:text="الكمية"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:textColor="#32a65b"
+            android:id="@+id/textView37"
+            app:layout_constraintTop_toTopOf="parent"
+            android:layout_marginTop="24dp" android:layout_marginEnd="24dp" android:layout_marginRight="24dp"
+            app:layout_constraintEnd_toEndOf="parent"/>
+
+    <EditText
+            android:id="@+id/edtNotes"
+            android:layout_width="0dp"
+            android:layout_height="110dp"
+            android:gravity="end"
+            android:background="#ffffff"
+            android:paddingLeft="20dp"
+            android:paddingRight="20dp"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintHorizontal_bias="0.5" app:layout_constraintEnd_toEndOf="parent"
+            android:layout_marginEnd="24dp" android:layout_marginRight="24dp" android:layout_marginLeft="24dp"
+            android:layout_marginStart="24dp" android:layout_marginBottom="24dp"
+            app:layout_constraintBottom_toTopOf="@+id/textView28" android:layout_marginTop="24dp"
+            app:layout_constraintTop_toBottomOf="@+id/textView36"/>
+
+
+    <TextView
+            android:text="0.0"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:textColor="#32a65b"
+            android:id="@+id/txtTotalItem"
+            android:gravity="center"
+            app:layout_constraintTop_toTopOf="@+id/textView28" app:layout_constraintEnd_toStartOf="@+id/textView28"
+            android:layout_marginEnd="128dp" android:layout_marginRight="128dp"/>
+
+    <TextView
+            android:text="@string/Total"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:textColor="#32a65b"
+            android:gravity="center"
+            android:id="@+id/textView28"
+            android:layout_marginBottom="32dp"
+            app:layout_constraintBottom_toTopOf="@+id/btnItemOrder" android:layout_marginEnd="92dp"
+            android:layout_marginRight="92dp" app:layout_constraintEnd_toEndOf="parent"
+    />
+
+
+    <Button
+            android:id="@+id/btnItemOrder"
+            android:text="@string/btnOrder_Text"
+            android:textColor="@android:color/white"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:background="#32a65b"
+            app:layout_constraintBottom_toBottomOf="parent" android:layout_marginBottom="24dp"
+            app:layout_constraintStart_toStartOf="parent" app:layout_constraintHorizontal_bias="0.5"
+            app:layout_constraintEnd_toEndOf="parent" android:layout_marginEnd="32dp"
+            android:layout_marginRight="32dp" android:layout_marginLeft="32dp" android:layout_marginStart="32dp"/>
+    <Spinner
+            android:layout_width="148dp"
+            android:layout_height="28dp"
+            android:textSize="18sp"
+            android:id="@+id/spWeightCamel"
+            android:background="#ffffff"
+            android:layoutDirection="rtl"
+            android:accessibilityHeading="false"
+            app:layout_constraintEnd_toEndOf="@+id/edtQuantity" app:layout_constraintTop_toTopOf="@+id/textView36"
+    />
+
+</android.support.constraint.ConstraintLayout>
