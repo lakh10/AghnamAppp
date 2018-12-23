@@ -67,12 +67,12 @@ public class Cart {
                     Weights.add( new Weight(660.0f, "نصف نعيمي"));
                     break;
                 case Sheep:
-                    Weights.add( new Weight(950.0f, "لباني 9 13 كيلو"));
-                    Weights.add( new Weight(1030.0f, "صغير 12 15 كيلو"));
-                    Weights.add( new Weight(1120.0f, "وسط 15 17 كيلو"));
-                    Weights.add( new Weight(1210.0f, "جدع وسط 17 20 كيلو"));
-                    Weights.add( new Weight(1290.0f, "جدع طيب 20 25 كيلو"));
-                    Weights.add( new Weight(1370.0f, "جدع ناهي 25 30 كيلو"));
+                    Weights.add( new Weight(950.0f, "لباني 9-13 كيلو"));
+                    Weights.add( new Weight(1030.0f, "صغير 12-15 كيلو"));
+                    Weights.add( new Weight(1120.0f, "وسط 15-17 كيلو"));
+                    Weights.add( new Weight(1210.0f, "جدع وسط 17-20 كيلو"));
+                    Weights.add( new Weight(1290.0f, "جدع طيب 20-25 كيلو"));
+                    Weights.add( new Weight(1370.0f, "جدع ناهي 25-30 كيلو"));
                     break;
                 case Goat:
                     Weights.add( new Weight(850.0f, "صغير"));
@@ -172,7 +172,7 @@ public class Cart {
         public static float GetPackagingPrice(int index) {
             Packages = GetPackages();
             if (index >= 0 && index < Packages.size())
-                return Weights.get(index).Price;
+                return Packages.get(index).Price;
             return -1;
         }
     }
@@ -236,6 +236,7 @@ public class Cart {
         }
     }
     public enum eCategory {
+
         None(-1),
         Sheep(R.drawable.naeme),
         //Lamb(R.drawable.hree),

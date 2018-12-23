@@ -3,7 +3,7 @@
                                              xmlns:app="http://schemas.android.com/apk/res-auto"
                                              xmlns:tools="http://schemas.android.com/tools"
                                              android:layout_width="match_parent"
-                                             android:layout_height="match_parent">
+                                             android:layout_height="match_parent" android:background="#f1f1f1">
 
     <EditText
             android:id="@+id/edtQuantity"
@@ -11,8 +11,9 @@
             android:layout_height="36dp"
             android:background="#fff"
             android:inputType="number"
-            android:hint="1" tools:layout_editor_absoluteY="22dp" app:layout_constraintEnd_toStartOf="@+id/textView37"
-            android:layout_marginEnd="32dp" android:layout_marginRight="32dp"/>
+            android:hint="1" app:layout_constraintEnd_toStartOf="@+id/textView37"
+            android:layout_marginEnd="32dp" android:layout_marginRight="32dp"
+            app:layout_constraintTop_toTopOf="@+id/textView37"/>
     <TextView
             android:text="الحجم"
             android:layout_width="wrap_content"
@@ -91,7 +92,10 @@
             android:background="#ffffff"
             android:layoutDirection="rtl"
             android:accessibilityHeading="false"
-            app:layout_constraintEnd_toEndOf="@+id/edtQuantity" app:layout_constraintTop_toTopOf="@+id/textView36"
-    />
+            app:layout_constraintTop_toTopOf="@+id/textView36"
+            app:layout_constraintBottom_toBottomOf="@+id/textView36" app:layout_constraintStart_toStartOf="parent"
+            android:layout_marginLeft="140dp" android:layout_marginStart="140dp"
+            app:layout_constraintVertical_bias="0.0" app:layout_constraintEnd_toStartOf="@+id/textView36"
+            android:layout_marginEnd="32dp" android:layout_marginRight="32dp"/>
 
 </android.support.constraint.ConstraintLayout>

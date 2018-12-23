@@ -70,10 +70,8 @@ public class CamelFragment extends Fragment {
         spWeight.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
             @Override
             public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
-                if(position != spWeight.getSelectedItemPosition())
-                Session.getInstance().Item().setWeight((int)(parent.getItemAtPosition(position)));
-                String totalTxt = Float.toString(Session.getInstance().Item().getTotal());
-                txtTotal.setText(totalTxt);
+                currentItem.setWeight(parent.getPositionForView(view));
+                txtTotal.setText(Float.toString(currentItem.getTotal()));
             }
             @Override
             public void onNothingSelected(AdapterView<?> parent) {
@@ -94,7 +92,7 @@ public class CamelFragment extends Fragment {
 
             @Override
             public void afterTextChanged(Editable s) {
-                int qte = Integer.parseInt(s.toString().equals("") ? "0" : s.toString());
+                int qte = Integer.parseInt(s.toString().equals("") ? "1" : s.toString());
                 currentItem.setQuantity(qte);
                 txtTotal.setText(Float.toString(currentItem.getTotal()));
             }

@@ -88,10 +88,10 @@ public class SheepFragment extends Fragment {
         spPackaging.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
             @Override
             public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
-                if(position != spPackaging.getSelectedItemPosition()) {
-                    currentItem.setPackaging((int)(parent.getItemAtPosition(position)));
-                    Session.getInstance().Item(currentItem);
-                }
+                //if(position != spPackaging.getSelectedItemPosition()) {
+                    currentItem.setPackaging(parent.getPositionForView(view));
+                    txtTotal.setText(Float.toString(currentItem.getTotal()));
+                //}
                 //No specific pricing
             }
 
@@ -103,10 +103,10 @@ public class SheepFragment extends Fragment {
         spWeight.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
             @Override
             public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
-                if(position != parent.getSelectedItemPosition()) {
-                    currentItem.setWeight((int)(parent.getItemAtPosition(position)));
+                //if(position != parent.getSelectedItemPosition()) {
+                    currentItem.setWeight(parent.getPositionForView(view));
                     txtTotal.setText(Float.toString(currentItem.getTotal()));
-                }
+                //}
             }
 
             @Override
@@ -117,10 +117,9 @@ public class SheepFragment extends Fragment {
         spSlicing.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
             @Override
             public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
-                if(position != spSlicing.getSelectedItemPosition()) {
-                    currentItem.setSlicing((int)parent.getItemAtPosition(position));
-                    txtTotal.setText(Float.toString(currentItem.getTotal()));
-                }
+               // if(position != spSlicing.getSelectedItemPosition()) {
+                currentItem.setSlicing(parent.getPositionForView(view));
+                //}
             }
 
             @Override

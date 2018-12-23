@@ -48,6 +48,17 @@ public class Home extends AppCompatActivity
     }
 
     @Override
+    protected void onStart() {
+        super.onStart();
+        OrderItemFragment f = new OrderItemFragment();
+        assert getSupportFragmentManager() != null;
+        FragmentTransaction fragmentTransaction = getSupportFragmentManager().beginTransaction();
+        fragmentTransaction.replace(R.id.homeContainer, f);
+        fragmentTransaction.addToBackStack(null);
+        fragmentTransaction.commit();
+    }
+
+    @Override
     public boolean onPrepareOptionsMenu(Menu menu) {
         return false;
     }

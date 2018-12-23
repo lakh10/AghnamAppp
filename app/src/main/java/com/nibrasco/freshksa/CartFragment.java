@@ -89,9 +89,9 @@ public class CartFragment extends Fragment {
                OrderItemFragment f = new OrderItemFragment();
                 assert getFragmentManager() != null;
                 FragmentTransaction fragmentTransaction = getFragmentManager().beginTransaction();
-               fragmentTransaction.replace(R.id.homeContainer, f);
-               fragmentTransaction.addToBackStack(null);
-               fragmentTransaction.commit();
+                fragmentTransaction.replace(R.id.homeContainer, f);
+                fragmentTransaction.addToBackStack(null);
+                fragmentTransaction.commit();
             }
         };
         View.OnClickListener shippingListener = new View.OnClickListener() {

@@ -62,7 +62,7 @@
             android:layout_width="234dp"
             android:layout_height="wrap_content"
             android:background="#d6dedddd"
-            android:id="@+id/txtUserInfoName"
+            android:id="@+id/txtUserInfoAddress"
             android:layout_centerVertical="true" android:layout_alignStart="@+id/txtUserInfoPaymentMethod"/>
     <TextView
             android:text=""
