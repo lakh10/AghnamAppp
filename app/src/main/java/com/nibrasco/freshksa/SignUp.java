@@ -10,6 +10,7 @@ import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
 import com.google.firebase.database.*;
+import com.nibrasco.freshksa.Model.Cart;
 import com.nibrasco.freshksa.Model.Session;
 import com.nibrasco.freshksa.Model.User;
 
@@ -36,7 +37,7 @@ public class SignUp extends AppCompatActivity {
                         pwd = edtPwd.getText().toString(),
                         phone = edtPhone.getText().toString();
                 if(!phone.equals("") || !pwd.equals("")) {
-                    if(phone.length() > 10) {
+                    if(phone.length() >= 10) {
                         String message = getResources().getString(R.string.msgSignUpRegister);
                         final Snackbar snack = Snackbar.make(v, message, Snackbar.LENGTH_LONG);
                         snack.setActionTextColor(Color.WHITE).show();
@@ -47,7 +48,26 @@ public class SignUp extends AppCompatActivity {
                                     snack.dismiss();
 
                                     Session.getInstance().User(new User(name, pwd));
-                                    Session.getInstance().User().MapToDbRef(tblUser.child(phone));
+                                    Session.getInstance().User().setPhone(phone);
+                                    Session.getInstance().Cart(new Cart());
+                                    final DatabaseReference tblCart = db.getReference("Cart");
+                                    tblCart.addListenerForSingleValueEvent(new ValueEventListener() {
+                                        @Override
+                                        public void onDataChange(@NonNull DataSnapshot cartsSnap) {
+                                            String id = Session.getInstance().User().getCart();
+                                            if (!id.equals("0"))
+                                                Session.getInstance().Cart(new Cart(cartsSnap.child(id)));
+                                            else {
+                                                Session.getInstance().User().setCart(Long.toString(cartsSnap.getChildrenCount()));
+                                                Session.getInstance().User().MapToDbRef(tblUser.child(phone));
+                                            }
+                                        }
+
+                                        @Override
+                                        public void onCancelled(@NonNull DatabaseError databaseError) {
+
+                                        }
+                                    });
                                     snack.setText(getResources().getString(R.string.msgSignUpSuccess))
                                             .setActionTextColor(Color.GREEN)
                                             .show();
@@ -65,13 +85,19 @@ public class SignUp extends AppCompatActivity {
 
                             }
                         });
-                    }
-                    else{
+                    }else{
 
-                        Snackbar.make(v, getResources().getString(R.string.msgSignInEmpty), Snackbar.LENGTH_LONG)
+                        Snackbar.make(v, getResources().getString(R.string.msgSignUpWrongNumber), Snackbar.LENGTH_LONG)
                                 .setActionTextColor(Color.YELLOW)
                                 .show();
                     }
+
+                }
+                else{
+
+                    Snackbar.make(v, getResources().getString(R.string.msgSignInEmpty), Snackbar.LENGTH_LONG)
+                            .setActionTextColor(Color.RED)
+                            .show();
                 }
             }
         });

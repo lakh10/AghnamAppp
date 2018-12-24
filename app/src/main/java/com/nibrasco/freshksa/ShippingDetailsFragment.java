@@ -4,6 +4,7 @@ package com.nibrasco.freshksa;
 import android.Manifest;
 import android.content.Context;
 import android.content.pm.PackageManager;
+import android.graphics.Color;
 import android.location.*;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
@@ -23,6 +24,8 @@ import android.widget.TextView;
 import com.google.android.gms.maps.CameraUpdateFactory;
 import com.google.android.gms.maps.model.LatLng;
 import com.google.android.gms.maps.model.MarkerOptions;
+import com.nibrasco.freshksa.Model.Cart;
+import com.nibrasco.freshksa.Model.GPSTracker;
 import com.nibrasco.freshksa.Model.Session;
 import com.nibrasco.freshksa.Model.User;
 
@@ -39,9 +42,10 @@ public class ShippingDetailsFragment extends Fragment {
     RadioGroup rdGrpTime;
     Button btnConfirm;
     LocationManager locationManager;
-
+    Cart cart;
     public ShippingDetailsFragment() {
         // Required empty public constructor
+        cart = Session.getInstance().Cart();
     }
 
     @Override
@@ -70,10 +74,10 @@ public class ShippingDetailsFragment extends Fragment {
     private void LoadContent(View v)
     {
         LinkControls(v);
-        InitGps();
         final User user = Session.getInstance().User();
         txtName.setText(user.getName());
         txtPhone.setText(user.getPhone());
+        InitGps();
         LinkListeners();
     }
     private void LinkListeners() {
@@ -83,13 +87,13 @@ public class ShippingDetailsFragment extends Fragment {
                 switch(group.getCheckedRadioButtonId())
                 {
                     case R.id.rdTimeNoon:
-                        Session.getInstance().Cart().setTimeOfDelivery(0);
+                        cart.setTimeOfDelivery(0);
                         break;
                     case R.id.rdTimeAfterNoon:
-                        Session.getInstance().Cart().setTimeOfDelivery(1);
+                        cart.setTimeOfDelivery(1);
                         break;
                     case R.id.rdTimeEvening:
-                        Session.getInstance().Cart().setTimeOfDelivery(2);
+                        cart.setTimeOfDelivery(2);
                         break;
                 }
             }
@@ -101,11 +105,14 @@ public class ShippingDetailsFragment extends Fragment {
                     Snackbar.make(v, getResources().getString(R.string.msgSignInEmpty), Snackbar.LENGTH_LONG);
                     return;
                 }
-                Session.getInstance().Cart().setAddress(edtAddress.getText().toString());
+                cart.setAddress(edtAddress.getText().toString());
+                Session.getInstance().Cart(cart);
                 PaymentDetailsFragment fragment = new PaymentDetailsFragment();
-                FragmentTransaction ft = getActivity().getSupportFragmentManager().beginTransaction();
-                ft.replace(R.id.homeContainer, fragment);
-                ft.commit();
+                getActivity()
+                        .getSupportFragmentManager()
+                        .beginTransaction()
+                        .replace(R.id.homeContainer, fragment)
+                        .commit();
             }
         });
     }
@@ -116,83 +123,28 @@ public class ShippingDetailsFragment extends Fragment {
                 Manifest.permission.ACCESS_FINE_LOCATION,
                 Manifest.permission.ACCESS_COARSE_LOCATION
         }, 1037);
-        if (ActivityCompat.checkSelfPermission(getContext(), Manifest.permission.ACCESS_FINE_LOCATION) != PackageManager.PERMISSION_GRANTED &&
-                ActivityCompat.checkSelfPermission(getContext(), Manifest.permission.ACCESS_COARSE_LOCATION) != PackageManager.PERMISSION_GRANTED) {
-            return;
+        Snackbar snackbar  = Snackbar.make(getView(), "Getting Location", Snackbar.LENGTH_INDEFINITE);
+        ((TextView)(snackbar.getView()
+                        .findViewById(android.support.design.R.id.snackbar_text)))
+                        .setTextColor(Color.YELLOW);
+        snackbar.show();
+
+        GPSTracker gps = new GPSTracker(getActivity());
+        GetLocation(gps);
+        snackbar.dismiss();
+    }
+    void GetLocation(GPSTracker gps){
+        double Latitude = gps.getLatitude();
+        double Longtitude = gps.getLongitude();
+        Geocoder geocoder = new Geocoder(getActivity().getApplicationContext());
+        try {
+            List<Address> addressList = geocoder.getFromLocation(Latitude, Longtitude, 1);
+            String str = addressList.get(0).getAddressLine(0);
+            cart.setAddress(str);
+            edtAddress.setText(cart.getAddress());
+        } catch (IOException e) {
+            e.printStackTrace();
         }
-        if (locationManager.isProviderEnabled(locationManager.NETWORK_PROVIDER)) {
-            locationManager.requestLocationUpdates(locationManager.NETWORK_PROVIDER, 0, 0, new LocationListener() {
-                @Override
-                public void onLocationChanged(Location location) {
-                    double Latitude = location.getLatitude();
-                    double Longtitude = location.getLongitude();
-                    //LatLng LatLng = new LatLng(Latitude, Longtitude);
-                    Geocoder geocoder = new Geocoder(getActivity().getApplicationContext());
-                    try {
-                        List<Address> addressList = geocoder.getFromLocation(Latitude, Longtitude, 1);
-                        String str = addressList.get(0).getAddressLine(0) + ",";
-                        str += addressList.get(0).getCountryName();
 
-                        edtAddress.setText(str);
-                    } catch (IOException e) {
-                        e.printStackTrace();
-                    }
-                }
-
-                @Override
-                public void onStatusChanged(String provider, int status, Bundle extras) {
-
-                }
-
-                @Override
-                public void onProviderEnabled(String provider) {
-
-                }
-
-                @Override
-                public void onProviderDisabled(String provider) {
-
-                }
-            });
-            locationManager.getLastKnownLocation(LocationManager.NETWORK_PROVIDER);
-        }
-        else if (locationManager.isProviderEnabled(LocationManager.GPS_PROVIDER)) {
-            locationManager.requestLocationUpdates(locationManager.GPS_PROVIDER, 0, 0, new LocationListener() {
-                @Override
-                public void onLocationChanged(Location location) {
-                    double Latitude = location.getLatitude();
-                    double Longtitude = location.getLongitude();
-                    //LatLng LatLng = new LatLng(Latitude, Longtitude);
-                    Geocoder geocoder = new Geocoder(getActivity().getApplicationContext());
-                    try {
-                        List<Address> addressList = geocoder.getFromLocation(Latitude, Longtitude, 1);
-                        String str = addressList.get(0).getAddressLine(0) + ",";
-                        str += addressList.get(0).getCountryName();
-
-                        edtAddress.setText(str);
-
-
-                    } catch (IOException e) {
-                        e.printStackTrace();
-                    }
-                }
-
-                @Override
-                public void onStatusChanged(String provider, int status, Bundle extras) {
-
-                }
-
-                @Override
-                public void onProviderEnabled(String provider) {
-
-                }
-
-                @Override
-                public void onProviderDisabled(String provider) {
-
-                }
-            });
-            locationManager.getLastKnownLocation(LocationManager.GPS_PROVIDER);
-        }
     }
 }

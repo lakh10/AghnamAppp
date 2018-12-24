@@ -256,7 +256,7 @@ public class Cart {
             for(eCategory t : values()){
                 if(t.value == value) return t;
             }
-            return None;
+            return Sheep;
         }
 
         public int At() {
@@ -454,6 +454,9 @@ public class Cart {
     {
         Items.add(item);
     }
+    public void RemoveItem(int index){
+        Items.remove(index);
+    }
     public void RemoveItem(Item item)
     {
         Items.remove(item);
@@ -465,7 +468,7 @@ public class Cart {
     public List<Item> Items(){return Items;}
 
     public Cart() {
-        Address = "N/A";
+        Address = "";
         TimeOfDelivery = eTime.Noon;
         BankAccount = "0";
         Items = new ArrayList<Item>();

@@ -59,9 +59,10 @@ public class SignIn extends AppCompatActivity {
                         User user = new User(dataSnapshot.child(phone));
                         if (user.getPassword().equals(pwd)) {
                             String message = getResources().getString(R.string.msgSignInSuccess);
-                            snack.setText(message)
-                                    .setActionTextColor(Color.GREEN)
-                                    .show();
+                            ((TextView)(snack.setText(message)
+                                    .getView().findViewById(android.support.design.R.id.snackbar_text)))
+                                    .setTextColor(Color.GREEN);
+                                    snack.show();
                             Session.getInstance().User(user);
                             final DatabaseReference tblCart = db.getReference("Cart");
                             tblCart.addListenerForSingleValueEvent(new ValueEventListener() {
@@ -86,16 +87,16 @@ public class SignIn extends AppCompatActivity {
 
                         } else {
                             String message = getResources().getString(R.string.msgSignInFailed);
-                            snack.setText(message);
-                            TextView textView = (TextView) snack.getView().findViewById(android.support.design.R.id.snackbar_text);
-                            textView.setTextColor(Color.RED);
+                            ((TextView)(snack.setText(message)
+                                    .getView().findViewById(android.support.design.R.id.snackbar_text)))
+                                    .setTextColor(Color.YELLOW);
                             snack.show();
                         }
                     } else {
                         String message = getResources().getString(R.string.msgSignInInexistant);
-                        snack.setText(message);
-                        TextView textView = (TextView) snack.getView().findViewById(android.support.design.R.id.snackbar_text);
-                        textView.setTextColor(Color.YELLOW);
+                        ((TextView)(snack.setText(message)
+                                .getView().findViewById(android.support.design.R.id.snackbar_text)))
+                                .setTextColor(Color.RED);
                         snack.show();
                     }
                 }

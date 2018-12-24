@@ -114,10 +114,12 @@ public class PaymentDetailsFragment extends Fragment {
                         }
                     });
                     snackbar.dismiss();
+
                     CartFragment cartFragment = new CartFragment();
-                 FragmentTransaction ft = getActivity().getSupportFragmentManager().beginTransaction();
-                 ft.replace(R.id.homeContainer, cartFragment);
-                 ft.commit();
+                    getActivity()
+                            .getSupportFragmentManager().beginTransaction()
+                            .replace(R.id.homeContainer, cartFragment)
+                            .commit();
             }
         });
     }
