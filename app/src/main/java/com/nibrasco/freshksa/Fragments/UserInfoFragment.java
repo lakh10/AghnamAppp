@@ -1,4 +1,4 @@
-package com.nibrasco.freshksa;
+package com.nibrasco.freshksa.Fragments;
 
 import android.os.Bundle;
 import android.support.annotation.NonNull;
@@ -11,6 +11,7 @@ import android.view.ViewGroup;
 import android.widget.TextView;
 import com.nibrasco.freshksa.Model.Session;
 import com.nibrasco.freshksa.Model.User;
+import com.nibrasco.freshksa.R;
 
 
 public class UserInfoFragment extends Fragment {

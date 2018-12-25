@@ -1,28 +1,22 @@
-package com.nibrasco.freshksa;
+package com.nibrasco.freshksa.Fragments;
 
 
-import android.content.Intent;
-import android.net.Uri;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
 import android.support.design.widget.Snackbar;
 import android.support.design.widget.TextInputEditText;
 import android.support.v4.app.Fragment;
-import android.support.v4.app.FragmentTransaction;
-import android.text.Editable;
-import android.text.TextWatcher;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
-import android.widget.EditText;
 import android.widget.TextView;
 import com.google.firebase.database.*;
 import com.nibrasco.freshksa.Model.Cart;
-import com.nibrasco.freshksa.Model.Delivery;
 import com.nibrasco.freshksa.Model.Session;
 import com.nibrasco.freshksa.Model.User;
+import com.nibrasco.freshksa.R;
 
 /**
  * A simple {@link Fragment} subclass.
@@ -43,7 +37,7 @@ public class PaymentDetailsFragment extends Fragment {
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
-        return inflater.inflate(R.layout.fragment_paymentdetails, container, false);
+        return inflater.inflate(com.nibrasco.freshksa.R.layout.fragment_paymentdetails, container, false);
     }
 
     @Override
@@ -54,10 +48,10 @@ public class PaymentDetailsFragment extends Fragment {
     }
 
     private void LinkControls(View v){
-        txtCount = (TextView)v.findViewById(R.id.txtOrderCount);
-        txtTotal = (TextView)v.findViewById(R.id.txtOrderTotal);
-        edtAccount = (TextInputEditText)v.findViewById(R.id.edtPaymentAccount);
-        btnConfirm = (Button)v.findViewById(R.id.btnPaymentConfirm);
+        txtCount = (TextView)v.findViewById(com.nibrasco.freshksa.R.id.txtOrderCount);
+        txtTotal = (TextView)v.findViewById(com.nibrasco.freshksa.R.id.txtOrderTotal);
+        edtAccount = (TextInputEditText)v.findViewById(com.nibrasco.freshksa.R.id.edtPaymentAccount);
+        btnConfirm = (Button)v.findViewById(com.nibrasco.freshksa.R.id.btnPaymentConfirm);
     }
     private void LoadContent(View v){
         LinkControls(v);
@@ -71,7 +65,7 @@ public class PaymentDetailsFragment extends Fragment {
         btnConfirm.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                String message = getResources().getString(R.string.msgPaymentSaving);
+                String message = getResources().getString(com.nibrasco.freshksa.R.string.msgPaymentSaving);
                 Snackbar snackbar = Snackbar.make(v, message, Snackbar.LENGTH_LONG);
                 snackbar.show();
                 String Account = edtAccount.getText().toString();

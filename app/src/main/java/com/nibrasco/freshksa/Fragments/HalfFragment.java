@@ -1,4 +1,4 @@
-package com.nibrasco.freshksa;
+package com.nibrasco.freshksa.Fragments;
 
 
 import android.os.Bundle;
@@ -17,6 +17,7 @@ import android.widget.TextView;
 import com.google.firebase.database.*;
 import com.nibrasco.freshksa.Model.Cart;
 import com.nibrasco.freshksa.Model.Session;
+import com.nibrasco.freshksa.R;
 
 /**
  * A simple {@link Fragment} subclass.
@@ -42,7 +43,7 @@ public class HalfFragment extends Fragment {
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
-        return inflater.inflate(R.layout.fragment_nesfnaemiorder, container, false);
+        return inflater.inflate(com.nibrasco.freshksa.R.layout.fragment_nesfnaemiorder, container, false);
     }
 
     @Override
@@ -50,9 +51,9 @@ public class HalfFragment extends Fragment {
         super.onStart();
     }
     private void LoadContent(View v){
-        btnConfirm = (Button)v.findViewById(R.id.btnItemOrder);
-        edtQuantity = (EditText)v.findViewById(R.id.edtQuantity);
-        txtTotal = (TextView)v.findViewById(R.id.txtTotalItem);
+        btnConfirm = (Button)v.findViewById(com.nibrasco.freshksa.R.id.btnItemOrder);
+        edtQuantity = (EditText)v.findViewById(com.nibrasco.freshksa.R.id.edtQuantity);
+        txtTotal = (TextView)v.findViewById(com.nibrasco.freshksa.R.id.txtTotalItem);
 
         edtQuantity.addTextChangedListener(new TextWatcher() {
             @Override

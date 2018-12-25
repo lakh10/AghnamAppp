@@ -35,14 +35,14 @@
         app:layout_constraintTop_toBottomOf="@+id/edtQuantity" />
 
     <EditText
-        android:id="@+id/edtQuantity"
-        android:layout_width="40dp"
-        android:layout_height="wrap_content"
-        android:background="#fff"
-        android:hint="1"
-        android:inputType="number"
-        tools:layout_editor_absoluteX="320dp"
-        tools:layout_editor_absoluteY="72dp" />
+            android:id="@+id/edtQuantity"
+            android:layout_width="40dp"
+            android:layout_height="wrap_content"
+            android:background="#fff"
+            android:hint="1"
+            android:inputType="number"
+            tools:layout_editor_absoluteX="320dp"
+            tools:layout_editor_absoluteY="72dp" android:gravity="right"/>
     <Button
             android:id="@+id/btnItemOrder"
             android:text="@string/btnOrder_Text"

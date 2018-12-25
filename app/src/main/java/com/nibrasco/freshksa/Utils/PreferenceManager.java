@@ -1,4 +1,4 @@
-package com.nibrasco.freshksa;
+package com.nibrasco.freshksa.Utils;
 
 import android.content.Context;
 import android.content.SharedPreferences;
@@ -16,16 +16,29 @@ public class PreferenceManager {
     private static final String PREF_NAME = "intro_slider-welcome";
 
     private static final String IS_FIRST_TIME_LAUNCH = "IsFirstTimeLaunch";
+    private static final String KEY_PHONE = "phone";
 
     public PreferenceManager(Context context) {
         this._context = context;
         pref = _context.getSharedPreferences(PREF_NAME, PRIVATE_MODE);
-        editor = pref.edit();
+
+    }
+
+    public String getUserPhone(Context context){
+        return context
+                .getSharedPreferences(PREF_NAME, PRIVATE_MODE)
+                .getString(KEY_PHONE, null);
+    }
+    public void setUserPhone(String phone){
+        pref.edit()
+            .putString(KEY_PHONE, phone)
+            .apply();
     }
 
     public void setFirstTimeLaunch(boolean isFirstTime) {
-        editor.putBoolean(IS_FIRST_TIME_LAUNCH, isFirstTime);
-        editor.commit();
+        pref.edit()
+            .putBoolean(IS_FIRST_TIME_LAUNCH, isFirstTime)
+            .apply();
     }
 
     public boolean isFirstTimeLaunch() {

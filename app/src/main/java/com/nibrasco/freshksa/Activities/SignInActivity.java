@@ -1,4 +1,4 @@
-package com.nibrasco.freshksa;
+package com.nibrasco.freshksa.Activities;
 
 import android.content.Intent;
 import android.graphics.Color;
@@ -14,16 +14,28 @@ import com.google.firebase.database.*;
 import com.nibrasco.freshksa.Model.Cart;
 import com.nibrasco.freshksa.Model.Session;
 import com.nibrasco.freshksa.Model.User;
+import com.nibrasco.freshksa.R;
+import com.nibrasco.freshksa.Utils.PreferenceManager;
 
-public class SignIn extends AppCompatActivity {
+public class SignInActivity extends AppCompatActivity {
 
     private TextInputEditText edtPhone, edtPwd;
     private Button btnSignIn;
+    private User user;
+    final FirebaseDatabase db = FirebaseDatabase.getInstance();
+    final DatabaseReference tblUser = db.getReference("User");
+    final DatabaseReference tblCart = db.getReference("Cart");
+
+    private PreferenceManager preferenceManager;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_sign_in);
 
+        preferenceManager = new PreferenceManager(SignInActivity.this);
+
+
+
+        setContentView(com.nibrasco.freshksa.R.layout.activity_sign_in);
         LinkControls();
         btnSignIn.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -34,20 +46,16 @@ public class SignIn extends AppCompatActivity {
 
     }
     private void LinkControls(){
-        edtPhone = (TextInputEditText)findViewById(R.id.edtPhone);
-        edtPwd = (TextInputEditText)findViewById(R.id.edtPwd);
-        btnSignIn = findViewById(R.id.edtSignUpPhone);
+        edtPhone = (TextInputEditText)findViewById(com.nibrasco.freshksa.R.id.edtPhone);
+        edtPwd = (TextInputEditText)findViewById(com.nibrasco.freshksa.R.id.edtPwd);
+        btnSignIn = findViewById(com.nibrasco.freshksa.R.id.edtSignUpPhone);
     }
 
     private void Authenticate(View v){
-
-
-        final FirebaseDatabase db = FirebaseDatabase.getInstance();
-        final DatabaseReference tblUser = db.getReference("User");
         final String phone = edtPhone.getText().toString();
         final String pwd = edtPwd.getText().toString();
         if(!phone.equals("") &&  !pwd.equals("")) {
-            String message = getResources().getString(R.string.msgSignInLoadingProfile);
+            String message = getResources().getString(com.nibrasco.freshksa.R.string.msgSignInLoadingProfile);
             final Snackbar snack = Snackbar.make(v, message, Snackbar.LENGTH_INDEFINITE);
             snack.show();
             tblUser.addListenerForSingleValueEvent(new ValueEventListener() {
@@ -56,44 +64,27 @@ public class SignIn extends AppCompatActivity {
                     if (dataSnapshot.child(edtPhone.getText().toString()).exists()) {
                         snack.dismiss();
 
-                        User user = new User(dataSnapshot.child(phone));
+                        user = new User(dataSnapshot.child(phone));
                         if (user.getPassword().equals(pwd)) {
-                            String message = getResources().getString(R.string.msgSignInSuccess);
+                            String message = getResources().getString(com.nibrasco.freshksa.R.string.msgSignInSuccess);
                             ((TextView)(snack.setText(message)
                                     .getView().findViewById(android.support.design.R.id.snackbar_text)))
                                     .setTextColor(Color.GREEN);
                                     snack.show();
+                            GetCart();
                             Session.getInstance().User(user);
-                            final DatabaseReference tblCart = db.getReference("Cart");
-                            tblCart.addListenerForSingleValueEvent(new ValueEventListener() {
-                                @Override
-                                public void onDataChange(@NonNull DataSnapshot cartsSnap) {
-                                    String id = Session.getInstance().User().getCart();
-                                    if (!id.equals("0"))
-                                        Session.getInstance().Cart(new Cart(cartsSnap.child(id)));
-                                    else {
-                                        Session.getInstance().Cart(new Cart());
-                                        Session.getInstance().User().setCart(Long.toString(cartsSnap.getChildrenCount()));
-                                        Session.getInstance().User().MapToDbRef(tblUser.child(Session.getInstance().User().getPhone()));
-                                    }
-                                }
-
-                                @Override
-                                public void onCancelled(@NonNull DatabaseError databaseError) {
-
-                                }
-                            });
-                            startActivity(new Intent(SignIn.this, Home.class));
+                            preferenceManager.setUserPhone(phone);
+                            startActivity(new Intent(SignInActivity.this, HomeActivity.class));
 
                         } else {
-                            String message = getResources().getString(R.string.msgSignInFailed);
+                            String message = getResources().getString(com.nibrasco.freshksa.R.string.msgSignInFailed);
                             ((TextView)(snack.setText(message)
                                     .getView().findViewById(android.support.design.R.id.snackbar_text)))
                                     .setTextColor(Color.YELLOW);
                             snack.show();
                         }
                     } else {
-                        String message = getResources().getString(R.string.msgSignInInexistant);
+                        String message = getResources().getString(com.nibrasco.freshksa.R.string.msgSignInInexistant);
                         ((TextView)(snack.setText(message)
                                 .getView().findViewById(android.support.design.R.id.snackbar_text)))
                                 .setTextColor(Color.RED);
@@ -111,5 +102,26 @@ public class SignIn extends AppCompatActivity {
 
             Snackbar.make(v, getResources().getString(R.string.msgSignInEmpty), Snackbar.LENGTH_LONG).show();
         }
+    }
+
+    private void GetCart(){
+        tblCart.addListenerForSingleValueEvent(new ValueEventListener() {
+            @Override
+            public void onDataChange(@NonNull DataSnapshot cartsSnap) {
+                String id = Session.getInstance().User().getCart();
+                if (!id.equals("0"))
+                    Session.getInstance().Cart(new Cart(cartsSnap.child(id)));
+                else {
+                    Session.getInstance().Cart(new Cart());
+                    user.setCart(Long.toString(cartsSnap.getChildrenCount()));
+                    user.MapToDbRef(tblUser.child(user.getPhone()));
+                }
+            }
+
+            @Override
+            public void onCancelled(@NonNull DatabaseError databaseError) {
+
+            }
+        });
     }
 }

@@ -1,23 +1,20 @@
-package com.nibrasco.freshksa;
+package com.nibrasco.freshksa.Fragments;
 
 import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.design.widget.Snackbar;
-import android.support.design.widget.TabLayout;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentTransaction;
-import android.support.v4.view.ViewPager;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.Button;
-import android.widget.EditText;
-import android.widget.TextView;
-import android.support.v7.widget.Toolbar;
 import com.google.firebase.database.*;
 import com.nibrasco.freshksa.Model.*;
+import com.nibrasco.freshksa.R;
+import com.nibrasco.freshksa.Utils.RecyclerItemAdapter;
+import com.nibrasco.freshksa.Utils.RecyclerItemTouchListener;
 
 import java.util.ArrayList;
 
@@ -28,7 +25,7 @@ public class OrderItemFragment extends Fragment {
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
-        return inflater.inflate(R.layout.fragment_orderitem, container, false);
+        return inflater.inflate(com.nibrasco.freshksa.R.layout.fragment_orderitem, container, false);
     }
 
     @Override
@@ -71,7 +68,7 @@ public class OrderItemFragment extends Fragment {
     private void LinkControls(View v)
     {
 
-        itemsView = (RecyclerView) v.findViewById(R.id.recyclerItems);
+        itemsView = (RecyclerView) v.findViewById(com.nibrasco.freshksa.R.id.recyclerItems);
     }
     private void LoadContent(final View v)
     {
@@ -110,7 +107,7 @@ public class OrderItemFragment extends Fragment {
                         }
                         if (fragment != null) {
                             FragmentTransaction ft = getActivity().getSupportFragmentManager().beginTransaction();
-                            ft.replace(R.id.orderItemContentFrame, fragment);
+                            ft.replace(com.nibrasco.freshksa.R.id.orderItemContentFrame, fragment);
                             ft.commit();
                         }
                     }

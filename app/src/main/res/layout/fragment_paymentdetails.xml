@@ -14,7 +14,7 @@
             android:layout_marginRight="8dp" android:layout_marginTop="8dp">
         <android.support.constraint.ConstraintLayout
                 android:layout_width="match_parent"
-                android:layout_height="match_parent">
+                android:layout_height="503dp">
 
             <TextView
                     android:text="بيانات الدفع"
@@ -32,16 +32,16 @@
                     app:layout_constraintTop_toTopOf="@+id/textView12"
                     app:layout_constraintEnd_toEndOf="@+id/txtDeliveryCost" android:layout_marginEnd="8dp"
                     android:layout_marginRight="8dp" app:layout_constraintStart_toStartOf="@+id/txtDeliveryCost"
-                    android:layout_marginLeft="8dp" android:layout_marginStart="8dp"/>
+                    android:layout_marginLeft="8dp" android:layout_marginStart="8dp"
+                    app:layout_constraintHorizontal_bias="1.0"/>
             <Button
                     android:text="توثيق الطلب"
                     android:layout_width="171dp"
                     android:layout_height="wrap_content"
-                    android:layout_marginBottom="32dp" android:id="@+id/btnPaymentConfirm"
+                    android:id="@+id/btnPaymentConfirm"
                     android:background="#32a65b"
-                    android:textColor="@android:color/white" app:layout_constraintBottom_toBottomOf="parent"
-                    app:layout_constraintLeft_toLeftOf="parent" app:layout_constraintRight_toRightOf="parent"
-                    app:layout_constraintTop_toBottomOf="@+id/textInputLayout4" android:layout_marginTop="16dp"/>
+                    android:textColor="@android:color/white"
+                    tools:layout_editor_absoluteY="453dp" tools:layout_editor_absoluteX="99dp"/>
             <TextView
                     android:text="مجاني"
                     android:layout_width="wrap_content"
@@ -49,7 +49,7 @@
                     android:id="@+id/txtDeliveryCost"
                     app:layout_constraintTop_toTopOf="@+id/textView17"
                     app:layout_constraintEnd_toEndOf="@+id/txtOrderTotal"
-            />
+                    android:layout_marginTop="4dp" android:layout_marginEnd="4dp" android:layout_marginRight="4dp"/>
             <android.support.design.widget.TextInputLayout
                     android:layout_width="277dp"
                     android:layout_height="wrap_content"
@@ -60,7 +60,7 @@
 
                 <android.support.design.widget.TextInputEditText
                         android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
+                        android:layout_height="match_parent"
                         android:hint="بيانات الدفع" android:id="@+id/edtPaymentAccount"
                         android:inputType="number|numberSigned"/>
             </android.support.design.widget.TextInputLayout>
@@ -69,10 +69,10 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:id="@+id/textView17" android:gravity="right"
-                    android:textColor="#32a65b" android:layout_marginTop="24dp"
+                    android:textColor="#32a65b" android:layout_marginTop="32dp"
                     app:layout_constraintTop_toBottomOf="@+id/textView12"
                     app:layout_constraintEnd_toEndOf="@+id/textView12"
-            />
+                    android:layout_marginEnd="4dp" android:layout_marginRight="4dp"/>
             <TextView
                     android:text="عدد الطلبات"
                     android:layout_width="wrap_content"
@@ -90,7 +90,8 @@
                     app:layout_constraintTop_toTopOf="@+id/textView19"
                     app:layout_constraintEnd_toStartOf="@+id/textView19" android:layout_marginEnd="64dp"
                     android:layout_marginRight="64dp" app:layout_constraintStart_toStartOf="parent"
-                    android:layout_marginLeft="64dp" android:layout_marginStart="64dp"/>
+                    android:layout_marginLeft="64dp" android:layout_marginStart="64dp"
+                    app:layout_constraintHorizontal_bias="0.411"/>
             <TextView
                     android:text="المجموع"
                     android:layout_width="77dp"
@@ -98,8 +99,13 @@
                     android:id="@+id/textView19"
                     android:textColor="#32a65b"
                     app:layout_constraintEnd_toEndOf="@+id/textView17"
-                    android:layout_marginTop="64dp" app:layout_constraintTop_toBottomOf="@+id/textView17"
+                    android:layout_marginTop="32dp" app:layout_constraintTop_toBottomOf="@+id/textView17"
             />
+            <Button
+                    android:text="رفع وصل الدفع"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content" tools:layout_editor_absoluteY="376dp"
+                    tools:layout_editor_absoluteX="126dp" android:id="@+id/button2"/>
         </android.support.constraint.ConstraintLayout>
     </android.support.v7.widget.CardView>
 </android.support.constraint.ConstraintLayout>

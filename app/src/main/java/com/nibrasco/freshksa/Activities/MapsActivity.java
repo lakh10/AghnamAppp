@@ -1,4 +1,4 @@
-package com.nibrasco.freshksa;
+package com.nibrasco.freshksa.Activities;
 
 import android.Manifest;
 import android.content.pm.PackageManager;

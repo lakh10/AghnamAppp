@@ -1,5 +1,5 @@
 
-package com.nibrasco.freshksa;
+package com.nibrasco.freshksa.Fragments;
 
 
 import android.os.Bundle;
@@ -16,6 +16,7 @@ import android.widget.*;
 import com.google.firebase.database.*;
 import com.nibrasco.freshksa.Model.Cart;
 import com.nibrasco.freshksa.Model.Session;
+import com.nibrasco.freshksa.R;
 
 import java.util.ArrayList;
 
@@ -47,7 +48,7 @@ public class CamelFragment extends Fragment {
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
 
-        return inflater.inflate(R.layout.fragment_hachiorder, container, false);
+        return inflater.inflate(com.nibrasco.freshksa.R.layout.fragment_hachiorder, container, false);
     }
 
     @Override
@@ -59,11 +60,11 @@ public class CamelFragment extends Fragment {
 
     private void LinkControls(View v)
     {
-        btnConfirm = (Button)v.findViewById(R.id.btnItemOrder);
-        spWeight = (Spinner)v.findViewById(R.id.spWeightCamel);
-        edtQuantity = (EditText)v.findViewById(R.id.edtQuantity);
-        edtNotes = (EditText)v.findViewById(R.id.edtNotes);
-        txtTotal = (TextView)v.findViewById(R.id.txtTotalItem);
+        btnConfirm = (Button)v.findViewById(com.nibrasco.freshksa.R.id.btnItemOrder);
+        spWeight = (Spinner)v.findViewById(com.nibrasco.freshksa.R.id.spWeightCamel);
+        edtQuantity = (EditText)v.findViewById(com.nibrasco.freshksa.R.id.edtQuantity);
+        edtNotes = (EditText)v.findViewById(com.nibrasco.freshksa.R.id.edtNotes);
+        txtTotal = (TextView)v.findViewById(com.nibrasco.freshksa.R.id.txtTotalItem);
     }
     private void LinkListeners()
     {

@@ -1,4 +1,4 @@
-package com.nibrasco.freshksa;
+package com.nibrasco.freshksa.Activities;
 
 import android.content.Intent;
 import android.graphics.Color;
@@ -13,19 +13,20 @@ import com.google.firebase.database.*;
 import com.nibrasco.freshksa.Model.Cart;
 import com.nibrasco.freshksa.Model.Session;
 import com.nibrasco.freshksa.Model.User;
+import com.nibrasco.freshksa.R;
 
-public class SignUp extends AppCompatActivity {
+public class SignUpAcitivity extends AppCompatActivity {
 
     private EditText edtPhone, edtName, edtPwd;
     private Button btnSignUp;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_sign_up);
-        edtPhone = (EditText)findViewById(R.id.edtSignUpPhone);
-        edtPwd = (EditText)findViewById(R.id.edtSignUpPwd);
-        edtName = (EditText)findViewById(R.id.edtSignUpName);
-        btnSignUp = (Button)findViewById(R.id.btnSignUp);
+        setContentView(com.nibrasco.freshksa.R.layout.activity_sign_up);
+        edtPhone = (EditText)findViewById(com.nibrasco.freshksa.R.id.edtSignUpPhone);
+        edtPwd = (EditText)findViewById(com.nibrasco.freshksa.R.id.edtSignUpPwd);
+        edtName = (EditText)findViewById(com.nibrasco.freshksa.R.id.edtSignUpName);
+        btnSignUp = (Button)findViewById(com.nibrasco.freshksa.R.id.btnSignUp);
 
         final FirebaseDatabase db = FirebaseDatabase.getInstance();
         final DatabaseReference tblUser = db.getReference("User");
@@ -38,7 +39,7 @@ public class SignUp extends AppCompatActivity {
                         phone = edtPhone.getText().toString();
                 if(!phone.equals("") || !pwd.equals("")) {
                     if(phone.length() >= 10) {
-                        String message = getResources().getString(R.string.msgSignUpRegister);
+                        String message = getResources().getString(com.nibrasco.freshksa.R.string.msgSignUpRegister);
                         final Snackbar snack = Snackbar.make(v, message, Snackbar.LENGTH_LONG);
                         snack.setActionTextColor(Color.WHITE).show();
                         tblUser.addListenerForSingleValueEvent(new ValueEventListener() {
@@ -68,14 +69,14 @@ public class SignUp extends AppCompatActivity {
 
                                         }
                                     });
-                                    snack.setText(getResources().getString(R.string.msgSignUpSuccess))
+                                    snack.setText(getResources().getString(com.nibrasco.freshksa.R.string.msgSignUpSuccess))
                                             .setActionTextColor(Color.GREEN)
                                             .show();
-                                    startActivity(new Intent(SignUp.this, Home.class));
+                                    startActivity(new Intent(SignUpAcitivity.this, HomeActivity.class));
                                     snack.dismiss();
                                 } else {
                                     snack.dismiss();
-                                    snack.setText(getResources().getString(R.string.msgSignInRegisterFailed))
+                                    snack.setText(getResources().getString(com.nibrasco.freshksa.R.string.msgSignInRegisterFailed))
                                             .setActionTextColor(Color.RED).show();
                                 }
                             }
@@ -87,7 +88,7 @@ public class SignUp extends AppCompatActivity {
                         });
                     }else{
 
-                        Snackbar.make(v, getResources().getString(R.string.msgSignUpWrongNumber), Snackbar.LENGTH_LONG)
+                        Snackbar.make(v, getResources().getString(com.nibrasco.freshksa.R.string.msgSignUpWrongNumber), Snackbar.LENGTH_LONG)
                                 .setActionTextColor(Color.YELLOW)
                                 .show();
                     }

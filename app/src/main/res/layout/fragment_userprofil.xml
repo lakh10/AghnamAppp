@@ -8,7 +8,7 @@
             android:layout_width="89dp"
             android:gravity="right"
             android:textColor="#1a7d41"
-            android:layout_height="32dp"
+            android:layout_height="wrap_content"
             android:id="@+id/textView5"
             android:paddingBottom="5dp"
             android:layout_alignEnd="@+id/textView22"
@@ -18,7 +18,7 @@
             android:layout_width="82dp"
             android:gravity="right"
             android:textColor="#1a7d41"
-            android:layout_height="37dp"
+            android:layout_height="wrap_content"
             android:id="@+id/textView22"
             android:paddingBottom="5dp"
             android:layout_centerVertical="true" android:layout_alignParentEnd="true" android:layout_marginEnd="34dp"/>
@@ -27,7 +27,7 @@
             android:layout_width="83dp"
             android:gravity="right"
             android:textColor="#1a7d41"
-            android:layout_height="33dp"
+            android:layout_height="wrap_content"
             android:id="@+id/textView23"
             android:paddingBottom="5dp"
             android:layout_alignParentTop="true" android:layout_marginTop="218dp"
@@ -37,7 +37,7 @@
             android:layout_width="95dp"
             android:gravity="right"
             android:textColor="#1a7d41"
-            android:layout_height="37dp"
+            android:layout_height="wrap_content"
             android:id="@+id/textView24"
             android:paddingBottom="5dp"
             android:layout_alignTop="@+id/txtUserInfoPaymentMethod" android:layout_alignEnd="@+id/textView22"/>
@@ -60,7 +60,7 @@
     <TextView
             android:text=""
             android:layout_width="234dp"
-            android:layout_height="wrap_content"
+            android:layout_height="34dp"
             android:background="#d6dedddd"
             android:id="@+id/txtUserInfoAddress"
             android:layout_centerVertical="true" android:layout_alignStart="@+id/txtUserInfoPaymentMethod"/>
@@ -85,4 +85,12 @@
             android:layout_height="wrap_content" android:layout_centerHorizontal="true"
             android:id="@+id/textView26" android:textColor="#1a7d41"
             android:autoText="false" android:textSize="24sp" android:layout_below="@+id/textView25"/>
+    <Button
+            android:text="تسجيل الخروج"
+            android:layout_width="134dp"
+            android:layout_height="wrap_content"
+            android:background="#32a65b"
+            android:layout_alignParentBottom="true"
+            android:layout_marginBottom="19dp" android:layout_centerHorizontal="true" android:id="@+id/button"
+            android:textColor="@android:color/white"/>
 </RelativeLayout>

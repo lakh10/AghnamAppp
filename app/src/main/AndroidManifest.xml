@@ -18,24 +18,24 @@
             android:roundIcon="@mipmap/ic_launcher_round"
             android:supportsRtl="true"
             android:theme="@style/AppTheme">
-        <activity android:name=".WelcomeActivity">
+        <activity android:name=".Activities.WelcomeActivity">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN"/>
 
                 <category android:name="android.intent.category.LAUNCHER"/>
             </intent-filter>
         </activity>
-        <activity android:name=".MainActivity"/>
+        <activity android:name=".Activities.MainActivity"/>
         <activity
-                android:name=".SignIn"
+                android:name=".Activities.SignInActivity"
                 android:noHistory="true">
         </activity>
         <activity
-                android:name=".SignUp"
+                android:name=".Activities.SignUpAcitivity"
                 android:noHistory="true">
         </activity>
         <activity
-                android:name=".Home"
+                android:name=".Activities.HomeActivity"
                 android:label="@string/title_activity_drawer"
                 android:noHistory="true"
                 android:theme="@style/AppTheme">

@@ -1,10 +1,9 @@
-package com.nibrasco.freshksa;
+package com.nibrasco.freshksa.Fragments;
 
 
 import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.design.widget.Snackbar;
-import android.support.design.widget.TextInputEditText;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentTransaction;
 import android.text.Editable;
@@ -16,6 +15,7 @@ import android.widget.*;
 import com.google.firebase.database.*;
 import com.nibrasco.freshksa.Model.Cart;
 import com.nibrasco.freshksa.Model.Session;
+import com.nibrasco.freshksa.R;
 
 import java.util.ArrayList;
 
@@ -48,7 +48,7 @@ public class SheepFragment extends Fragment {
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
-        return inflater.inflate(R.layout.fragment_naemiorder, container, false);
+        return inflater.inflate(com.nibrasco.freshksa.R.layout.fragment_naemiorder, container, false);
     }
 
     @Override
@@ -61,14 +61,14 @@ public class SheepFragment extends Fragment {
 
     private void LinkControls(View v)
     {
-        btnConfirm = (Button)v.findViewById(R.id.btnItemOrder);
-        spSlicing = (Spinner)v.findViewById(R.id.spSlicing);
-        spWeight = (Spinner)v.findViewById(R.id.spWeight);
-        spPackaging = (Spinner)v.findViewById(R.id.spPackaging);
-        edtQuantity = (EditText)v.findViewById(R.id.edtQuantity);
-        rdGrpIntestine = (RadioGroup)v.findViewById(R.id.rdGrpIntestine);
-        edtNotes = (EditText)v.findViewById(R.id.edtNotes);
-        txtTotal = (TextView)v.findViewById(R.id.txtTotalItem);
+        btnConfirm = (Button)v.findViewById(com.nibrasco.freshksa.R.id.btnItemOrder);
+        spSlicing = (Spinner)v.findViewById(com.nibrasco.freshksa.R.id.spSlicing);
+        spWeight = (Spinner)v.findViewById(com.nibrasco.freshksa.R.id.spWeight);
+        spPackaging = (Spinner)v.findViewById(com.nibrasco.freshksa.R.id.spPackaging);
+        edtQuantity = (EditText)v.findViewById(com.nibrasco.freshksa.R.id.edtQuantity);
+        rdGrpIntestine = (RadioGroup)v.findViewById(com.nibrasco.freshksa.R.id.rdGrpIntestine);
+        edtNotes = (EditText)v.findViewById(com.nibrasco.freshksa.R.id.edtNotes);
+        txtTotal = (TextView)v.findViewById(com.nibrasco.freshksa.R.id.txtTotalItem);
     }
     private void LinkListeners()
     {
@@ -76,10 +76,10 @@ public class SheepFragment extends Fragment {
             @Override
             public void onCheckedChanged(RadioGroup group, int checkedId) {
                 switch (group.getCheckedRadioButtonId()) {
-                    case R.id.rdInt_Yes:
+                    case com.nibrasco.freshksa.R.id.rdInt_Yes:
                         currentItem.setIntestine(true);
                         break;
-                    case R.id.rdInt_No:
+                    case com.nibrasco.freshksa.R.id.rdInt_No:
                         currentItem.setIntestine(false);
                         break;
                 }

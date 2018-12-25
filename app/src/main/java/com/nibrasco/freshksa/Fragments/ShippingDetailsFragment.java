@@ -1,33 +1,26 @@
-package com.nibrasco.freshksa;
+package com.nibrasco.freshksa.Fragments;
 
 
 import android.Manifest;
 import android.content.Context;
-import android.content.pm.PackageManager;
 import android.graphics.Color;
 import android.location.*;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.design.widget.Snackbar;
 import android.support.design.widget.TextInputEditText;
-import android.support.v4.app.ActivityCompat;
 import android.support.v4.app.Fragment;
-import android.support.v4.app.FragmentTransaction;
-import android.text.Editable;
-import android.text.TextWatcher;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.RadioGroup;
 import android.widget.TextView;
-import com.google.android.gms.maps.CameraUpdateFactory;
-import com.google.android.gms.maps.model.LatLng;
-import com.google.android.gms.maps.model.MarkerOptions;
 import com.nibrasco.freshksa.Model.Cart;
-import com.nibrasco.freshksa.Model.GPSTracker;
+import com.nibrasco.freshksa.Utils.GPSTracker;
 import com.nibrasco.freshksa.Model.Session;
 import com.nibrasco.freshksa.Model.User;
+import com.nibrasco.freshksa.R;
 
 import java.io.IOException;
 import java.util.List;
@@ -139,9 +132,11 @@ public class ShippingDetailsFragment extends Fragment {
         Geocoder geocoder = new Geocoder(getActivity().getApplicationContext());
         try {
             List<Address> addressList = geocoder.getFromLocation(Latitude, Longtitude, 1);
-            String str = addressList.get(0).getAddressLine(0);
-            cart.setAddress(str);
-            edtAddress.setText(cart.getAddress());
+            if(addressList.size() > 0){
+                String str = addressList.get(0).getAddressLine(0);
+                cart.setAddress(str);
+                edtAddress.setText(cart.getAddress());
+            }
         } catch (IOException e) {
             e.printStackTrace();
         }

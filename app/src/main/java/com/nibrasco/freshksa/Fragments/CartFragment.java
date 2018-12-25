@@ -1,4 +1,4 @@
-package com.nibrasco.freshksa;
+package com.nibrasco.freshksa.Fragments;
 
 
 import android.os.Bundle;
@@ -7,7 +7,6 @@ import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentTransaction;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -16,6 +15,9 @@ import android.widget.ImageView;
 import android.widget.TextView;
 import com.google.firebase.database.*;
 import com.nibrasco.freshksa.Model.*;
+import com.nibrasco.freshksa.R;
+import com.nibrasco.freshksa.Utils.RecyclerCartItemAdapter;
+import com.nibrasco.freshksa.Utils.RecyclerItemTouchListener;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -64,14 +66,14 @@ public class CartFragment extends Fragment {
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
-        return inflater.inflate(R.layout.fragment_cart, container, false);
+        return inflater.inflate(com.nibrasco.freshksa.R.layout.fragment_cart, container, false);
     }
     private void LinkControls(View v) {
-        rmvImg = (ImageView)v.findViewById(R.id.rmvImg);
-        itemsView = (RecyclerView)v.findViewById(R.id.recyclerCartItems);
-        txtCartTotal = (TextView)v.findViewById(R.id.txtCartTotal);
-        btnOrder = (TextView) v.findViewById(R.id.btnItemOrder);
-        btnConfirmCart = (Button)v.findViewById(R.id.btnConfirmCart);
+        rmvImg = (ImageView)v.findViewById(com.nibrasco.freshksa.R.id.rmvImg);
+        itemsView = (RecyclerView)v.findViewById(com.nibrasco.freshksa.R.id.recyclerCartItems);
+        txtCartTotal = (TextView)v.findViewById(com.nibrasco.freshksa.R.id.txtCartTotal);
+        btnOrder = (TextView) v.findViewById(com.nibrasco.freshksa.R.id.btnItemOrder);
+        btnConfirmCart = (Button)v.findViewById(com.nibrasco.freshksa.R.id.btnConfirmCart);
     }
     private void FillRecyclerView(View v) {
         if(cart != null && cart.Items().size() > 0) {
@@ -95,7 +97,7 @@ public class CartFragment extends Fragment {
                 OrderItemFragment f = new OrderItemFragment();
                 assert getFragmentManager() != null;
                 FragmentTransaction fragmentTransaction = getFragmentManager().beginTransaction();
-                fragmentTransaction.replace(R.id.homeContainer, f);
+                fragmentTransaction.replace(com.nibrasco.freshksa.R.id.homeContainer, f);
                 fragmentTransaction.addToBackStack(null);
                 fragmentTransaction.commit();
             }
@@ -132,18 +134,20 @@ public class CartFragment extends Fragment {
     }
     void RemoveItem(final int index){
         try{
-            if(index >= 0 && cart.Items().size() > 0) {
+            if(cart.Items().size() > 0 && items.size() > 0 && index >= 0) {
                 items.remove(index);
                 itemsView.getAdapter().notifyDataSetChanged();
-                Session.getInstance().Cart(cart);
                 final FirebaseDatabase db = FirebaseDatabase.getInstance();
                 final DatabaseReference tblCart = db.getReference("Cart");
                 tblCart.addListenerForSingleValueEvent(new ValueEventListener() {
                     @Override
                     public void onDataChange(@NonNull DataSnapshot cartsSnap) {
                         String id = Session.getInstance().User().getCart();
-                        tblCart.child(id).child("Items").child(Integer.toString(cart.GetItem(index).getCategory().Value())).removeValue();
+                        Cart.Item item = cart.GetItem(index);
+                        String itemIndex = Integer.toString(item.getCategory().Value());
+                        tblCart.child(id).child("Items").child(itemIndex).removeValue();
                         cart.RemoveItem(index);
+                        Session.getInstance().Cart(cart);
                     }
 
                     @Override
