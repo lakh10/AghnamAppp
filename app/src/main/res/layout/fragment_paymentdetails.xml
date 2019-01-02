@@ -43,7 +43,9 @@
                     android:id="@+id/btnPaymentConfirm"
                     android:background="#32a65b"
                     android:textColor="@android:color/white"
-                    tools:layout_editor_absoluteY="453dp" tools:layout_editor_absoluteX="99dp"/>
+                    app:layout_constraintBottom_toBottomOf="parent"
+                    app:layout_constraintStart_toStartOf="parent" app:layout_constraintHorizontal_bias="0.5"
+                    app:layout_constraintEnd_toEndOf="parent"/>
             <TextView
                     android:text="مجاني"
                     android:layout_width="wrap_content"
@@ -106,8 +108,12 @@
             <Button
                     android:text="رفع وصل الدفع"
                     android:layout_width="wrap_content"
-                    android:layout_height="wrap_content" tools:layout_editor_absoluteY="376dp"
-                    tools:layout_editor_absoluteX="126dp" android:id="@+id/button2"/>
+                    android:layout_height="wrap_content"
+                    android:id="@+id/button2"
+                    android:layout_marginBottom="2dp"
+                    app:layout_constraintBottom_toTopOf="@+id/btnPaymentConfirm"
+                    app:layout_constraintStart_toStartOf="parent" app:layout_constraintHorizontal_bias="0.5"
+                    app:layout_constraintEnd_toEndOf="parent"/>
         </android.support.constraint.ConstraintLayout>
     </android.support.v7.widget.CardView>
 </android.support.constraint.ConstraintLayout>

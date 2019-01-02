@@ -153,8 +153,8 @@ public class MapsFragment extends Fragment implements OnMapReadyCallback {
         btnConfirm.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                GetLocation(gps);
 
+                Session.getInstance().Cart().setAddress(address);
                 ShippingDetailsFragment shippingDetailsFragment = new ShippingDetailsFragment();
                 getActivity().
                         getSupportFragmentManager().beginTransaction()
