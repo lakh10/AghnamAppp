@@ -105,7 +105,7 @@ public class CartFragment extends Fragment {
         View.OnClickListener shippingListener = new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                ShippingDetailsFragment f = new ShippingDetailsFragment();
+                MapsFragment f = new MapsFragment();
                 assert getFragmentManager() != null;
                 FragmentTransaction fragmentTransaction = getFragmentManager().beginTransaction();
                 fragmentTransaction.replace(R.id.homeContainer, f);

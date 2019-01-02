@@ -55,6 +55,7 @@ public class HalfFragment extends Fragment {
         edtQuantity = (EditText)v.findViewById(com.nibrasco.freshksa.R.id.edtQuantity);
         txtTotal = (TextView)v.findViewById(com.nibrasco.freshksa.R.id.txtTotalItem);
 
+        txtTotal.setText(Float.toString(currentItem.getTotal()));
         edtQuantity.addTextChangedListener(new TextWatcher() {
             @Override
             public void beforeTextChanged(CharSequence s, int start, int count, int after) {
@@ -89,6 +90,7 @@ public class HalfFragment extends Fragment {
                 }
             }
         });
+
     }
     private Boolean SaveChanges(View v) {
         final Snackbar snack = Snackbar.make(v, "Saving Your Order", Snackbar.LENGTH_LONG);

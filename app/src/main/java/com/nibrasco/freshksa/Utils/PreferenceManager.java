@@ -24,10 +24,8 @@ public class PreferenceManager {
 
     }
 
-    public String getUserPhone(Context context){
-        return context
-                .getSharedPreferences(PREF_NAME, PRIVATE_MODE)
-                .getString(KEY_PHONE, null);
+    public String getUserPhone(){
+        return pref.getString(KEY_PHONE, null);
     }
     public void setUserPhone(String phone){
         pref.edit()

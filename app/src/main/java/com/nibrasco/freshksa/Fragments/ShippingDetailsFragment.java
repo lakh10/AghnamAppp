@@ -34,7 +34,6 @@ public class ShippingDetailsFragment extends Fragment {
     TextInputEditText edtAddress;
     RadioGroup rdGrpTime;
     Button btnConfirm;
-    LocationManager locationManager;
     Cart cart;
     public ShippingDetailsFragment() {
         // Required empty public constructor
@@ -70,7 +69,7 @@ public class ShippingDetailsFragment extends Fragment {
         final User user = Session.getInstance().User();
         txtName.setText(user.getName());
         txtPhone.setText(user.getPhone());
-        InitGps();
+        edtAddress.setText(cart.getAddress());
         LinkListeners();
     }
     private void LinkListeners() {
@@ -108,38 +107,5 @@ public class ShippingDetailsFragment extends Fragment {
                         .commit();
             }
         });
-    }
-
-    private void InitGps(){
-        locationManager = (LocationManager) getActivity().getSystemService(Context.LOCATION_SERVICE);
-        requestPermissions(new String[]{
-                Manifest.permission.ACCESS_FINE_LOCATION,
-                Manifest.permission.ACCESS_COARSE_LOCATION
-        }, 1037);
-        Snackbar snackbar  = Snackbar.make(getView(), "Getting Location", Snackbar.LENGTH_INDEFINITE);
-        ((TextView)(snackbar.getView()
-                        .findViewById(android.support.design.R.id.snackbar_text)))
-                        .setTextColor(Color.YELLOW);
-        snackbar.show();
-
-        GPSTracker gps = new GPSTracker(getActivity());
-        GetLocation(gps);
-        snackbar.dismiss();
-    }
-    void GetLocation(GPSTracker gps){
-        double Latitude = gps.getLatitude();
-        double Longtitude = gps.getLongitude();
-        Geocoder geocoder = new Geocoder(getActivity().getApplicationContext());
-        try {
-            List<Address> addressList = geocoder.getFromLocation(Latitude, Longtitude, 1);
-            if(addressList.size() > 0){
-                String str = addressList.get(0).getAddressLine(0);
-                cart.setAddress(str);
-                edtAddress.setText(cart.getAddress());
-            }
-        } catch (IOException e) {
-            e.printStackTrace();
-        }
-
     }
 }

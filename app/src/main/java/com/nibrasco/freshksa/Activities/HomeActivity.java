@@ -37,17 +37,6 @@ public class HomeActivity extends AppCompatActivity
 
         NavigationView navigationView = (NavigationView) findViewById(R.id.nav_view);
         navigationView.setNavigationItemSelectedListener(this);
-        //Fragment f;
-        //if (Session.getInstance().Cart().GetCount() > 0)
-        //{
-        //    f = new CartFragment();
-        //}
-        //else {
-        //    f = new OrderItemFragment();
-        //}
-        //FragmentTransaction ft = getSupportFragmentManager().beginTransaction();
-        //ft.replace(R.id.homeContainer, f);
-        //ft.commit();
     }
 
     @Override

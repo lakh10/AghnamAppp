@@ -3,6 +3,7 @@ package com.nibrasco.freshksa.Model;
 import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseReference;
 import com.nibrasco.freshksa.R;
+import com.nibrasco.freshksa.Utils.RoomData.Model.Item;
 
 import java.util.*;
 
@@ -276,6 +277,7 @@ public class Cart {
         }
     }
 
+
     public static class Item {
 
         private eCategory Category= eCategory.None;
@@ -410,7 +412,6 @@ public class Cart {
                     + "\nNotes : " + Notes
                     + "\nTotal : " + Total;
         }
-
     }
 
     private eTime TimeOfDelivery;
