@@ -73,7 +73,7 @@ public class SignInActivity extends AppCompatActivity {
                                     snack.show();
                             GetCart();
                             Session.getInstance().User(user);
-                            //preferenceManager.setUserPhone(phone);
+                            preferenceManager.setUserPhone(phone);
                             startActivity(new Intent(SignInActivity.this, HomeActivity.class));
 
                         } else {
