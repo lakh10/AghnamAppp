@@ -38,7 +38,6 @@ public class CartFragment extends Fragment {
     public CartFragment() {
         // Required empty public constructor
         cart = Session.getInstance().Cart();
-        Total = cart.GetTotal();
     }
 
     public void onActivityCreated(Bundle savedInstanceState) {
@@ -60,7 +59,7 @@ public class CartFragment extends Fragment {
     }
 
     private void DisplayValues() {
-        txtCartTotal.setText(Float.toString(Total));
+        txtCartTotal.setText(Float.toString(cart.GetTotal()));
     }
 
     @Override
@@ -134,27 +133,21 @@ public class CartFragment extends Fragment {
     }
     void RemoveItem(final int index){
         try{
-            if(cart.Items().size() > 0 && items.size() > 0 && index >= 0) {
+            if(cart.GetCount() > 0 && index >= 0) {
                 items.remove(index);
-                itemsView.getAdapter().notifyDataSetChanged();
+                String id = Session.getInstance().User().getCart();
+                int itemId = cart.GetItem(index).getId();
+
                 final FirebaseDatabase db = FirebaseDatabase.getInstance();
                 final DatabaseReference tblCart = db.getReference("Cart");
-                tblCart.addListenerForSingleValueEvent(new ValueEventListener() {
-                    @Override
-                    public void onDataChange(@NonNull DataSnapshot cartsSnap) {
-                        String id = Session.getInstance().User().getCart();
-                        Cart.Item item = cart.GetItem(index);
-                        String itemIndex = Integer.toString(item.getCategory().Value());
-                        tblCart.child(id).child("Items").child(itemIndex).removeValue();
-                        cart.RemoveItem(index);
-                        Session.getInstance().Cart(cart);
-                    }
+                DatabaseReference itemRef = tblCart.child(id).child("Items").child(Integer.toString(itemId));
+                itemRef.removeValue();
+                cart.RemoveItem(index);
+                Session.getInstance().Cart(cart);
 
-                    @Override
-                    public void onCancelled(@NonNull DatabaseError databaseError) {
-                    }
-                });
-                Boolean flipListeners = cart != null && cart.Items().size() > 0;
+                itemsView.getAdapter().notifyDataSetChanged();
+                DisplayValues();
+                Boolean flipListeners = cart.GetCount() > 0;
                 if (flipListeners) {
                     FillRecyclerView(getView());
                     AssignListeners(flipListeners);
