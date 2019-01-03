@@ -280,6 +280,7 @@ public class Cart {
 
     public static class Item {
 
+        private int id = 0;
         private eCategory Category= eCategory.None;
         private int Quantity = 0;
         private boolean Intestine = false;
@@ -289,6 +290,13 @@ public class Cart {
         private int Weight = -1;
         private float Total = 0.0f;
 
+
+        public int getId() {
+            return id;
+        }
+        public void setId(int Id) {
+            id = Id;
+        }
         public eCategory getCategory() {
             return Category;
         }
@@ -381,7 +389,8 @@ public class Cart {
 
         public Item(DataSnapshot itemSnap)
         {
-            Category = eCategory.Get(Integer.parseInt(itemSnap.getKey()));
+            id = Integer.parseInt(itemSnap.getKey());
+            Category = eCategory.Get(Integer.parseInt(itemSnap.child("Category").getValue().toString()));
             Notes = itemSnap.child("Notes").getValue(String.class);
             Total = Float.parseFloat(itemSnap.child("Total").getValue().toString());
             Intestine = (Integer.parseInt(itemSnap.child("Intestine").getValue().toString()) != 0);
@@ -390,9 +399,9 @@ public class Cart {
             Slicing = eSlicing.Get(Integer.parseInt(itemSnap.child("Slicing").getValue().toString()));
             Weight = Integer.parseInt(itemSnap.child("Weight").getValue().toString());
         }
-        public void MapToDbRef(DatabaseReference itemsRef)
+        public void MapToDbRef(DatabaseReference itemRef)
         {
-            DatabaseReference itemRef = itemsRef.child(Integer.toString(Category.value));
+            itemRef.child("Category").setValue(Category.value);
             itemRef.child("Intestine").setValue(Intestine ? 1 : 0);
             itemRef.child("Notes").setValue(Notes);
             itemRef.child("Packaging").setValue(Packaging.value);
@@ -412,6 +421,8 @@ public class Cart {
                     + "\nNotes : " + Notes
                     + "\nTotal : " + Total;
         }
+
+
     }
 
     private eTime TimeOfDelivery;
@@ -443,7 +454,7 @@ public class Cart {
         this.TimeOfDelivery = eTime.Get(TimeOfDelivery);
     }
 
-    public Integer GetCount()
+    public int GetCount()
     {
         return Items.size();
     }
@@ -512,7 +523,7 @@ public class Cart {
         if(Items.size() > 0){
             DatabaseReference itemsRef = cartRef.child("Items");
             for (Item item : Items) {
-                item.MapToDbRef(itemsRef);
+                item.MapToDbRef(itemsRef.child(Integer.toString(item.id)));
             }
         }
 

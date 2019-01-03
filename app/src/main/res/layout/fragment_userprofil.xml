@@ -91,6 +91,6 @@
             android:layout_height="wrap_content"
             android:background="#32a65b"
             android:layout_alignParentBottom="true"
-            android:layout_marginBottom="19dp" android:layout_centerHorizontal="true" android:id="@+id/button"
+            android:layout_marginBottom="19dp" android:layout_centerHorizontal="true" android:id="@+id/btnLogOut"
             android:textColor="@android:color/white"/>
 </RelativeLayout>

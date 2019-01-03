@@ -135,7 +135,8 @@ public class CamelFragment extends Fragment {
         final Snackbar snack = Snackbar.make(v, "Saving Your Order", Snackbar.LENGTH_LONG);
         snack.show();
         final Boolean[] success = {true};
-        Session.getInstance().Cart().AddItem(Session.getInstance().Item());
+        currentItem.setId(Session.getInstance().Cart().GetCount());
+        Session.getInstance().Cart().AddItem(currentItem);
         //if(Session.getInstance().User().getCart().equals("0"))
         //{
         final FirebaseDatabase db = FirebaseDatabase.getInstance();
@@ -145,8 +146,7 @@ public class CamelFragment extends Fragment {
             public void onDataChange(@NonNull DataSnapshot cartsSnap) {
 
                 DatabaseReference cartRef = tblCart.child(Session.getInstance().User().getCart());
-                Session.getInstance().Item().MapToDbRef(cartRef.child("Items"));
-
+                currentItem.MapToDbRef(cartRef.child("Items").child(Integer.toString(currentItem.getId())));
                 snack.dismiss();
                 success[0] = true;
             }
@@ -168,7 +168,7 @@ public class CamelFragment extends Fragment {
         //adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
         spWeight.setAdapter(adapter);
         //spWeight.setSelection(0);
-        String totalTxt = Float.toString(Session.getInstance().Item().getTotal());
+        String totalTxt = Float.toString(currentItem.getTotal());
         txtTotal.setText(totalTxt);
 
         LinkListeners();

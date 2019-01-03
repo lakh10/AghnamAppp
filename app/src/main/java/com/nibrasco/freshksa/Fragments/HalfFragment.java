@@ -69,7 +69,7 @@ public class HalfFragment extends Fragment {
 
             @Override
             public void afterTextChanged(Editable s) {
-                int qte = Integer.parseInt(s.toString().equals("") ? "0" : s.toString());
+                int qte = Integer.parseInt(s.toString().equals("") ? "1" : s.toString());
                 currentItem.setQuantity(qte);
                 txtTotal.setText(Float.toString(currentItem.getTotal()));
             }
@@ -96,7 +96,8 @@ public class HalfFragment extends Fragment {
         final Snackbar snack = Snackbar.make(v, "Saving Your Order", Snackbar.LENGTH_LONG);
         snack.show();
         final Boolean[] success = {true};
-        Session.getInstance().Cart().AddItem(Session.getInstance().Item());
+        currentItem.setId(Session.getInstance().Cart().GetCount());
+        Session.getInstance().Cart().AddItem(currentItem);
         //if(Session.getInstance().User().getCart().equals("0"))
         //{
         final FirebaseDatabase db = FirebaseDatabase.getInstance();
@@ -106,8 +107,7 @@ public class HalfFragment extends Fragment {
             public void onDataChange(@NonNull DataSnapshot cartsSnap) {
 
                 DatabaseReference cartRef = tblCart.child(Session.getInstance().User().getCart());
-                Session.getInstance().Item().MapToDbRef(cartRef.child("Items"));
-
+                currentItem.MapToDbRef(cartRef.child("Items").child(Integer.toString(currentItem.getId())));
                 snack.dismiss();
                 success[0] = true;
             }

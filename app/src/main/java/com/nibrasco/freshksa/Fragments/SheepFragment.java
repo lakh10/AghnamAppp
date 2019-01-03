@@ -165,7 +165,7 @@ public class SheepFragment extends Fragment {
         btnConfirm.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                if(Session.getInstance().Item().getCategory() != Cart.eCategory.None) {
+                if(currentItem.getCategory() != Cart.eCategory.None) {
                     //Add the item to the cart at this point
                     if(SaveChanges(v))
                     {
@@ -200,7 +200,7 @@ public class SheepFragment extends Fragment {
         adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
         spPackaging.setAdapter(adapter);
         //spPackaging.setSelection(0);
-        txtTotal.setText(Float.toString(Session.getInstance().Item().getTotal()));
+        txtTotal.setText(Float.toString(currentItem.getTotal()));
 
         LinkListeners();
     }
@@ -208,7 +208,8 @@ public class SheepFragment extends Fragment {
         final Snackbar snack = Snackbar.make(v, "Saving Your Order", Snackbar.LENGTH_LONG);
         snack.show();
         final Boolean[] success = {true};
-        Session.getInstance().Cart().AddItem(Session.getInstance().Item());
+        currentItem.setId(Session.getInstance().Cart().GetCount());
+        Session.getInstance().Cart().AddItem(currentItem);
         //if(Session.getInstance().User().getCart().equals("0"))
         //{
         final FirebaseDatabase db = FirebaseDatabase.getInstance();
@@ -218,8 +219,8 @@ public class SheepFragment extends Fragment {
             public void onDataChange(@NonNull DataSnapshot cartsSnap) {
 
                 DatabaseReference cartRef = tblCart.child(Session.getInstance().User().getCart());
-                Session.getInstance().Item().MapToDbRef(cartRef.child("Items"));
-
+                currentItem.MapToDbRef(cartRef.child("Items").child(Integer.toString(currentItem.getId())));
+                Session.getInstance().Item(currentItem);
                 snack.dismiss();
                 success[0] = true;
             }
