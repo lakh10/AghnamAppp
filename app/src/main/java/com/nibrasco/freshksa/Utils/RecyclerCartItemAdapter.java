@@ -9,6 +9,7 @@ import android.view.ViewGroup;
 import android.widget.ImageView;
 import android.widget.TextView;
 import com.nibrasco.freshksa.Model.CartItemCategory;
+import com.nibrasco.freshksa.Model.RecyclerCartItemTouchListener;
 import com.nibrasco.freshksa.R;
 
 import java.util.List;
@@ -18,10 +19,13 @@ public class RecyclerCartItemAdapter extends RecyclerView.Adapter<RecyclerCartIt
 {
     private final List<CartItemCategory> items;
     private Context ctx;
+    public OnClickListeners listeners;
+
+    public RecyclerCartItemTouchListener listener;
     public class CartItemHolder extends RecyclerView.ViewHolder
     {
         TextView Category, Weight, Packaging, Qte, Slicing, Intestine;
-        ImageView resource;
+        ImageView resource, rmvImg;
         public CartItemHolder(@NonNull View itemView) {
             super(itemView);
             Category = (TextView) itemView.findViewById(R.id.txtCartItemCategory);
@@ -31,11 +35,19 @@ public class RecyclerCartItemAdapter extends RecyclerView.Adapter<RecyclerCartIt
             Intestine = (TextView) itemView.findViewById(R.id.txtCartItemIntestine);
             Slicing = (TextView) itemView.findViewById(R.id.txtCartItemSlicing);
             resource = (ImageView) itemView.findViewById(R.id.resource);
+            rmvImg = (ImageView)itemView.findViewById(R.id.rmvImg);
+            rmvImg.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                    listeners.OnRmvImageClick(v, getAdapterPosition());
+                }
+            });
         }
 
     }
-    public RecyclerCartItemAdapter(Context ctx, List<CartItemCategory> items)
+    public RecyclerCartItemAdapter(Context ctx, List<CartItemCategory> items, OnClickListeners listeners)
     {
+        this.listeners = listeners;
         this.ctx = ctx;
         this.items = items;
     }
@@ -66,7 +78,9 @@ public class RecyclerCartItemAdapter extends RecyclerView.Adapter<RecyclerCartIt
         return items.size();
     }
 
-
+    public interface OnClickListeners{
+        void OnRmvImageClick(View v, int position);
+    }
 }
 
 

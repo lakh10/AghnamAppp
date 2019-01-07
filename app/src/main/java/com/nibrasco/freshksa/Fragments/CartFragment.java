@@ -84,7 +84,12 @@ public class CartFragment extends Fragment {
                         cartItems) {
                     items.add(new CartItemCategory(item));
                 }
-                RecyclerCartItemAdapter adapter = new RecyclerCartItemAdapter(v.getContext(), items);
+                RecyclerCartItemAdapter adapter = new RecyclerCartItemAdapter(v.getContext(), items, new RecyclerCartItemAdapter.OnClickListeners() {
+                    @Override
+                    public void OnRmvImageClick(View v, int position) {
+                        RemoveItem(position);
+                    }
+                });
                 itemsView.setAdapter(adapter);
                 final LinearLayoutManager layoutManager = new LinearLayoutManager(v.getContext());
                 layoutManager.setOrientation(LinearLayoutManager.VERTICAL);
@@ -118,7 +123,7 @@ public class CartFragment extends Fragment {
                 fragmentTransaction.commit();
             }
         };
-
+/*
         itemsView.addOnItemTouchListener(new RecyclerItemTouchListener(getActivity().getApplicationContext(), itemsView, new RecyclerItemTouchListener.ClickListener() {
             @Override
             public void onClick(View view, int position) {
@@ -129,7 +134,7 @@ public class CartFragment extends Fragment {
             public void onLongClick(View view, int position) {
 
             }
-        }));
+        }));*/
         if (!flipped) {
             btnConfirmCart.setOnClickListener(orderListener);
         }else {
