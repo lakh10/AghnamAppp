@@ -11,6 +11,7 @@ import android.support.v4.view.PagerAdapter;
 import android.support.v4.view.ViewPager;
 import android.support.v7.app.AppCompatActivity;
 import android.text.Html;
+import android.util.Log;
 import android.view.*;
 import android.widget.Button;
 import android.widget.LinearLayout;
@@ -221,45 +222,49 @@ public class WelcomeActivity extends AppCompatActivity {
     }
     private void GetData(final String phone){
 
-        String message = getResources().getString(R.string.msgUserInfoLoading);
-        Snackbar snackbar = Snackbar.make(findViewById(android.R.id.content), message, Snackbar.LENGTH_INDEFINITE);
-        snackbar.show();
-        tblUser = db.getReference("User");
-        tblUser.addListenerForSingleValueEvent(new ValueEventListener() {
-            @Override
-            public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
-                if (dataSnapshot.child(phone).exists()) {
+        try {
+            String message = getResources().getString(R.string.msgUserInfoLoading);
+            Snackbar snackbar = Snackbar.make(findViewById(android.R.id.content), message, Snackbar.LENGTH_INDEFINITE);
+            snackbar.show();
+            tblUser = db.getReference("User");
+            tblUser.addListenerForSingleValueEvent(new ValueEventListener() {
+                @Override
+                public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
+                    if (dataSnapshot.child(phone).exists()) {
 
-                    user = new User(dataSnapshot.child(phone));
-                    Session.getInstance().User(user);
+                        user = new User(dataSnapshot.child(phone));
+                        Session.getInstance().User(user);
+                    }
                 }
-            }
 
-            @Override
-            public void onCancelled(@NonNull DatabaseError databaseError) {
+                @Override
+                public void onCancelled(@NonNull DatabaseError databaseError) {
 
-            }
-        });
-
-        tblCart = db.getReference("Cart");
-        tblCart.addListenerForSingleValueEvent(new ValueEventListener() {
-            @Override
-            public void onDataChange(@NonNull DataSnapshot cartsSnap) {
-                String id = user.getCart();
-                if (!id.equals("0"))
-                    Session.getInstance().Cart(new Cart(cartsSnap.child(id)));
-                else {
-                    Session.getInstance().Cart(new Cart());
-                    user.setCart(Long.toString(cartsSnap.getChildrenCount()));
-                    user.MapToDbRef(tblUser.child(user.getPhone()));
                 }
-            }
+            });
 
-            @Override
-            public void onCancelled(@NonNull DatabaseError databaseError) {
+            tblCart = db.getReference("Cart");
+            tblCart.addListenerForSingleValueEvent(new ValueEventListener() {
+                @Override
+                public void onDataChange(@NonNull DataSnapshot cartsSnap) {
+                    String id = user.getCart();
+                    if (!id.equals("0"))
+                        Session.getInstance().Cart(new Cart(cartsSnap.child(id)));
+                    else {
+                        Session.getInstance().Cart(new Cart());
+                        user.setCart(Long.toString(cartsSnap.getChildrenCount()));
+                        user.MapToDbRef(tblUser.child(user.getPhone()));
+                    }
+                }
 
-            }
-        });
-        snackbar.dismiss();
+                @Override
+                public void onCancelled(@NonNull DatabaseError databaseError) {
+
+                }
+            });
+            snackbar.dismiss();
+        }catch(Exception e){
+            Log.e(WelcomeActivity.class.getName(), e.getMessage());
+        }
     }
 }

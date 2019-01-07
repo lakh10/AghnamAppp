@@ -7,6 +7,7 @@ import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentTransaction;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -75,19 +76,24 @@ public class CartFragment extends Fragment {
         btnConfirmCart = (Button)v.findViewById(com.nibrasco.freshksa.R.id.btnConfirmCart);
     }
     private void FillRecyclerView(View v) {
-        if(cart != null && cart.Items().size() > 0) {
-            items = new ArrayList<>();
-            List<Cart.Item> cartItems = cart.Items();
-            for (Cart.Item item :
-                    cartItems) {
-                items.add(new CartItemCategory(item));
+        try {
+            if(cart != null && cart.Items().size() > 0) {
+                items = new ArrayList<>();
+                List<Cart.Item> cartItems = cart.Items();
+                for (Cart.Item item :
+                        cartItems) {
+                    items.add(new CartItemCategory(item));
+                }
+                RecyclerCartItemAdapter adapter = new RecyclerCartItemAdapter(v.getContext(), items);
+                itemsView.setAdapter(adapter);
+                final LinearLayoutManager layoutManager = new LinearLayoutManager(v.getContext());
+                layoutManager.setOrientation(LinearLayoutManager.VERTICAL);
+                itemsView.setLayoutManager(layoutManager);
             }
-            RecyclerCartItemAdapter adapter = new RecyclerCartItemAdapter(v.getContext(), items);
-            itemsView.setAdapter(adapter);
-            final LinearLayoutManager layoutManager = new LinearLayoutManager(v.getContext());
-            layoutManager.setOrientation(LinearLayoutManager.VERTICAL);
-            itemsView.setLayoutManager(layoutManager);
+        }catch (Exception e){
+            Log.e(CartFragment.class.getName(), e.getMessage());
         }
+
     }
     private void AssignListeners(Boolean flipped) {
         View.OnClickListener orderListener = new View.OnClickListener() {
@@ -158,6 +164,7 @@ public class CartFragment extends Fragment {
                 }
             }
         }catch (Exception e){
+            Log.e(CartFragment.class.getName(), e.getMessage());
         }
 
     }

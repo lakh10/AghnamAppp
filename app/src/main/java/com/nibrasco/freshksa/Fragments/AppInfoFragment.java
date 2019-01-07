@@ -28,7 +28,5 @@ public class AppInfoFragment extends Fragment {
     }
     public void onActivityCreated(Bundle savedInstanceState) {
         super.onActivityCreated(savedInstanceState);
-        View v = getView();
-
     }
 }

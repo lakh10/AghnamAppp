@@ -9,11 +9,13 @@ import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentTransaction;
 import android.text.Editable;
 import android.text.TextWatcher;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.*;
 import com.google.firebase.database.*;
+import com.nibrasco.freshksa.Activities.WelcomeActivity;
 import com.nibrasco.freshksa.Model.Cart;
 import com.nibrasco.freshksa.Model.Session;
 import com.nibrasco.freshksa.R;
@@ -132,32 +134,38 @@ public class CamelFragment extends Fragment {
         });
     }
     private Boolean SaveChanges(View v) {
-        final Snackbar snack = Snackbar.make(v, "Saving Your Order", Snackbar.LENGTH_LONG);
-        snack.show();
-        final Boolean[] success = {true};
-        currentItem.setId(Session.getInstance().Cart().GetCount());
-        Session.getInstance().Cart().AddItem(currentItem);
-        //if(Session.getInstance().User().getCart().equals("0"))
-        //{
-        final FirebaseDatabase db = FirebaseDatabase.getInstance();
-        final DatabaseReference tblCart = db.getReference("Cart");
-        tblCart.addListenerForSingleValueEvent(new ValueEventListener() {
-            @Override
-            public void onDataChange(@NonNull DataSnapshot cartsSnap) {
+        try {
+            final Snackbar snack = Snackbar.make(v, "Saving Your Order", Snackbar.LENGTH_LONG);
+            snack.show();
+            final Boolean[] success = {true};
+            currentItem.setId(Session.getInstance().Cart().GetCount());
+            Session.getInstance().Cart().AddItem(currentItem);
+            //if(Session.getInstance().User().getCart().equals("0"))
+            //{
+            final FirebaseDatabase db = FirebaseDatabase.getInstance();
+            final DatabaseReference tblCart = db.getReference("Cart");
+            tblCart.addListenerForSingleValueEvent(new ValueEventListener() {
+                @Override
+                public void onDataChange(@NonNull DataSnapshot cartsSnap) {
 
-                DatabaseReference cartRef = tblCart.child(Session.getInstance().User().getCart());
-                currentItem.MapToDbRef(cartRef.child("Items").child(Integer.toString(currentItem.getId())));
-                snack.dismiss();
-                success[0] = true;
-            }
+                    DatabaseReference cartRef = tblCart.child(Session.getInstance().User().getCart());
+                    currentItem.MapToDbRef(cartRef.child("Items").child(Integer.toString(currentItem.getId())));
+                    snack.dismiss();
+                    success[0] = true;
+                }
 
-            @Override
-            public void onCancelled(@NonNull DatabaseError databaseError) {
-                success[0] = false;
-            }
-        });
+                @Override
+                public void onCancelled(@NonNull DatabaseError databaseError) {
+                    success[0] = false;
+                }
+            });
+            return success[0];
+        }catch (Exception e){
+            Log.e(CamelFragment.class.getName(), e.getMessage());
+            return false;
+        }
         //}
-        return success[0];
+
     }
     private void LoadContent(View v)
     {

@@ -79,6 +79,28 @@ public class MapsFragment extends Fragment implements OnMapReadyCallback {
                 Manifest.permission.ACCESS_FINE_LOCATION,
                 Manifest.permission.ACCESS_COARSE_LOCATION
         }, 1037);
+        GetLocation(gps);
+    }
+
+    private void GetLocation(GPSTracker gps){
+        if (ActivityCompat.checkSelfPermission(getContext(), Manifest.permission.ACCESS_FINE_LOCATION) !=
+                PackageManager.PERMISSION_GRANTED
+                && ActivityCompat.checkSelfPermission(getContext(), Manifest.permission.ACCESS_COARSE_LOCATION) !=
+                PackageManager.PERMISSION_GRANTED)
+        {
+            // TODO: Consider calling
+            //    ActivityCompat#requestPermissions
+            // here to request the missing permissions, and then overriding
+            //   public void onRequestPermissionsResult(int requestCode, String[] permissions,
+            //                                          int[] grantResults)
+            // to handle the case where the user grants the permission. See the documentation
+            // for ActivityCompat#requestPermissions for more details.
+            return;
+        }
+        double Latitude = gps.getLatitude();
+        double Longtitude = gps.getLongitude();
+        GetLocation(new LatLng(Latitude, Longtitude));
+
     }
     private void GetLocation(LatLng LatLng)
     {
@@ -108,27 +130,6 @@ public class MapsFragment extends Fragment implements OnMapReadyCallback {
             e.printStackTrace();
         }
     }
-    private void GetLocation(GPSTracker gps){
-        if (ActivityCompat.checkSelfPermission(getContext(), Manifest.permission.ACCESS_FINE_LOCATION) !=
-                PackageManager.PERMISSION_GRANTED
-                && ActivityCompat.checkSelfPermission(getContext(), Manifest.permission.ACCESS_COARSE_LOCATION) !=
-                PackageManager.PERMISSION_GRANTED)
-        {
-            // TODO: Consider calling
-            //    ActivityCompat#requestPermissions
-            // here to request the missing permissions, and then overriding
-            //   public void onRequestPermissionsResult(int requestCode, String[] permissions,
-            //                                          int[] grantResults)
-            // to handle the case where the user grants the permission. See the documentation
-            // for ActivityCompat#requestPermissions for more details.
-            return;
-        }
-        double Latitude = gps.getLatitude();
-        double Longtitude = gps.getLongitude();
-        GetLocation(new LatLng(Latitude, Longtitude));
-
-    }
-
     /**
      * Manipulates the map once available.
      * This callback is triggered when the map is ready to be used.

@@ -7,6 +7,7 @@ import android.support.annotation.NonNull;
 import android.support.design.widget.Snackbar;
 import android.support.design.widget.TextInputEditText;
 import android.support.v7.app.AppCompatActivity;
+import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 import android.widget.TextView;
@@ -52,55 +53,58 @@ public class SignInActivity extends AppCompatActivity {
     }
 
     private void Authenticate(View v){
-        final String phone = edtPhone.getText().toString();
-        final String pwd = edtPwd.getText().toString();
-        if(!phone.equals("") &&  !pwd.equals("")) {
-            String message = getResources().getString(com.nibrasco.freshksa.R.string.msgSignInLoadingProfile);
-            final Snackbar snack = Snackbar.make(v, message, Snackbar.LENGTH_INDEFINITE);
-            snack.show();
-            tblUser.addListenerForSingleValueEvent(new ValueEventListener() {
-                @Override
-                public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
-                    if (dataSnapshot.child(edtPhone.getText().toString()).exists()) {
-                        snack.dismiss();
+        try {
+            final String phone = edtPhone.getText().toString();
+            final String pwd = edtPwd.getText().toString();
+            if (!phone.equals("") && !pwd.equals("")) {
+                String message = getResources().getString(com.nibrasco.freshksa.R.string.msgSignInLoadingProfile);
+                final Snackbar snack = Snackbar.make(v, message, Snackbar.LENGTH_INDEFINITE);
+                snack.show();
+                tblUser.addListenerForSingleValueEvent(new ValueEventListener() {
+                    @Override
+                    public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
+                        if (dataSnapshot.child(edtPhone.getText().toString()).exists()) {
+                            snack.dismiss();
 
-                        user = new User(dataSnapshot.child(phone));
-                        if (user.getPassword().equals(pwd)) {
-                            String message = getResources().getString(com.nibrasco.freshksa.R.string.msgSignInSuccess);
-                            ((TextView)(snack.setText(message)
-                                    .getView().findViewById(android.support.design.R.id.snackbar_text)))
-                                    .setTextColor(Color.GREEN);
-                                    snack.show();
-                            GetCart();
-                            Session.getInstance().User(user);
-                            preferenceManager.setUserPhone(phone);
-                            startActivity(new Intent(SignInActivity.this, HomeActivity.class));
+                            user = new User(dataSnapshot.child(phone));
+                            if (user.getPassword().equals(pwd)) {
+                                String message = getResources().getString(com.nibrasco.freshksa.R.string.msgSignInSuccess);
+                                ((TextView) (snack.setText(message)
+                                        .getView().findViewById(android.support.design.R.id.snackbar_text)))
+                                        .setTextColor(Color.GREEN);
+                                snack.show();
+                                GetCart();
+                                Session.getInstance().User(user);
+                                preferenceManager.setUserPhone(phone);
+                                startActivity(new Intent(SignInActivity.this, HomeActivity.class));
 
+                            } else {
+                                String message = getResources().getString(com.nibrasco.freshksa.R.string.msgSignInFailed);
+                                ((TextView) (snack.setText(message)
+                                        .getView().findViewById(android.support.design.R.id.snackbar_text)))
+                                        .setTextColor(Color.YELLOW);
+                                snack.show();
+                            }
                         } else {
-                            String message = getResources().getString(com.nibrasco.freshksa.R.string.msgSignInFailed);
-                            ((TextView)(snack.setText(message)
+                            String message = getResources().getString(com.nibrasco.freshksa.R.string.msgSignInInexistant);
+                            ((TextView) (snack.setText(message)
                                     .getView().findViewById(android.support.design.R.id.snackbar_text)))
-                                    .setTextColor(Color.YELLOW);
+                                    .setTextColor(Color.RED);
                             snack.show();
                         }
-                    } else {
-                        String message = getResources().getString(com.nibrasco.freshksa.R.string.msgSignInInexistant);
-                        ((TextView)(snack.setText(message)
-                                .getView().findViewById(android.support.design.R.id.snackbar_text)))
-                                .setTextColor(Color.RED);
-                        snack.show();
                     }
-                }
 
-                @Override
-                public void onCancelled(@NonNull DatabaseError databaseError) {
+                    @Override
+                    public void onCancelled(@NonNull DatabaseError databaseError) {
 
-                }
-            });
-        }
-        else{
+                    }
+                });
+            } else {
 
-            Snackbar.make(v, getResources().getString(R.string.msgSignInEmpty), Snackbar.LENGTH_LONG).show();
+                Snackbar.make(v, getResources().getString(R.string.msgSignInEmpty), Snackbar.LENGTH_LONG).show();
+            }
+        }catch (Exception e){
+            Log.e(SignInActivity.class.getName(), e.getMessage());
         }
     }
 
