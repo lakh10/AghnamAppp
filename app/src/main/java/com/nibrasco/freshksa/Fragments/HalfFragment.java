@@ -51,6 +51,8 @@ public class HalfFragment extends Fragment {
     @Override
     public void onStart() {
         super.onStart();
+        final View v = getView();
+        LoadContent(v);
     }
     private void LoadContent(View v){
         btnConfirm = (Button)v.findViewById(com.nibrasco.freshksa.R.id.btnItemOrder);

@@ -28,7 +28,7 @@
             android:layout_marginStart="50dp"/>
     <TextView
             android:id="@+id/btnItemOrder"
-            android:textColor="#1a7d41"
+            android:textColor="@color/colorPrimary"
             android:text="@string/btnItemOrderTxt"
             android:layout_gravity="center"
             android:layout_width="wrap_content"
@@ -50,9 +50,9 @@
     <Button
             android:text="إتمام عملية الشراء"
             android:layout_width="368dp"
-            android:textColor="#ffffff"
+            android:textColor="@android:color/white"
             android:layout_height="48dp"
-            android:background="#1a7d41"
+            android:background="@color/colorPrimary"
             android:id="@+id/btnConfirmCart"
             android:layout_above="@+id/btnItemOrder"
             app:layout_constraintBottom_toTopOf="@+id/btnItemOrder"

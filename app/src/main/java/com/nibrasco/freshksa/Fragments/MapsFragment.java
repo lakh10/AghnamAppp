@@ -148,6 +148,7 @@ public class MapsFragment extends Fragment implements OnMapReadyCallback {
         fabMyLocation.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
+                mMap.clear();
                 GetLocation(gps);
             }
         });

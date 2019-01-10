@@ -1,6 +1,7 @@
 package com.nibrasco.freshksa.Fragments;
 
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
@@ -12,7 +13,11 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.TextView;
+import com.google.android.gms.tasks.OnSuccessListener;
 import com.google.firebase.database.*;
+import com.google.firebase.storage.FirebaseStorage;
+import com.google.firebase.storage.StorageReference;
+import com.google.firebase.storage.UploadTask;
 import com.nibrasco.freshksa.Model.Cart;
 import com.nibrasco.freshksa.Model.Session;
 import com.nibrasco.freshksa.Model.User;
@@ -24,7 +29,7 @@ import com.nibrasco.freshksa.R;
 public class PaymentDetailsFragment extends Fragment {
     private TextView txtCount, txtTotal;
     TextInputEditText edtAccount;
-    private Button btnConfirm;
+    private Button btnConfirm, btnUpload;
     public PaymentDetailsFragment() {
         // Required empty public constructor
     }
@@ -52,6 +57,7 @@ public class PaymentDetailsFragment extends Fragment {
         txtTotal = (TextView)v.findViewById(com.nibrasco.freshksa.R.id.txtOrderTotal);
         edtAccount = (TextInputEditText)v.findViewById(com.nibrasco.freshksa.R.id.edtPaymentAccount);
         btnConfirm = (Button)v.findViewById(com.nibrasco.freshksa.R.id.btnPaymentConfirm);
+        btnUpload = (Button)v.findViewById(R.id.btnUpload);
     }
     private void LoadContent(View v){
         LinkControls(v);
@@ -116,5 +122,35 @@ public class PaymentDetailsFragment extends Fragment {
                             .commit();
             }
         });
+        btnUpload.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                startActivityForResult(
+                        Intent.createChooser(new Intent(Intent.ACTION_GET_CONTENT)
+                            .setType("image/*"),
+                        "Select an Image"),
+                        1
+                );
+            }
+        });
+    }
+
+    @Override
+    public void onActivityResult(int requestCode, int resultCode, Intent data) {
+        super.onActivityResult(requestCode, resultCode, data);
+        StorageReference storageRef = FirebaseStorage.getInstance().getReference();
+        switch (requestCode){
+            case 2:
+                if(resultCode == getActivity().RESULT_OK){
+                    StorageReference imgRef = storageRef.child(Session.getInstance().User().getCart());
+                    imgRef.putFile(data.getData()).addOnSuccessListener(new OnSuccessListener<UploadTask.TaskSnapshot>() {
+                        @Override
+                        public void onSuccess(UploadTask.TaskSnapshot taskSnapshot) {
+
+                        }
+                    });
+                }
+                break;
+        }
     }
 }

@@ -42,10 +42,5 @@ public class MainActivity extends AppCompatActivity {
         });
         //OutputToDB();
     }
-
-    @Override
-    protected void onStart() {
-        super.onStart();
-    }
 }
 

@@ -17,15 +17,17 @@
             android:layout_height="63dp"
             android:clickable="true"
             android:src="@drawable/icon_mylocation"
-            map:backgroundTint="@color/common_google_signin_btn_text_dark_pressed"
+            map:backgroundTint="@color/colorPrimary"
             android:layout_marginBottom="16dp" map:layout_constraintBottom_toBottomOf="parent"
             map:layout_constraintEnd_toEndOf="parent" android:layout_marginEnd="16dp"
-            android:layout_marginRight="16dp"/>
+            android:layout_marginRight="16dp" map:layout_constraintDimensionRatio="16:16"/>
 
     <Button
             android:id="@+id/btnConfirmAddress"
             android:layout_width="145dp"
             android:layout_height="51dp"
+            android:background="@color/colorPrimary"
+            android:textColor="@android:color/white"
             android:text="تم"
             map:layout_constraintStart_toEndOf="@+id/map"
             map:layout_constraintHorizontal_bias="0.5" map:layout_constraintEnd_toStartOf="@+id/map"

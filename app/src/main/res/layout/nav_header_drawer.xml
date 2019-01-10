@@ -9,7 +9,7 @@
               android:paddingTop="@dimen/activity_vertical_margin"
               android:theme="@style/ThemeOverlay.AppCompat.Dark"
               android:orientation="vertical"
-              android:backgroundTint="#1a7d41"
+              android:backgroundTint="@color/colorPrimary"
               android:gravity="bottom">
 
     <TextView

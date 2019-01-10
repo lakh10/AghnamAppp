@@ -51,7 +51,7 @@
                     app:layout_constraintTop_toBottomOf="@+id/textView5"/>
             <TextView
                     android:text="التقطيع"
-                    android:textColor="#32a65b"
+                    android:textColor="@color/colorPrimary"
                     android:layout_width="53dp"
                     android:layout_height="wrap_content"
                     android:layout_centerHorizontal="true"
@@ -61,10 +61,9 @@
             <TextView
                     android:text="الوزن"
                     android:layout_width="41dp"
-                    android:textColor="#32a65b"
+                    android:textColor="@color/colorPrimary"
                     android:layout_height="31dp"
                     app:layout_constraintTop_toTopOf="@+id/textView"
-                    android:layout_marginTop="0dp"
                     app:layout_constraintBottom_toTopOf="@+id/txtCartItemWeight"
                     android:id="@+id/textView13" app:layout_constraintVertical_bias="0.0"
                     app:layout_constraintEnd_toEndOf="@+id/textView4"
@@ -94,7 +93,7 @@
                     app:layout_constraintTop_toBottomOf="@+id/textView4"/>
             <TextView
                     android:text="المصارن"
-                    android:textColor="#32a65b"
+                    android:textColor="@color/colorPrimary"
                     android:layout_width="56dp"
                     android:layout_height="31dp"
                     android:id="@+id/textView4"
@@ -105,18 +104,18 @@
             <TextView
                     android:text="التعليب"
                     android:gravity="right"
-                    android:textColor="#32a65b"
+                    android:textColor="@color/colorPrimary"
                     android:layout_width="45dp"
                     android:layout_height="26dp"
                     android:id="@+id/textView"
                     app:layout_constraintTop_toTopOf="@+id/txtCartItemCategory"
-                    android:layout_marginTop="0dp" app:layout_constraintStart_toEndOf="@+id/textView13"
+                    app:layout_constraintStart_toEndOf="@+id/textView13"
                     android:layout_marginLeft="36dp" android:layout_marginStart="36dp"
                     app:layout_constraintBottom_toTopOf="@+id/txtCartItemPackaging"
                     app:layout_constraintVertical_bias="1.0"/>
             <TextView
                     android:text="الكمية"
-                    android:textColor="#32a65b"
+                    android:textColor="@color/colorPrimary"
                     android:layout_width="40dp"
                     android:layout_height="31dp"
                     android:id="@+id/txtCartItemQteLabel"
@@ -126,7 +125,7 @@
             />
             <TextView
                     android:text="@string/recyclerItemGoat"
-                    android:textColor="#32a65b"
+                    android:textColor="@color/colorPrimary"
                     android:layout_width="77dp"
                     android:layout_height="31dp"
                     android:id="@+id/txtCartItemCategory"
