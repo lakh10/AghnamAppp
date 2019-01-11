@@ -88,7 +88,6 @@ public class HalfFragment extends Fragment {
                         CartFragment f = new CartFragment();
                         FragmentTransaction fragmentTransaction = getFragmentManager().beginTransaction();
                         fragmentTransaction.replace(R.id.homeContainer, f);
-                        fragmentTransaction.addToBackStack(null);
                         fragmentTransaction.commit();
                     }
                 }

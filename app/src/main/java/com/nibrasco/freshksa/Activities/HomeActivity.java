@@ -46,7 +46,6 @@ public class HomeActivity extends AppCompatActivity
         assert getSupportFragmentManager() != null;
         FragmentTransaction fragmentTransaction = getSupportFragmentManager().beginTransaction();
         fragmentTransaction.replace(R.id.homeContainer, f);
-        fragmentTransaction.addToBackStack(null);
         fragmentTransaction.commit();
     }
 
@@ -60,11 +59,9 @@ public class HomeActivity extends AppCompatActivity
         DrawerLayout drawer = (DrawerLayout) findViewById(R.id.drawer_layout);
         if (drawer.isDrawerOpen(GravityCompat.END)) {
             drawer.closeDrawer(GravityCompat.END);
+        } else {
+            super.onBackPressed();
         }
-
-        //else {
-        //    //super.onBackPressed();
-        //}
     }
 
     @Override

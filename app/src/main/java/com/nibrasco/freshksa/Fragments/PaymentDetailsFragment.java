@@ -125,10 +125,8 @@ public class PaymentDetailsFragment extends Fragment {
         btnUpload.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                startActivityForResult(
-                        Intent.createChooser(new Intent(Intent.ACTION_GET_CONTENT)
+                startActivityForResult(new Intent(Intent.ACTION_PICK)
                             .setType("image/*"),
-                        "Select an Image"),
                         1
                 );
             }
@@ -140,7 +138,7 @@ public class PaymentDetailsFragment extends Fragment {
         super.onActivityResult(requestCode, resultCode, data);
         StorageReference storageRef = FirebaseStorage.getInstance().getReference();
         switch (requestCode){
-            case 2:
+            case 1:
                 if(resultCode == getActivity().RESULT_OK){
                     StorageReference imgRef = storageRef.child(Session.getInstance().User().getCart());
                     imgRef.putFile(data.getData()).addOnSuccessListener(new OnSuccessListener<UploadTask.TaskSnapshot>() {
