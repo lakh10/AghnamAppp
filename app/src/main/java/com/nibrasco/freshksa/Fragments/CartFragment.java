@@ -31,11 +31,9 @@ public class CartFragment extends Fragment {
     private Cart cart;
     private ArrayList<CartItemCategory> items;
 
-    private ImageView rmvImg;
     private RecyclerView itemsView;
     private TextView txtCartTotal, btnOrder;
     private Button btnConfirmCart;
-    private Float Total = 0.0f;
     public CartFragment() {
         // Required empty public constructor
         cart = Session.getInstance().Cart();
@@ -66,14 +64,13 @@ public class CartFragment extends Fragment {
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
-        return inflater.inflate(com.nibrasco.freshksa.R.layout.fragment_cart, container, false);
+        return inflater.inflate(R.layout.fragment_cart, container, false);
     }
     private void LinkControls(View v) {
-        rmvImg = (ImageView)v.findViewById(com.nibrasco.freshksa.R.id.rmvImg);
-        itemsView = (RecyclerView)v.findViewById(com.nibrasco.freshksa.R.id.recyclerCartItems);
-        txtCartTotal = (TextView)v.findViewById(com.nibrasco.freshksa.R.id.txtCartTotal);
-        btnOrder = (TextView) v.findViewById(com.nibrasco.freshksa.R.id.btnItemOrder);
-        btnConfirmCart = (Button)v.findViewById(com.nibrasco.freshksa.R.id.btnConfirmCart);
+        itemsView = (RecyclerView)v.findViewById(R.id.recyclerCartItems);
+        txtCartTotal = (TextView)v.findViewById(R.id.txtCartTotal);
+        btnOrder = (TextView) v.findViewById(R.id.btnItemOrder);
+        btnConfirmCart = (Button)v.findViewById(R.id.btnConfirmCart);
     }
     private void FillRecyclerView(View v) {
         try {
@@ -142,7 +139,7 @@ public class CartFragment extends Fragment {
             btnOrder.setOnClickListener(orderListener);
         }
     }
-    void RemoveItem(final int index){
+    private void RemoveItem(final int index){
         try{
             if(cart.GetCount() > 0 && index >= 0) {
                 items.remove(index);

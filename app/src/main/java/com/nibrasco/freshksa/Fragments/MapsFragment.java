@@ -7,14 +7,17 @@ import android.location.Geocoder;
 import android.os.Build;
 import android.support.annotation.RequiresApi;
 import android.support.design.widget.FloatingActionButton;
+import android.support.design.widget.Snackbar;
 import android.support.v4.app.ActivityCompat;
 import android.support.v4.app.Fragment;
 import android.os.Bundle;
 
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
+import android.widget.Toast;
 import com.google.android.gms.maps.*;
 import com.google.android.gms.maps.model.CameraPosition;
 import com.google.android.gms.maps.model.LatLng;
@@ -22,9 +25,19 @@ import com.google.android.gms.maps.model.MarkerOptions;
 import com.nibrasco.freshksa.Model.Session;
 import com.nibrasco.freshksa.R;
 import com.nibrasco.freshksa.Utils.GPSTracker;
+import org.apache.http.HttpEntity;
+import org.apache.http.HttpResponse;
+import org.apache.http.client.HttpClient;
+import org.apache.http.client.methods.HttpGet;
+import org.apache.http.impl.client.DefaultHttpClient;
+import org.json.JSONArray;
+import org.json.JSONObject;
 
 import java.io.IOException;
+import java.io.InputStream;
+import java.util.ArrayList;
 import java.util.List;
+import java.util.Locale;
 
 public class MapsFragment extends Fragment implements OnMapReadyCallback {
 
@@ -35,7 +48,6 @@ public class MapsFragment extends Fragment implements OnMapReadyCallback {
     GPSTracker gps;
     String address;
 
-    @RequiresApi(api = Build.VERSION_CODES.M)
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
@@ -59,7 +71,6 @@ public class MapsFragment extends Fragment implements OnMapReadyCallback {
     }
 
 
-    @RequiresApi(api = Build.VERSION_CODES.M)
     private void InitControls(){
         fabMyLocation = (FloatingActionButton) getView().findViewById(R.id.fabMyLocation);
         btnConfirm = (Button) getView().findViewById(R.id.btnConfirmAddress);
@@ -71,7 +82,6 @@ public class MapsFragment extends Fragment implements OnMapReadyCallback {
             }
         });
     }
-    @RequiresApi(api = Build.VERSION_CODES.M)
     private void InitGps(){
         //locationManager = (LocationManager) getSystemService(Context.LOCATION_SERVICE);
         gps = new GPSTracker(getContext());
@@ -86,34 +96,113 @@ public class MapsFragment extends Fragment implements OnMapReadyCallback {
         if (ActivityCompat.checkSelfPermission(getContext(), Manifest.permission.ACCESS_FINE_LOCATION) !=
                 PackageManager.PERMISSION_GRANTED
                 && ActivityCompat.checkSelfPermission(getContext(), Manifest.permission.ACCESS_COARSE_LOCATION) !=
-                PackageManager.PERMISSION_GRANTED)
-        {
-            // TODO: Consider calling
-            //    ActivityCompat#requestPermissions
-            // here to request the missing permissions, and then overriding
-            //   public void onRequestPermissionsResult(int requestCode, String[] permissions,
-            //                                          int[] grantResults)
-            // to handle the case where the user grants the permission. See the documentation
-            // for ActivityCompat#requestPermissions for more details.
+                PackageManager.PERMISSION_GRANTED) {
             return;
         }
+
         double Latitude = gps.getLatitude();
-        double Longtitude = gps.getLongitude();
-        GetLocation(new LatLng(Latitude, Longtitude));
+        double Longitude = gps.getLongitude();
+        GetLocation(new LatLng(Latitude, Longitude));
 
     }
-    private void GetLocation(LatLng LatLng)
-    {
-        Geocoder geocoder = new Geocoder(getActivity().getApplicationContext());
+    private List<Address> getManualLocation(double lat, double lng) {
+        //SharedPreferences settings;
+        //settings = PreferenceManager.getDefaultSharedPreferences(mContext);
+        //settings.edit().putBoolean("SecondaryGeoCode", true).apply();
+
+
+        String address = String.format(Locale.ENGLISH,
+                "http://maps.googleapis.com/maps/api/geocode/json?latlng=%1$f,%2$f&sensor=true&language=" + Locale.getDefault().getCountry(),
+                lat, lng);
+
+        HttpGet httpGet = new HttpGet(address);
+        HttpClient client = new DefaultHttpClient();
+        HttpResponse response;
+
+        StringBuilder stringBuilder = new StringBuilder();
+        List<Address> retList = new ArrayList<>();
         try {
-            List<Address> addressList = geocoder.getFromLocation(LatLng.latitude, LatLng.longitude, 1);
+            response = client.execute(httpGet);
+            HttpEntity entity = response.getEntity();
+            InputStream stream = entity.getContent();
+            int b;
+            while ((b = stream.read()) != -1) {
+                stringBuilder.append((char) b);
+            }
+
+            JSONObject jsonObject = new JSONObject(stringBuilder.toString());
+            retList = new ArrayList<>();
+
+            if ("OK".equalsIgnoreCase(jsonObject.getString("status"))) {
+                JSONArray results = jsonObject.getJSONArray("results");
+                boolean hasGoodPartTwo = false;
+
+                for (int i = 0; i < results.length(); i++) {
+                    Address addr = new Address(Locale.getDefault());
+                        String neighborhood = ((JSONArray)((JSONObject)results.get(i)).get("types")).getString(0);
+                        if (neighborhood.compareTo("neighborhood") == 0) {
+                            String neighborhood1 = ((JSONObject)results.get(i)).getString("long_name");
+                            addr.setSubThoroughfare(neighborhood1);
+                        }
+                        String locality = ((JSONArray)((JSONObject)results.get(i)).get("types")).getString(0);
+                        if (locality.compareTo("locality") == 0) {
+                            String locality1 = ((JSONObject)results.get(0)).getString("long_name");
+                            addr.setLocality(locality1);
+                        }
+
+                        String subadminArea = ((JSONArray)((JSONObject)results.get(i)).get("types")).getString(0);
+                        if (locality.compareTo("administrative_area_level_2") == 0) {
+                            String subadminArea1 = ((JSONObject)results.get(i)).getString("long_name");
+                            addr.setSubAdminArea(subadminArea1);
+                        }
+                        String adminArea = ((JSONArray)((JSONObject)results.get(i)).get("types")).getString(0);
+                        if (adminArea.compareTo("administrative_area_level_1") == 0) {
+                            String adminArea1 = ((JSONObject)results.get(i)).getString("long_name");
+                            addr.setAdminArea(adminArea1);
+                        }
+
+                        String postalcode = ((JSONArray)((JSONObject)results.get(i)).get("types")).getString(0);
+                        if (postalcode.compareTo("postal_code") == 0) {
+                            String postalcode1 = ((JSONObject)results.get(i)).getString("long_name");
+                            addr.setPostalCode(postalcode1);
+                        }
+                        String sublocality = ((JSONArray)((JSONObject)results.get(i)).get("types")).getString(0);
+                        if (sublocality.compareTo("sublocality") == 0) {
+                            String sublocality1 = ((JSONObject)results.get(i)).getString("long_name");
+                            addr.setSubLocality(sublocality1);
+                        }
+                        String countr = ((JSONArray)((JSONObject)results.get(i)).get("types")).getString(0);
+                        if (countr.compareTo("country") == 0) {
+                            String countr1 = ((JSONObject)results.get(i)).getString("long_name");
+
+                            addr.setCountryName(countr1);
+                        }
+                        retList.add(addr);
+                    }
+
+            }
+            return retList;
+        }catch (Exception e){
+            Log.e(MapsFragment.class.getName(), e.getMessage());
+            return new ArrayList<Address>();
+        }
+    }
+    private void GetLocation(LatLng latLng) {
+        //Geocoder geocoder = new Geocoder(getActivity().getApplicationContext());
+        try {
+            List<Address> addressList = getManualLocation(latLng.latitude, latLng.longitude);
             if (!addressList.isEmpty()) {
                 Address adr = addressList.get(0);
-                address = adr.getAddressLine(0);
+                address = adr.getAddressLine(0) + adr.getAdminArea() + adr.getSubAdminArea() + adr.getPostalCode();
+                //addr_label.setText("Address:"+addre/*+","+addr1.getSubLocality()+","+addr1.getSubThoroughfare()+","+addr1.getLocality()*/);
+                //city.setText("City:"+addr1.getSubAdminArea());
+                //state.setText("State:"+addr1.getAdminArea());
+                //country.setText("Country:"+addr1.getCountryName());
+                //pin.setText("Pin:"+addr1.getPostalCode());
                 Session.getInstance().Cart().setAddress(address);
                 mMap.addMarker(
                         new MarkerOptions()
-                                .position(LatLng)
+                                .position(latLng)
                                 .title(address)
                                 .snippet(adr.getCountryName())
                 );
@@ -121,12 +210,15 @@ public class MapsFragment extends Fragment implements OnMapReadyCallback {
                         CameraUpdateFactory.newCameraPosition(
                                 new CameraPosition
                                         .Builder()
-                                        .target(LatLng)
+                                        .target(latLng)
                                         .zoom(15)
                                         .build()
                         ));
+            }else {
+                //TODO: msg => invalid location
+                Toast.makeText(getContext(), "msg", Toast.LENGTH_SHORT).show();
             }
-        } catch (IOException e) {
+        } catch (Exception e) {
             e.printStackTrace();
         }
     }
@@ -139,7 +231,6 @@ public class MapsFragment extends Fragment implements OnMapReadyCallback {
      * it inside the SupportMapFragment. This method will only be triggered once the user has
      * installed Google Play services and returned to the app.
      */
-    @RequiresApi(api = Build.VERSION_CODES.M)
     @Override
     public void onMapReady(GoogleMap googleMap) {
         mMap = googleMap;
@@ -155,15 +246,21 @@ public class MapsFragment extends Fragment implements OnMapReadyCallback {
         btnConfirm.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-
-                Session.getInstance().Cart().setAddress(address);
-                ShippingDetailsFragment shippingDetailsFragment = new ShippingDetailsFragment();
-                getActivity().
-                        getSupportFragmentManager().beginTransaction()
-                        .replace(R.id.homeContainer, shippingDetailsFragment)
-                        .commit();
+                if(address != null && !address.equals("")) {
+                    ShippingDetailsFragment shippingDetailsFragment = new ShippingDetailsFragment();
+                    getActivity().
+                            getSupportFragmentManager().beginTransaction()
+                            .replace(R.id.homeContainer, shippingDetailsFragment)
+                            .commit();
+                }else {
+                    //TODO: english to arabic string
+                    String msg = "";
+                    Toast.makeText(getContext(), msg, Toast.LENGTH_LONG).show();
+                }
             }
         });
+        mMap.clear();
+        GetLocation(gps);
     }
     @Override
     public void onResume() {

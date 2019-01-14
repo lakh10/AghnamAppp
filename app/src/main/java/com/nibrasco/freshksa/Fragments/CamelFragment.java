@@ -32,6 +32,7 @@ public class CamelFragment extends Fragment {
     private TextView txtTotal;
     private EditText edtQuantity, edtNotes;
     private Cart.Item currentItem;
+    
     public CamelFragment() {
         currentItem = Session.getInstance().Item();
         currentItem.setQuantity(1);
@@ -44,11 +45,9 @@ public class CamelFragment extends Fragment {
 
     public void onActivityCreated(Bundle savedInstanceState) {
         super.onActivityCreated(savedInstanceState);
-
     }
     @Override
-    public View onCreateView(LayoutInflater inflater, ViewGroup container,
-                             Bundle savedInstanceState) {
+    public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
 
         return inflater.inflate(com.nibrasco.freshksa.R.layout.fragment_hachiorder, container, false);
     }
@@ -60,16 +59,15 @@ public class CamelFragment extends Fragment {
         LoadContent(v);
     }
 
-    private void LinkControls(View v)
-    {
+    private void LinkControls(View v) {
         btnConfirm = (Button)v.findViewById(com.nibrasco.freshksa.R.id.btnItemOrder);
         spWeight = (Spinner)v.findViewById(com.nibrasco.freshksa.R.id.spWeightCamel);
         edtQuantity = (EditText)v.findViewById(com.nibrasco.freshksa.R.id.edtQuantity);
         edtNotes = (EditText)v.findViewById(com.nibrasco.freshksa.R.id.edtNotes);
         txtTotal = (TextView)v.findViewById(com.nibrasco.freshksa.R.id.txtTotalItem);
     }
-    private void LinkListeners()
-    {
+
+    private void LinkListeners() {
         spWeight.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
             @Override
             public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
@@ -81,7 +79,6 @@ public class CamelFragment extends Fragment {
 
             }
         });
-
         edtQuantity.addTextChangedListener(new TextWatcher() {
             @Override
             public void beforeTextChanged(CharSequence s, int start, int count, int after) {
@@ -133,6 +130,7 @@ public class CamelFragment extends Fragment {
             }
         });
     }
+
     private Boolean SaveChanges(View v) {
         try {
             final Snackbar snack = Snackbar.make(v, "Saving Your Order", Snackbar.LENGTH_LONG);
@@ -167,8 +165,8 @@ public class CamelFragment extends Fragment {
         //}
 
     }
-    private void LoadContent(View v)
-    {
+
+    private void LoadContent(View v) {
         LinkControls(v);
 
         ArrayList<String> list = Cart.Lists.GetWeightNames(Session.getInstance().Item().getCategory());

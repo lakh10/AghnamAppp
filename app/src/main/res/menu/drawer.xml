@@ -7,24 +7,24 @@ tools:showIn="navigation_view">
         <group android:checkableBehavior="single">
 
                 <item
+                        android:id="@+id/navhome"
+                        android:title="الواجهة الرئيسية"
+                        android:icon="@drawable/freshinfo"/>
+
+                <item
                         android:id="@+id/navUser"
                         android:title="ملف المستخدم"
-                        android:icon="@drawable/usericon"
-                />
+                        android:icon="@drawable/usericon"/>
 
                 <item
                         android:id="@+id/navCart"
                         android:title="السلة الشرائية"
                         android:icon="@drawable/order"/>
 
-                <!--<item
-                        android:id="@+id/navOrders"
-                        android:title="طلباتي"/>-->
-
                 <item
                         android:id="@+id/navAbout"
                         android:icon="@drawable/freshinfo"
-                        android:title="حسابات فريش"/>
+                        android:title="حسابات أغنام"/>
 
         </group>
 

@@ -1,6 +1,7 @@
 package com.nibrasco.freshksa.Fragments;
 
 
+import android.app.Activity;
 import android.content.Intent;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
@@ -30,8 +31,10 @@ public class PaymentDetailsFragment extends Fragment {
     private TextView txtCount, txtTotal;
     TextInputEditText edtAccount;
     private Button btnConfirm, btnUpload;
+    Cart cart;
     public PaymentDetailsFragment() {
         // Required empty public constructor
+        cart = Session.getInstance().Cart();
     }
 
     @Override
@@ -62,8 +65,8 @@ public class PaymentDetailsFragment extends Fragment {
     private void LoadContent(View v){
         LinkControls(v);
 
-        txtTotal.setText(Float.toString(Session.getInstance().Cart().GetTotal()));
-        txtCount.setText(Integer.toString(Session.getInstance().Cart().GetCount()));
+        txtTotal.setText(Float.toString(cart.GetTotal()));
+        txtCount.setText(Integer.toString(cart.GetCount()));
 
         LinkListeners(v);
     }
@@ -76,43 +79,23 @@ public class PaymentDetailsFragment extends Fragment {
                 snackbar.show();
                 String Account = edtAccount.getText().toString();
 
-                    final Cart cart = Session.getInstance().Cart();
                     cart.setBankAccount(Account);
-                    final User user = Session.getInstance().User();
                     FirebaseDatabase db = FirebaseDatabase.getInstance();
                     final DatabaseReference tblCart = db.getReference("Cart");
-
-                    tblCart.addListenerForSingleValueEvent(new ValueEventListener() {
-                        @Override
-                        public void onDataChange(@NonNull DataSnapshot cartSnap) {
-                            String cartId = user.getCart();
-                            cart.MapToDbRef(tblCart.child(cartId));
-                        }
-
-                        @Override
-                        public void onCancelled(@NonNull DatabaseError databaseError) {
-
-                        }
-                    });
                     final DatabaseReference tblUser = db.getReference("User");
+                    final User user = Session.getInstance().User();
 
-                    tblUser.addListenerForSingleValueEvent(new ValueEventListener() {
-                        @Override
-                        public void onDataChange(@NonNull DataSnapshot userSnap) {
-                            String cartId = user.getCart(),
-                                    usrId = user.getPhone();
-                            user.AddOrder(cartId);
-                            user.setCart("0");
-                            user.MapToDbRef(tblUser.child(usrId));
-                            Session.getInstance().User(user);
-                            Session.getInstance().Cart(new Cart(cart.getAddress()));
-                        }
+                    String cartId = user.getCart(),
+                            usrId = user.getPhone();
 
-                        @Override
-                        public void onCancelled(@NonNull DatabaseError databaseError) {
+                    cart.MapToDbRef(tblCart.child(cartId));
+                    user.AddOrder(cartId);
+                    user.setCart("0");
 
-                        }
-                    });
+                    user.MapToDbRef(tblUser.child(usrId));
+                    Session.getInstance().User(user);
+                    Session.getInstance().Cart(new Cart(cart.getAddress()));
+
                     snackbar.dismiss();
 
                     CartFragment cartFragment = new CartFragment();
@@ -126,7 +109,7 @@ public class PaymentDetailsFragment extends Fragment {
             @Override
             public void onClick(View v) {
                 startActivityForResult(new Intent(Intent.ACTION_PICK)
-                            .setType("image/*"),
+                                .setType("image/*"),
                         1
                 );
             }
@@ -137,18 +120,14 @@ public class PaymentDetailsFragment extends Fragment {
     public void onActivityResult(int requestCode, int resultCode, Intent data) {
         super.onActivityResult(requestCode, resultCode, data);
         StorageReference storageRef = FirebaseStorage.getInstance().getReference();
-        switch (requestCode){
-            case 1:
-                if(resultCode == getActivity().RESULT_OK){
-                    StorageReference imgRef = storageRef.child(Session.getInstance().User().getCart());
-                    imgRef.putFile(data.getData()).addOnSuccessListener(new OnSuccessListener<UploadTask.TaskSnapshot>() {
-                        @Override
-                        public void onSuccess(UploadTask.TaskSnapshot taskSnapshot) {
+        if (requestCode == 1 && resultCode == Activity.RESULT_OK && data.getData() != null) {
+            StorageReference imgRef = storageRef.child(Session.getInstance().User().getCart());
+            imgRef.putFile(data.getData()).addOnSuccessListener(new OnSuccessListener<UploadTask.TaskSnapshot>() {
+                @Override
+                public void onSuccess(UploadTask.TaskSnapshot taskSnapshot) {
 
-                        }
-                    });
                 }
-                break;
+            });
         }
     }
 }

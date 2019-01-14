@@ -86,9 +86,9 @@ public class HalfFragment extends Fragment {
                     if(SaveChanges(v))
                     {
                         CartFragment f = new CartFragment();
-                        FragmentTransaction fragmentTransaction = getFragmentManager().beginTransaction();
-                        fragmentTransaction.replace(R.id.homeContainer, f);
-                        fragmentTransaction.commit();
+                        getFragmentManager().beginTransaction()
+                                .replace(R.id.homeContainer, f)
+                                .commit();
                     }
                 }
             }

@@ -95,6 +95,9 @@ public class HomeActivity extends AppCompatActivity
         Fragment fragment = null;
         switch (id)
         {
+            case R.id.navhome:
+                fragment = new OrderItemFragment();
+                break;
             case R.id.navUser:
                 fragment = new UserInfoFragment() ;
                 break;
@@ -104,6 +107,7 @@ public class HomeActivity extends AppCompatActivity
             case R.id.navAbout:
                 fragment = new AppInfoFragment();
                 break;
+
         }
         if (fragment != null) {
             FragmentTransaction ft = getSupportFragmentManager().beginTransaction();
