@@ -23,10 +23,8 @@ public class SignInActivity extends AppCompatActivity {
     private TextInputEditText edtPhone, edtPwd;
     private Button btnSignIn;
     private User user;
-    final FirebaseDatabase db = FirebaseDatabase.getInstance();
-    final DatabaseReference tblUser = db.getReference("User");
-    final DatabaseReference tblCart = db.getReference("Cart");
-
+    DatabaseReference tblUser;
+    DatabaseReference tblCart;
     private PreferenceManager preferenceManager;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -54,6 +52,10 @@ public class SignInActivity extends AppCompatActivity {
 
     private void Authenticate(View v){
         try {
+            final FirebaseDatabase db = FirebaseDatabase.getInstance();
+
+             tblUser = db.getReference("User");
+             tblCart = db.getReference("Cart");
             final String phone = edtPhone.getText().toString();
             final String pwd = edtPwd.getText().toString();
             if (!phone.equals("") && !pwd.equals("")) {

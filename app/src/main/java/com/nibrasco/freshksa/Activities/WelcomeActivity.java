@@ -33,7 +33,6 @@ public class WelcomeActivity extends AppCompatActivity {
     private Button btnSkip, btnNext;
     private PreferenceManager prefManager;
     private User user;
-    final FirebaseDatabase db = FirebaseDatabase.getInstance();
     DatabaseReference tblUser;
     DatabaseReference tblCart;
     @Override
@@ -226,6 +225,7 @@ public class WelcomeActivity extends AppCompatActivity {
             String message = getResources().getString(R.string.msgUserInfoLoading);
             Snackbar snackbar = Snackbar.make(findViewById(android.R.id.content), message, Snackbar.LENGTH_INDEFINITE);
             snackbar.show();
+            final FirebaseDatabase db = FirebaseDatabase.getInstance();
             tblUser = db.getReference("User");
             tblUser.addListenerForSingleValueEvent(new ValueEventListener() {
                 @Override

@@ -1,9 +1,11 @@
 package com.nibrasco.freshksa.Fragments;
 
 import android.Manifest;
+import android.content.pm.ApplicationInfo;
 import android.content.pm.PackageManager;
 import android.location.Address;
 import android.location.Geocoder;
+import android.os.AsyncTask;
 import android.os.Build;
 import android.support.annotation.RequiresApi;
 import android.support.design.widget.FloatingActionButton;
@@ -38,6 +40,7 @@ import java.io.InputStream;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Locale;
+import java.util.Objects;
 
 public class MapsFragment extends Fragment implements OnMapReadyCallback {
 
@@ -105,14 +108,22 @@ public class MapsFragment extends Fragment implements OnMapReadyCallback {
         GetLocation(new LatLng(Latitude, Longitude));
 
     }
+    /*
     private List<Address> getManualLocation(double lat, double lng) {
         //SharedPreferences settings;
         //settings = PreferenceManager.getDefaultSharedPreferences(mContext);
         //settings.edit().putBoolean("SecondaryGeoCode", true).apply();
-
+        ApplicationInfo app = null;
+        try {
+            app = getContext().getPackageManager().getApplicationInfo(getContext().getPackageName(), PackageManager.GET_META_DATA);
+        } catch (PackageManager.NameNotFoundException e) {
+            e.printStackTrace();
+        }
+        Bundle bundle = app.metaData;
 
         String address = String.format(Locale.ENGLISH,
-                "http://maps.googleapis.com/maps/api/geocode/json?latlng=%1$f,%2$f&sensor=true&language=" + Locale.getDefault().getCountry(),
+                "https://maps.googleapis.com/maps/api/geocode/json?latlng=%1$f,%2$f&sensor=true&language=" + Locale.getDefault().getCountry()
+                + "&key=" + bundle.getString("com.google.android.geo.API_KEY"),
                 lat, lng);
 
         HttpGet httpGet = new HttpGet(address);
@@ -120,7 +131,6 @@ public class MapsFragment extends Fragment implements OnMapReadyCallback {
         HttpResponse response;
 
         StringBuilder stringBuilder = new StringBuilder();
-        List<Address> retList = new ArrayList<>();
         try {
             response = client.execute(httpGet);
             HttpEntity entity = response.getEntity();
@@ -131,7 +141,7 @@ public class MapsFragment extends Fragment implements OnMapReadyCallback {
             }
 
             JSONObject jsonObject = new JSONObject(stringBuilder.toString());
-            retList = new ArrayList<>();
+            List<Address> retList = new ArrayList<>();
 
             if ("OK".equalsIgnoreCase(jsonObject.getString("status"))) {
                 JSONArray results = jsonObject.getJSONArray("results");
@@ -187,13 +197,15 @@ public class MapsFragment extends Fragment implements OnMapReadyCallback {
             return new ArrayList<Address>();
         }
     }
+    */
     private void GetLocation(LatLng latLng) {
         //Geocoder geocoder = new Geocoder(getActivity().getApplicationContext());
         try {
-            List<Address> addressList = getManualLocation(latLng.latitude, latLng.longitude);
+
+            List<Address> addressList = (List<Address>)new LocationTask().execute(latLng.latitude, latLng.longitude).get();
             if (!addressList.isEmpty()) {
                 Address adr = addressList.get(0);
-                address = adr.getAddressLine(0) + adr.getAdminArea() + adr.getSubAdminArea() + adr.getPostalCode();
+                address = adr.getSubLocality()+","+adr.getSubThoroughfare()+","+adr.getLocality();
                 //addr_label.setText("Address:"+addre/*+","+addr1.getSubLocality()+","+addr1.getSubThoroughfare()+","+addr1.getLocality()*/);
                 //city.setText("City:"+addr1.getSubAdminArea());
                 //state.setText("State:"+addr1.getAdminArea());
@@ -285,5 +297,20 @@ public class MapsFragment extends Fragment implements OnMapReadyCallback {
         super.onLowMemory();
         mMapView.onLowMemory();
     }
+    private class LocationTask extends AsyncTask {
 
+        @Override
+        protected List<Address> doInBackground(Object[] coordinates) {
+            //return getManualLocation((double)coordinates[0], (double)coordinates[1]);
+            List<Address> addresses = null;
+            try {
+                Geocoder geocoder = new Geocoder(getContext());
+                addresses = geocoder.getFromLocation((double)coordinates[0], (double)coordinates[1], 1);
+            } catch (IOException e) {
+                e.printStackTrace();
+            }
+            return addresses;
+        }
+
+    }
 }
