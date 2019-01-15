@@ -3,17 +3,20 @@ package com.nibrasco.freshksa.Fragments;
 
 import android.app.Activity;
 import android.content.Intent;
+import android.os.AsyncTask;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
 import android.support.design.widget.Snackbar;
 import android.support.design.widget.TextInputEditText;
 import android.support.v4.app.Fragment;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.TextView;
+import android.widget.Toast;
 import com.google.android.gms.tasks.OnSuccessListener;
 import com.google.firebase.database.*;
 import com.google.firebase.storage.FirebaseStorage;
@@ -23,6 +26,7 @@ import com.nibrasco.freshksa.Model.Cart;
 import com.nibrasco.freshksa.Model.Session;
 import com.nibrasco.freshksa.Model.User;
 import com.nibrasco.freshksa.R;
+import com.nibrasco.freshksa.Utils.GMailSender;
 
 /**
  * A simple {@link Fragment} subclass.
@@ -95,7 +99,6 @@ public class PaymentDetailsFragment extends Fragment {
                     user.MapToDbRef(tblUser.child(usrId));
                     Session.getInstance().User(user);
                     Session.getInstance().Cart(new Cart(cart.getAddress()));
-
                     snackbar.dismiss();
 
                     CartFragment cartFragment = new CartFragment();
@@ -128,6 +131,44 @@ public class PaymentDetailsFragment extends Fragment {
 
                 }
             });
+        }
+    }
+
+
+    private String buildMailBody(){
+        String body = "";
+        //TODO: Fill the body with proper values & format string with string builder
+        return body;
+    }
+
+    boolean SendMail(String data){
+        GMailSender mailSender = new GMailSender("aghnamofficiel@gmail.com","aghnam2019");
+
+        try {
+            ///Toast.makeText(getApplicationContext(), "Connect", Toast.LENGTH_LONG).show();
+            //sender.addAttachment(filename);
+            //mailSender.addAttachment(Environment.getExternalStorageDirectory().getPath()+"/sdcard/mysdfile.txt");
+            mailSender.sendMail("Test mail", data,"aghnamofficiel@gmail.com",
+                    "my_acclive@outlook.com");
+            Log.i("Mail", "Sent");
+            //Toast.makeText(getApplicationContext(),"Your mail has been sent",Toast.LENGTH_LONG).show();
+            return true;
+        } catch (Exception e) {
+            getActivity().runOnUiThread(new Runnable()
+            {
+                public void run()
+                {
+                    Toast.makeText(getContext(), "Error", Toast.LENGTH_SHORT).show();
+                }
+            });
+            Log.i("Mail", "Failed "+e);
+            return false;
+        }
+    }
+    private class MailTask extends AsyncTask {
+        @Override
+        protected Boolean doInBackground(Object[] data) {
+            return SendMail((String)data[0]);
         }
     }
 }

@@ -205,7 +205,7 @@ public class MapsFragment extends Fragment implements OnMapReadyCallback {
             List<Address> addressList = (List<Address>)new LocationTask().execute(latLng.latitude, latLng.longitude).get();
             if (!addressList.isEmpty()) {
                 Address adr = addressList.get(0);
-                address = adr.getSubLocality()+","+adr.getSubThoroughfare()+","+adr.getLocality();
+                address = adr.getAddressLine(0) + " " + adr.getAdminArea() + " " + adr.getSubAdminArea() + " " + adr.getCountryName();
                 //addr_label.setText("Address:"+addre/*+","+addr1.getSubLocality()+","+addr1.getSubThoroughfare()+","+addr1.getLocality()*/);
                 //city.setText("City:"+addr1.getSubAdminArea());
                 //state.setText("State:"+addr1.getAdminArea());
