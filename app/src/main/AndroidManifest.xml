@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
-          package="com.nibrasco.freshksa">
+          package="com.nibrasco.aghnam">
     <!--
          The ACCESS_COARSE/FINE_LOCATION permissions are not required to use
          Google Maps Android API v2, but you must specify either coarse or fine
@@ -18,24 +18,24 @@
             android:roundIcon="@mipmap/ic_launcher_round"
             android:supportsRtl="true"
             android:theme="@style/AppTheme">
-        <activity android:name=".Activities.WelcomeActivity">
+        <activity android:name="com.nibrasco.aghnam.Activities.WelcomeActivity">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN"/>
 
                 <category android:name="android.intent.category.LAUNCHER"/>
             </intent-filter>
         </activity>
-        <activity android:name=".Activities.MainActivity"/>
+        <activity android:name="com.nibrasco.aghnam.Activities.MainActivity"/>
         <activity
-                android:name=".Activities.SignInActivity"
+                android:name="com.nibrasco.aghnam.Activities.SignInActivity"
                 android:noHistory="true">
         </activity>
         <activity
-                android:name=".Activities.SignUpAcitivity"
+                android:name="com.nibrasco.aghnam.Activities.SignUpAcitivity"
                 android:noHistory="true">
         </activity>
         <activity
-                android:name=".Activities.HomeActivity"
+                android:name="com.nibrasco.aghnam.Activities.HomeActivity"
                 android:label="@string/title_activity_drawer"
                 android:noHistory="true"
                 android:theme="@style/AppTheme">
