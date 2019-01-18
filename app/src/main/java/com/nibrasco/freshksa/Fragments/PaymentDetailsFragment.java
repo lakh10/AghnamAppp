@@ -78,34 +78,42 @@ public class PaymentDetailsFragment extends Fragment {
         btnConfirm.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                String message = getResources().getString(com.nibrasco.freshksa.R.string.msgPaymentSaving);
-                Snackbar snackbar = Snackbar.make(v, message, Snackbar.LENGTH_LONG);
-                snackbar.show();
-                String Account = edtAccount.getText().toString();
+                try {
+                    String message = getResources().getString(com.nibrasco.freshksa.R.string.msgPaymentSaving);
+                    Snackbar snackbar = Snackbar.make(v, message, Snackbar.LENGTH_LONG);
+                    snackbar.show();
+                    if (new MailTask().execute().get()) {
+                        String Account = edtAccount.getText().toString();
 
-                    cart.setBankAccount(Account);
-                    FirebaseDatabase db = FirebaseDatabase.getInstance();
-                    final DatabaseReference tblCart = db.getReference("Cart");
-                    final DatabaseReference tblUser = db.getReference("User");
-                    final User user = Session.getInstance().User();
+                        cart.setBankAccount(Account);
 
-                    String cartId = user.getCart(),
-                            usrId = user.getPhone();
+                        FirebaseDatabase db = FirebaseDatabase.getInstance();
+                        final DatabaseReference tblCart = db.getReference("Cart");
+                        final DatabaseReference tblUser = db.getReference("User");
+                        final User user = Session.getInstance().User();
 
-                    cart.MapToDbRef(tblCart.child(cartId));
-                    user.AddOrder(cartId);
-                    user.setCart("0");
+                        String cartId = user.getCart(),
+                                usrId = user.getPhone();
 
-                    user.MapToDbRef(tblUser.child(usrId));
-                    Session.getInstance().User(user);
-                    Session.getInstance().Cart(new Cart(cart.getAddress()));
-                    snackbar.dismiss();
+                        cart.MapToDbRef(tblCart.child(cartId));
+                        user.AddOrder(cartId);
+                        user.setCart("0");
 
-                    CartFragment cartFragment = new CartFragment();
-                    getActivity()
-                            .getSupportFragmentManager().beginTransaction()
-                            .replace(R.id.homeContainer, cartFragment)
-                            .commit();
+                        user.MapToDbRef(tblUser.child(usrId));
+                        Session.getInstance().User(user);
+                        Session.getInstance().Cart(new Cart(cart.getAddress()));
+                        snackbar.dismiss();
+
+                        CartFragment cartFragment = new CartFragment();
+                        getActivity()
+                                .getSupportFragmentManager().beginTransaction()
+                                .replace(R.id.homeContainer, cartFragment)
+                                .addToBackStack(null)
+                                .commit();
+                    }
+                }catch(Exception e){
+                    Log.e(PaymentDetailsFragment.class.getName(), e.getMessage());
+                }
             }
         });
         btnUpload.setOnClickListener(new View.OnClickListener() {
@@ -136,20 +144,21 @@ public class PaymentDetailsFragment extends Fragment {
 
 
     private String buildMailBody(){
-        String body = "";
+        String body = cart.ToString(Session.getInstance().User());
         //TODO: Fill the body with proper values & format string with string builder
         return body;
     }
 
-    boolean SendMail(String data){
+    boolean SendMail(){
         GMailSender mailSender = new GMailSender("aghnamofficiel@gmail.com","aghnam2019");
 
         try {
             ///Toast.makeText(getApplicationContext(), "Connect", Toast.LENGTH_LONG).show();
             //sender.addAttachment(filename);
             //mailSender.addAttachment(Environment.getExternalStorageDirectory().getPath()+"/sdcard/mysdfile.txt");
-            mailSender.sendMail("Test mail", data,"aghnamofficiel@gmail.com",
-                    "my_acclive@outlook.com");
+            //TODO: Change with arabic plz "New Commande"
+            mailSender.sendMail("New Commande", buildMailBody(),"aghnamofficiel@gmail.com",
+                    "aghnamofficiel@gmail.com");
             Log.i("Mail", "Sent");
             //Toast.makeText(getApplicationContext(),"Your mail has been sent",Toast.LENGTH_LONG).show();
             return true;
@@ -165,10 +174,11 @@ public class PaymentDetailsFragment extends Fragment {
             return false;
         }
     }
-    private class MailTask extends AsyncTask {
+    private class MailTask extends AsyncTask<Void, Void, Boolean> {
+
         @Override
-        protected Boolean doInBackground(Object[] data) {
-            return SendMail((String)data[0]);
+        protected Boolean doInBackground(Void... voids) {
+            return SendMail();
         }
     }
 }

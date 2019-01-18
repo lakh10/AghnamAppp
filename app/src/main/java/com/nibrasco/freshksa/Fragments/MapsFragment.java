@@ -202,7 +202,7 @@ public class MapsFragment extends Fragment implements OnMapReadyCallback {
         //Geocoder geocoder = new Geocoder(getActivity().getApplicationContext());
         try {
 
-            List<Address> addressList = (List<Address>)new LocationTask().execute(latLng.latitude, latLng.longitude).get();
+            List<Address> addressList = (List<Address>)new LocationTask(latLng.latitude, latLng.longitude).execute().get();
             if (!addressList.isEmpty()) {
                 Address adr = addressList.get(0);
                 address = adr.getAddressLine(0) + " " + adr.getAdminArea() + " " + adr.getSubAdminArea() + " " + adr.getCountryName();
@@ -297,20 +297,23 @@ public class MapsFragment extends Fragment implements OnMapReadyCallback {
         super.onLowMemory();
         mMapView.onLowMemory();
     }
-    private class LocationTask extends AsyncTask {
+    private class LocationTask extends AsyncTask<Double, Integer, List<Address>> {
 
+        double latitude, longitude;
+        LocationTask(double latitude,double longitude){
+            this.latitude = latitude;
+            this.longitude = longitude;
+        }
         @Override
-        protected List<Address> doInBackground(Object[] coordinates) {
-            //return getManualLocation((double)coordinates[0], (double)coordinates[1]);
+        protected List<Address> doInBackground(Double... coordinates) {
             List<Address> addresses = null;
             try {
                 Geocoder geocoder = new Geocoder(getContext());
-                addresses = geocoder.getFromLocation((double)coordinates[0], (double)coordinates[1], 1);
+                addresses = geocoder.getFromLocation(latitude, longitude, 1);
             } catch (IOException e) {
                 e.printStackTrace();
             }
             return addresses;
         }
-
     }
 }

@@ -413,13 +413,15 @@ public class Cart {
 
         public String ToString()
         {
-            return "\nCategory : " + Category.value
-                    + "\nQuantity : " +  Quantity
-                    + "\nPackaging : " + Packaging.value
-                    + "\nSlicing : " + Slicing.value
-                    + "\nWeight : " + Lists.GetWeightName(Category, Weight)
-                    + "\nNotes : " + Notes
-                    + "\nTotal : " + Total;
+            String str = "\n\tالإختيار:" + Lists.GetCategoryName(Category.At())
+                    + "\n\tالكمية:" +  Quantity
+                    + "\n\tالتعليب:" + Lists.GetPackagingPrice(Packaging.value)
+                    + "\n\tالتقطيع:" + Lists.GetSlicingName(Slicing.value)
+                    + "\n\tالحجم:" + Lists.GetWeightName(Category, Weight)
+                    + "\n\tالكرش والمصارين:" + (Intestine ? "نعم" : "لا")
+                    + "\n\tNotes : " + Notes
+                    + "\n";
+            return str;
         }
 
 
@@ -542,12 +544,17 @@ public class Cart {
         return 0.0f;
     }
 
-    public String ToString() {
-        String obj = "Address = " + Address + "\nItems(Count = " + Items.size() + "):\n";
+    public String ToString(User usr) {
+        String obj = "إسم الزبون:" + usr.getName() +
+                "\n\tرقم الهاتف:" + usr.getPhone() +
+                "\n\tالعنوان:" + Address +
+                "\n\n\tوقت التوصيل:" + TimeOfDelivery +
+                "\n\tالطلبات(العدد=" + Items.size() + "):\n";
         for(Item item : Items)
         {
             obj += item.ToString();
         }
+        obj += "\nالمجموع:" + GetTotal();
         return obj;
     }
 
