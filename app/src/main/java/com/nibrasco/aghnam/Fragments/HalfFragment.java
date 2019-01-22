@@ -18,6 +18,9 @@ import com.google.firebase.database.*;
 import com.nibrasco.aghnam.Model.Cart;
 import com.nibrasco.aghnam.Model.Session;
 import com.nibrasco.aghnam.R;
+import com.travijuu.numberpicker.library.Enums.ActionEnum;
+import com.travijuu.numberpicker.library.Interface.ValueChangedListener;
+import com.travijuu.numberpicker.library.NumberPicker;
 
 /**
  * A simple {@link Fragment} subclass.
@@ -25,7 +28,7 @@ import com.nibrasco.aghnam.R;
 public class HalfFragment extends Fragment {
 
     Button btnConfirm;
-    EditText edtQuantity;
+    NumberPicker edtQuantity;
     Cart.Item currentItem;
     private TextView txtTotal;
     public HalfFragment() {
@@ -54,24 +57,14 @@ public class HalfFragment extends Fragment {
     }
     private void LoadContent(View v){
         btnConfirm = (Button)v.findViewById(com.nibrasco.aghnam.R.id.btnItemOrder);
-        edtQuantity = (EditText)v.findViewById(com.nibrasco.aghnam.R.id.edtQuantity);
+        edtQuantity = (NumberPicker)v.findViewById(com.nibrasco.aghnam.R.id.edtQuantity);
         txtTotal = (TextView)v.findViewById(com.nibrasco.aghnam.R.id.txtTotalItem);
 
         txtTotal.setText(Float.toString(currentItem.getTotal()));
-        edtQuantity.addTextChangedListener(new TextWatcher() {
+        edtQuantity.setValueChangedListener(new ValueChangedListener() {
             @Override
-            public void beforeTextChanged(CharSequence s, int start, int count, int after) {
-
-            }
-
-            @Override
-            public void onTextChanged(CharSequence s, int start, int before, int count) {
-
-            }
-
-            @Override
-            public void afterTextChanged(Editable s) {
-                int qte = Integer.parseInt(s.toString().equals("") ? "1" : s.toString());
+            public void valueChanged(int value, ActionEnum action) {
+                int qte = value;
                 currentItem.setQuantity(qte);
                 txtTotal.setText(Float.toString(currentItem.getTotal()));
             }

@@ -18,6 +18,9 @@ import com.google.firebase.database.*;
 import com.nibrasco.aghnam.Model.Cart;
 import com.nibrasco.aghnam.Model.Session;
 import com.nibrasco.aghnam.R;
+import com.travijuu.numberpicker.library.Enums.ActionEnum;
+import com.travijuu.numberpicker.library.Interface.ValueChangedListener;
+import com.travijuu.numberpicker.library.NumberPicker;
 
 import java.util.ArrayList;
 
@@ -29,7 +32,8 @@ public class CamelFragment extends Fragment {
     Spinner spWeight;
     private Button btnConfirm;
     private TextView txtTotal;
-    private EditText edtQuantity, edtNotes;
+    private EditText edtNotes;
+    private NumberPicker edtQuantity;
     private Cart.Item currentItem;
     
     public CamelFragment() {
@@ -61,7 +65,7 @@ public class CamelFragment extends Fragment {
     private void LinkControls(View v) {
         btnConfirm = (Button)v.findViewById(com.nibrasco.aghnam.R.id.btnItemOrder);
         spWeight = (Spinner)v.findViewById(com.nibrasco.aghnam.R.id.spWeightCamel);
-        edtQuantity = (EditText)v.findViewById(com.nibrasco.aghnam.R.id.edtQuantity);
+        edtQuantity = (NumberPicker)v.findViewById(com.nibrasco.aghnam.R.id.edtQuantity);
         edtNotes = (EditText)v.findViewById(com.nibrasco.aghnam.R.id.edtNotes);
         txtTotal = (TextView)v.findViewById(com.nibrasco.aghnam.R.id.txtTotalItem);
     }
@@ -78,20 +82,10 @@ public class CamelFragment extends Fragment {
 
             }
         });
-        edtQuantity.addTextChangedListener(new TextWatcher() {
+        edtQuantity.setValueChangedListener(new ValueChangedListener() {
             @Override
-            public void beforeTextChanged(CharSequence s, int start, int count, int after) {
-
-            }
-
-            @Override
-            public void onTextChanged(CharSequence s, int start, int before, int count) {
-
-            }
-
-            @Override
-            public void afterTextChanged(Editable s) {
-                int qte = Integer.parseInt(s.toString().equals("") ? "1" : s.toString());
+            public void valueChanged(int value, ActionEnum action) {
+                int qte = value;
                 currentItem.setQuantity(qte);
                 txtTotal.setText(Float.toString(currentItem.getTotal()));
             }
