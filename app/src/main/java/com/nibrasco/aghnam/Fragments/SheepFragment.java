@@ -14,6 +14,7 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.*;
 import com.google.firebase.database.*;
+import com.jaredrummler.materialspinner.MaterialSpinner;
 import com.nibrasco.aghnam.Model.Cart;
 import com.nibrasco.aghnam.Model.Session;
 import com.nibrasco.aghnam.R;
@@ -29,7 +30,7 @@ import java.util.ArrayList;
 public class SheepFragment extends Fragment {
 
     private Button btnConfirm;
-    private Spinner spSlicing, spWeight, spPackaging;
+    private MaterialSpinner spSlicing, spWeight, spPackaging;
     private TextView txtTotal;
     private NumberPicker edtQuantity;
     EditText edtNotes;
@@ -66,9 +67,9 @@ public class SheepFragment extends Fragment {
     private void LinkControls(View v)
     {
         btnConfirm = (Button)v.findViewById(com.nibrasco.aghnam.R.id.btnItemOrder);
-        spSlicing = (Spinner)v.findViewById(com.nibrasco.aghnam.R.id.spSlicing);
-        spWeight = (Spinner)v.findViewById(com.nibrasco.aghnam.R.id.spWeight);
-        spPackaging = (Spinner)v.findViewById(com.nibrasco.aghnam.R.id.spPackaging);
+        spSlicing = (MaterialSpinner )v.findViewById(com.nibrasco.aghnam.R.id.spSlicing);
+        spWeight = (MaterialSpinner )v.findViewById(com.nibrasco.aghnam.R.id.spWeight);
+        spPackaging = (MaterialSpinner )v.findViewById(com.nibrasco.aghnam.R.id.spPackaging);
         edtQuantity = (NumberPicker)v.findViewById(com.nibrasco.aghnam.R.id.edtQuantity);
         rdGrpIntestine = (RadioGroup)v.findViewById(com.nibrasco.aghnam.R.id.rdGrpIntestine);
         edtNotes = (EditText)v.findViewById(com.nibrasco.aghnam.R.id.edtNotes);
@@ -89,46 +90,29 @@ public class SheepFragment extends Fragment {
                 }
             }
         });
-        spPackaging.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
+        spPackaging.setOnItemSelectedListener(new MaterialSpinner.OnItemSelectedListener<String>() {
             @Override
-            public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
+            public void onItemSelected(MaterialSpinner view, int position, long id, String item) {
                 //if(position != spPackaging.getSelectedItemPosition()) {
-                    currentItem.setPackaging(parent.getPositionForView(view));
+                    currentItem.setPackaging(view.getSelectedIndex());
                     txtTotal.setText(Float.toString(currentItem.getTotal()));
                 //}
-                //No specific pricing
-            }
-
-            @Override
-            public void onNothingSelected(AdapterView<?> parent) {
-
             }
         });
-        spWeight.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
+        spWeight.setOnItemSelectedListener(new MaterialSpinner.OnItemSelectedListener<String>() {
             @Override
-            public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
+            public void onItemSelected(MaterialSpinner view, int position, long id, String item) {
                 //if(position != parent.getSelectedItemPosition()) {
-                    currentItem.setWeight(parent.getPositionForView(view));
+                    currentItem.setWeight(view.getSelectedIndex());
                     txtTotal.setText(Float.toString(currentItem.getTotal()));
                 //}
             }
-
-            @Override
-            public void onNothingSelected(AdapterView<?> parent) {
-
-            }
         });
-        spSlicing.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
+        spSlicing.setOnItemSelectedListener(new MaterialSpinner.OnItemSelectedListener<String>() {
             @Override
-            public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
+            public void onItemSelected(MaterialSpinner view, int position, long id, String item) {
                // if(position != spSlicing.getSelectedItemPosition()) {
-                currentItem.setSlicing(parent.getPositionForView(view));
-                //}
-            }
-
-            @Override
-            public void onNothingSelected(AdapterView<?> parent) {
-
+                currentItem.setSlicing(view.getSelectedIndex());
             }
         });
         edtQuantity.setValueChangedListener(new ValueChangedListener() {

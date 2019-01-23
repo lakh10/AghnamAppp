@@ -13,14 +13,13 @@
 
     <android.support.design.widget.FloatingActionButton
             android:id="@+id/fabMyLocation"
-            android:layout_width="63dp"
-            android:layout_height="63dp"
-            android:clickable="true"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
             android:src="@drawable/icon_mylocation"
             map:backgroundTint="@color/colorPrimary"
-            android:layout_marginBottom="16dp" map:layout_constraintBottom_toBottomOf="parent"
+            map:layout_constraintBottom_toBottomOf="parent"
             map:layout_constraintEnd_toEndOf="parent" android:layout_marginEnd="16dp"
-            android:layout_marginRight="16dp" map:layout_constraintDimensionRatio="16:16"/>
+            map:layout_constraintDimensionRatio="16:16" android:clickable="true"/>
 
     <Button
             android:id="@+id/btnConfirmAddress"

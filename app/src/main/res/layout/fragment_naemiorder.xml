@@ -59,9 +59,9 @@
                         android:textColor="@color/colorPrimary"
                         android:id="@+id/txtSlicing"
                         android:gravity="right"/>
-                <Spinner
+                <com.jaredrummler.materialspinner.MaterialSpinner
                         android:layout_width="110dp"
-                        android:layout_height="26dp"
+                        android:layout_height="wrap_content"
                         android:layout_gravity="right"
                         android:background="#fefefe"
                         android:id="@+id/spSlicing"
@@ -82,10 +82,9 @@
                         android:layout_height="wrap_content"
                         android:textColor="@color/colorPrimary"
                         android:gravity="center"/>
-                <Spinner
+                <com.jaredrummler.materialspinner.MaterialSpinner
                         android:layout_width="176dp"
-                        android:layout_height="26dp"
-                        android:textSize="18sp"
+                        android:layout_height="wrap_content"
                         android:id="@+id/spWeight"
                         android:gravity="center"
                         android:background="#ffffff"
@@ -110,10 +109,10 @@
                     android:textColor="@color/colorPrimary"
                     android:gravity="center"
                     android:id="@+id/txtPackaging"/>
-            <Spinner
+            <com.jaredrummler.materialspinner.MaterialSpinner
                     android:id="@+id/spPackaging"
                     android:layout_width="176dp"
-                    android:layout_height="26dp"
+                    android:layout_height="wrap_content"
                     android:layout_gravity="right"
                     android:layoutDirection="rtl"
                     android:background="#fefefe"

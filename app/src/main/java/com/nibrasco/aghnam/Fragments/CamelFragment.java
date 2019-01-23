@@ -15,6 +15,7 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.*;
 import com.google.firebase.database.*;
+import com.jaredrummler.materialspinner.MaterialSpinner;
 import com.nibrasco.aghnam.Model.Cart;
 import com.nibrasco.aghnam.Model.Session;
 import com.nibrasco.aghnam.R;
@@ -29,7 +30,7 @@ import java.util.ArrayList;
  */
 public class CamelFragment extends Fragment {
 
-    Spinner spWeight;
+    MaterialSpinner spWeight;
     private Button btnConfirm;
     private TextView txtTotal;
     private EditText edtNotes;
@@ -64,22 +65,18 @@ public class CamelFragment extends Fragment {
 
     private void LinkControls(View v) {
         btnConfirm = (Button)v.findViewById(com.nibrasco.aghnam.R.id.btnItemOrder);
-        spWeight = (Spinner)v.findViewById(com.nibrasco.aghnam.R.id.spWeightCamel);
+        spWeight = (MaterialSpinner)v.findViewById(com.nibrasco.aghnam.R.id.spWeightCamel);
         edtQuantity = (NumberPicker)v.findViewById(com.nibrasco.aghnam.R.id.edtQuantity);
         edtNotes = (EditText)v.findViewById(com.nibrasco.aghnam.R.id.edtNotes);
         txtTotal = (TextView)v.findViewById(com.nibrasco.aghnam.R.id.txtTotalItem);
     }
 
     private void LinkListeners() {
-        spWeight.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
+        spWeight.setOnItemSelectedListener(new MaterialSpinner.OnItemSelectedListener<String>() {
             @Override
-            public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
-                currentItem.setWeight(parent.getPositionForView(view));
+            public void onItemSelected(MaterialSpinner view, int position, long id, String item) {
+                currentItem.setWeight(position);
                 txtTotal.setText(Float.toString(currentItem.getTotal()));
-            }
-            @Override
-            public void onNothingSelected(AdapterView<?> parent) {
-
             }
         });
         edtQuantity.setValueChangedListener(new ValueChangedListener() {
@@ -93,12 +90,10 @@ public class CamelFragment extends Fragment {
         edtNotes.addTextChangedListener(new TextWatcher() {
             @Override
             public void beforeTextChanged(CharSequence s, int start, int count, int after) {
-
             }
 
             @Override
             public void onTextChanged(CharSequence s, int start, int before, int count) {
-
             }
 
             @Override
@@ -106,6 +101,7 @@ public class CamelFragment extends Fragment {
                 Session.getInstance().Item().setNotes(s.toString());
             }
         });
+
         btnConfirm.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
