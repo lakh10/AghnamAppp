@@ -55,7 +55,11 @@ public class CartFragment extends Fragment {
     }
 
     private void DisplayValues() {
-        txtCartTotal.setText(Float.toString(cart.GetTotal()));
+        try {
+            txtCartTotal.setText(String.format("%f", cart.GetTotal()));
+        }catch (Exception e){
+            Log.e("DisplayValues", e.getMessage());
+        }
     }
 
     @Override

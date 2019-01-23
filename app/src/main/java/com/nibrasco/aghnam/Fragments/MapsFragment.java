@@ -183,13 +183,13 @@ public class MapsFragment extends Fragment implements OnMapReadyCallback {
     }
     */
     private void GetLocation(LatLng latLng) {
-        //Geocoder geocoder = new Geocoder(getActivity().getApplicationContext());
+        Geocoder geocoder = new Geocoder(getActivity().getApplicationContext());
         try {
 
             List<Address> addressList = (List<Address>)new LocationTask(latLng.latitude, latLng.longitude).execute().get();
             if (!addressList.isEmpty()) {
                 Address adr = addressList.get(0);
-                address = adr.getAddressLine(0) + " " + adr.getAdminArea() + " " + adr.getSubAdminArea() + " " + adr.getCountryName();
+                address = adr.getAddressLine(0);
                 //addr_label.setText("Address:"+addre/*+","+addr1.getSubLocality()+","+addr1.getSubThoroughfare()+","+addr1.getLocality()*/);
                 //city.setText("City:"+addr1.getSubAdminArea());
                 //state.setText("State:"+addr1.getAdminArea());
