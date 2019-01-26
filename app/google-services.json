@@ -1,0 +1,55 @@
+{
+  "project_info": {
+    "project_number": "1041816426811",
+    "firebase_url": "https://aghnam-c15bd.firebaseio.com",
+    "project_id": "aghnam-c15bd",
+    "storage_bucket": "aghnam-c15bd.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:1041816426811:android:8cc0ff233cc2dc66",
+        "android_client_info": {
+          "package_name": "com.nibrasco.aghnam"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "1041816426811-v7p814q3rl2i95rtn9od2f9u6bbpog1h.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.nibrasco.aghnam",
+            "certificate_hash": "84ae2ed591ca81c7ee799735f771cb9b703fffc6"
+          }
+        },
+        {
+          "client_id": "1041816426811-7gju4nidttcrcn5apkr75eb03lk7q2ng.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyBNd7hwuJFaZOS8r0Q-W3dV7vPd9gHEBhc"
+        }
+      ],
+      "services": {
+        "analytics_service": {
+          "status": 1
+        },
+        "appinvite_service": {
+          "status": 2,
+          "other_platform_oauth_client": [
+            {
+              "client_id": "1041816426811-7gju4nidttcrcn5apkr75eb03lk7q2ng.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        },
+        "ads_service": {
+          "status": 2
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}

@@ -30,7 +30,7 @@ import java.io.IOException;
 
 public class RecuFragment extends Fragment implements View.OnClickListener /*  implementing click listener */ {
     //a constant to track the file chooser intent
-    private static final int PICK_IMAGE_REQUEST = 234;
+    public static final int PICK_IMAGE_REQUEST = 234;
 
     //Buttons
     private Button buttonChoose;
@@ -98,7 +98,6 @@ public class RecuFragment extends Fragment implements View.OnClickListener /*  i
                             //if the upload is successfull
                             //hiding the progress dialog
                             progressDialog.dismiss();
-
                             //and displaying a success toast
                             Toast.makeText(getContext().getApplicationContext(), "File Uploaded ", Toast.LENGTH_LONG).show();
                         }
@@ -134,7 +133,7 @@ public class RecuFragment extends Fragment implements View.OnClickListener /*  i
     //handling the image chooser activity result
     @Override
     public void onActivityResult(int requestCode, int resultCode, Intent data) {
-        super.onActivityResult(requestCode, resultCode, data);
+        //super.onActivityResult(requestCode, resultCode, data);
         if (requestCode == PICK_IMAGE_REQUEST && resultCode == Activity.RESULT_OK && data != null && data.getData() != null) {
             filePath = data.getData();
             try {
