@@ -59,8 +59,9 @@ public class HalfFragment extends Fragment {
         btnConfirm = (Button)v.findViewById(com.nibrasco.aghnam.R.id.btnItemOrder);
         edtQuantity = (NumberPicker)v.findViewById(com.nibrasco.aghnam.R.id.edtQuantity);
         txtTotal = (TextView)v.findViewById(com.nibrasco.aghnam.R.id.txtTotalItem);
-
-        txtTotal.setText(Float.toString(currentItem.getTotal()));
+        String total = String.format("%.2f", currentItem.getTotal());
+        //String totalTxt = Float.toString(currentItem.getTotal());
+        txtTotal.setText(total);
         edtQuantity.setValueChangedListener(new ValueChangedListener() {
             @Override
             public void valueChanged(int value, ActionEnum action) {

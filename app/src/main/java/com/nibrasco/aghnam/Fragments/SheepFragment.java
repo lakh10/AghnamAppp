@@ -95,7 +95,9 @@ public class SheepFragment extends Fragment {
             public void onItemSelected(MaterialSpinner view, int position, long id, String item) {
                 //if(position != spPackaging.getSelectedItemPosition()) {
                     currentItem.setPackaging(view.getSelectedIndex());
-                    txtTotal.setText(Float.toString(currentItem.getTotal()));
+                String total = String.format("%.2f", currentItem.getTotal());
+                //String totalTxt = Float.toString(currentItem.getTotal());
+                txtTotal.setText(total);
                 //}
             }
         });
@@ -104,7 +106,9 @@ public class SheepFragment extends Fragment {
             public void onItemSelected(MaterialSpinner view, int position, long id, String item) {
                 //if(position != parent.getSelectedItemPosition()) {
                     currentItem.setWeight(view.getSelectedIndex());
-                    txtTotal.setText(Float.toString(currentItem.getTotal()));
+                String total = String.format("%.2f", currentItem.getTotal());
+                //String totalTxt = Float.toString(currentItem.getTotal());
+                txtTotal.setText(total);
                 //}
             }
         });
@@ -120,7 +124,9 @@ public class SheepFragment extends Fragment {
             public void valueChanged(int value, ActionEnum action) {
                 int qte = value;
                 currentItem.setQuantity(qte);
-                txtTotal.setText(Float.toString(currentItem.getTotal()));
+                String total = String.format("%.2f", currentItem.getTotal());
+                //String totalTxt = Float.toString(currentItem.getTotal());
+                txtTotal.setText(total);
             }
         });
         edtNotes.addTextChangedListener(new TextWatcher() {
@@ -176,7 +182,9 @@ public class SheepFragment extends Fragment {
         adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
         spPackaging.setAdapter(adapter);
         //spPackaging.setSelection(0);
-        txtTotal.setText(Float.toString(currentItem.getTotal()));
+        String total = String.format("%.2f", currentItem.getTotal());
+        //String totalTxt = Float.toString(currentItem.getTotal());
+        txtTotal.setText(total);
 
         LinkListeners();
     }

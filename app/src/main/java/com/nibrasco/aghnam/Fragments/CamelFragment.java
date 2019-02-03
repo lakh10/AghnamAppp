@@ -163,8 +163,9 @@ public class CamelFragment extends Fragment {
         //adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
         spWeight.setAdapter(adapter);
         //spWeight.setSelection(0);
-        String totalTxt = Float.toString(currentItem.getTotal());
-        txtTotal.setText(totalTxt);
+        String total = String.format("%.2f", currentItem.getTotal());
+        //String totalTxt = Float.toString(currentItem.getTotal());
+        txtTotal.setText(total);
 
         LinkListeners();
     }

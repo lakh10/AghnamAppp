@@ -544,10 +544,11 @@ public class Cart {
     }
 
     public String ToString(User usr) {
+        String[] times = { "1-10 ظهرا","3-5 مساء ","7-9مساء"};
         String obj = "إسم الزبون:" + usr.getName() +
                 "\n\tرقم الهاتف:" + usr.getPhone() +
                 "\n\tالعنوان:" + Address +
-                "\n\n\tوقت التوصيل:" + TimeOfDelivery +
+                "\n\n\tوقت التوصيل:" + times[TimeOfDelivery.value] +
                 "\n\tالطلبات(العدد=" + Items.size() + "):\n";
         for(Item item : Items)
         {
