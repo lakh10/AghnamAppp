@@ -49,9 +49,9 @@ public class WelcomeActivity extends AppCompatActivity {
             ));
         }
         if (!isTaskRoot()
-        && getIntent().hasCategory(Intent.CATEGORY_LAUNCHER)
-        && getIntent().getAction() != null
-        && getIntent().getAction().equals(Intent.ACTION_MAIN)){
+                && getIntent().hasCategory(Intent.CATEGORY_LAUNCHER)
+                && getIntent().getAction() != null
+                && getIntent().getAction().equals(Intent.ACTION_MAIN)){
             finish();
             return;
         }
@@ -67,54 +67,54 @@ public class WelcomeActivity extends AppCompatActivity {
             getWindow().getDecorView().setSystemUiVisibility(View.SYSTEM_UI_FLAG_LAYOUT_STABLE | View.SYSTEM_UI_FLAG_LAYOUT_FULLSCREEN);
         }
 
-            setContentView(R.layout.activity_startup);
+        setContentView(R.layout.activity_startup);
 
-            viewPager = (ViewPager) findViewById(R.id.view_pager);
-            dotsLayout = (LinearLayout) findViewById(R.id.layoutDots);
-            btnSkip = (Button) findViewById(R.id.btn_skip);
-            btnNext = (Button) findViewById(R.id.btn_next);
+        viewPager = (ViewPager) findViewById(R.id.view_pager);
+        dotsLayout = (LinearLayout) findViewById(R.id.layoutDots);
+        btnSkip = (Button) findViewById(R.id.btn_skip);
+        btnNext = (Button) findViewById(R.id.btn_next);
 
-            // layouts of all welcome sliders
-            // add few more layouts if you want
-            layouts = new int[]{
-                    R.layout.slide_screen1,
-                    R.layout.slide_screen2,
-                    R.layout.slide_screen3,
-                    R.layout.slide_screen4,
-                    R.layout.slide_screen5};
+        // layouts of all welcome sliders
+        // add few more layouts if you want
+        layouts = new int[]{
+                R.layout.slide_screen1,
+                R.layout.slide_screen2,
+                R.layout.slide_screen3,
+                R.layout.slide_screen4,
+                R.layout.slide_screen5};
 
-            // adding bottom dots
-            addBottomDots(0);
+        // adding bottom dots
+        addBottomDots(0);
 
-            // making notification bar transparent
-            changeStatusBarColor();
+        // making notification bar transparent
+        changeStatusBarColor();
 
-            myViewPagerAdapter = new MyViewPagerAdapter();
-            viewPager.setAdapter(myViewPagerAdapter);
-            viewPager.addOnPageChangeListener(viewPagerPageChangeListener);
+        myViewPagerAdapter = new MyViewPagerAdapter();
+        viewPager.setAdapter(myViewPagerAdapter);
+        viewPager.addOnPageChangeListener(viewPagerPageChangeListener);
 
-            btnSkip.setOnClickListener(new View.OnClickListener() {
-                @Override
-                public void onClick(View v) {
+        btnSkip.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                launchHomeScreen();
+            }
+        });
+
+        btnNext.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                // checking for last page
+                // if last page home screen will be launched
+                int current = getItem(+1);
+                if (current < layouts.length) {
+                    // move to next screen
+                    viewPager.setCurrentItem(current);
+                } else {
                     launchHomeScreen();
                 }
-            });
-
-            btnNext.setOnClickListener(new View.OnClickListener() {
-                @Override
-                public void onClick(View v) {
-                    // checking for last page
-                    // if last page home screen will be launched
-                    int current = getItem(+1);
-                    if (current < layouts.length) {
-                        // move to next screen
-                        viewPager.setCurrentItem(current);
-                    } else {
-                        launchHomeScreen();
-                    }
-                }
-            });
-        }
+            }
+        });
+    }
 
 
     private void addBottomDots(int currentPage) {
@@ -240,29 +240,30 @@ public class WelcomeActivity extends AppCompatActivity {
                 @Override
                 public void onCancelled(@NonNull DatabaseError databaseError) {
 
+
                 }
             });
 
             tblCart = db.getReference("Cart");
-            tblCart.addListenerForSingleValueEvent(new ValueEventListener() {
-                @Override
-                public void onDataChange(@NonNull DataSnapshot cartsSnap) {
-                    String id = user.getCart();
-                    if (!id.equals("0"))
-                        Session.getInstance().Cart(new Cart(cartsSnap.child(id)));
-                    else {
-                        Session.getInstance().Cart(new Cart());
-                        user.setCart(Long.toString(cartsSnap.getChildrenCount()));
-                        user.MapToDbRef(tblUser.child(user.getPhone()));
-                    }
-                }
+           // tblCart.addListenerForSingleValueEvent(new ValueEventListener() {
+            //    @Override
+              //  public void onDataChange(@NonNull DataSnapshot cartsSnap) {
+                //    String id = user.getCart();
+                  //  if (!id.equals("0"))
+                    //    Session.getInstance().Cart(new Cart(cartsSnap.child(id)));
+                   // else {
+            //      Session.getInstance().Cart(new Cart());
+            //      user.setCart(Long.toString(cartsSnap.getChildrenCount()));
+            //   user.MapToDbRef(tblUser.child(user.getPhone()));
+            //   }
+            // }
 
-                @Override
-                public void onCancelled(@NonNull DatabaseError databaseError) {
+            //      @Override
+            //    public void onCancelled(@NonNull DatabaseError databaseError) {
 
-                }
-            });
-            snackbar.dismiss();
+            //      }
+            //  });
+           snackbar.dismiss();
         }catch(Exception e){
             Log.e(WelcomeActivity.class.getName(), e.getMessage());
         }

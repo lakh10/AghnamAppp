@@ -21,7 +21,6 @@ import com.google.firebase.database.*;
 import com.google.firebase.storage.FirebaseStorage;
 import com.google.firebase.storage.StorageReference;
 import com.google.firebase.storage.UploadTask;
-import com.nibrasco.aghnam.Activities.WtspActivity;
 import com.nibrasco.aghnam.Model.Cart;
 import com.nibrasco.aghnam.Model.Session;
 import com.nibrasco.aghnam.Model.User;
@@ -116,12 +115,7 @@ public class PaymentDetailsFragment extends Fragment {
                 }
             }
         });
-        btnUpload.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                startActivity(new Intent(getContext(), WtspActivity.class));
-            }
-        });
+
     }
 
     @Override

@@ -42,7 +42,7 @@ public class UserInfoFragment extends Fragment {
     }
     public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState)
     {
-        //final View v = getView();
+        final View v = getView();
 
     }
     private void LinkControls(View v)
